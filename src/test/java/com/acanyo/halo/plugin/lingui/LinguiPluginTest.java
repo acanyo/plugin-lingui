@@ -2,6 +2,7 @@ package com.acanyo.halo.plugin.lingui;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import com.acanyo.halo.plugin.lingui.model.ComponentEmbed;
 import com.acanyo.halo.plugin.lingui.model.ComponentTemplate;
 import com.acanyo.halo.plugin.lingui.model.DesignTheme;
 import com.acanyo.halo.plugin.lingui.model.FontFamily;
@@ -23,8 +24,9 @@ class LinguiPluginTest {
         verify(schemes).register(ComponentTemplate.class);
         verify(schemes).register(DesignTheme.class);
         verify(schemes).register(FontFamily.class);
+        verify(schemes).register(ComponentEmbed.class);
         verify(schemes).register(com.acanyo.halo.plugin.lingui.model.McpDraft.class);
         verify(schemes).register(com.acanyo.halo.plugin.lingui.model.McpActivity.class);
-        verify(schemes, times(5)).unregister(any(Scheme.class));
+        verify(schemes, times(6)).unregister(any(Scheme.class));
     }
 }
