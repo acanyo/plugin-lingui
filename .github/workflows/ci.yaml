@@ -12,7 +12,8 @@ jobs:
   ci:
     uses: halo-sigs/reusable-workflows/.github/workflows/plugin-ci.yaml@v4
     with:
-      ui-path: "ui"
-      pnpm-version: 10
+      # pnpm workspace 的锁文件位于仓库根目录。
+      ui-path: "."
+      pnpm-version: "10.33.0"
       node-version: 24
       java-version: 21
