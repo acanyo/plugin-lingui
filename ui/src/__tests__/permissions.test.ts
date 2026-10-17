@@ -44,7 +44,7 @@ describe('Halo author access', () => {
       expect(labels).toContain('编辑')
       expect(labels).toContain('导出当前版本')
       expect(labels.includes('删除')).toBe(canManage)
-      expect(labels.includes('复制组件')).toBe(canManage)
+      expect(labels.includes('创建副本')).toBe(canManage)
       expect(labels.includes('重命名与分类')).toBe(canManage)
     },
   )
