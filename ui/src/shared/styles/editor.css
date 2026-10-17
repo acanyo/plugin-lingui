@@ -1,0 +1,224 @@
+@import './events.css';
+.lingui-studio .lu-workbench-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.lingui-studio .lu-title-input {
+  border: 0 !important;
+  padding: 6px !important;
+  width: 180px;
+  max-width: 100%;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.lingui-studio .lu-workbench-grid {
+  display: grid;
+  grid-template-columns: 200px minmax(240px, 1fr) 280px;
+  height: calc(100dvh - 252px);
+  min-height: 560px;
+}
+.lingui-studio .lu-structure-panel {
+  background: var(--lu-bg);
+  padding: 20px 0;
+  border-right: 1px solid var(--lu-border);
+  overflow: auto;
+  min-height: 0;
+}
+.lingui-studio .lu-structure-panel > .lu-panel-heading {
+  padding: 0 16px;
+}
+.lingui-studio .lu-tree-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 9px 12px;
+  text-align: left;
+  font-size: 12px;
+  color: var(--lu-muted);
+  min-width: 0;
+  white-space: normal;
+}
+.lingui-studio .lu-tree-item.active {
+  background: var(--lu-subtle);
+  color: var(--lu-text);
+}
+.lingui-studio .lu-tree-label {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-tree-id {
+  font-family: var(--lu-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--lu-text);
+}
+.lingui-studio .lu-tree-type {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-tree-kind {
+  width: 10px;
+  flex-shrink: 0;
+  line-height: 18px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-add-node {
+  margin-top: 20px;
+  padding: 18px 16px;
+  border-top: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-node-operations {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 12px;
+}
+.lingui-studio .lu-canvas {
+  min-width: 0;
+  background: var(--lu-sidebar);
+  padding: 24px;
+  overflow: auto;
+}
+.lingui-studio .lu-segment {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--lu-hover);
+  border-radius: 8px;
+}
+.lingui-studio .lu-segment button {
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  padding: 6px 10px;
+  min-height: 30px;
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+.lingui-studio .lu-segment button.active {
+  background: var(--lu-bg);
+  color: var(--lu-text);
+}
+.lingui-studio .lu-preview-frame {
+  width: 100%;
+  max-width: 760px;
+  min-height: 240px;
+  margin: 0 auto;
+  padding: 24px;
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  background: var(--lu-bg);
+}
+.lingui-studio .lu-preview-mobile {
+  max-width: 375px;
+}
+.lingui-studio .lu-inspector {
+  min-width: 0;
+  border-left: 1px solid var(--lu-border);
+  overflow: auto;
+  min-height: 0;
+}
+.lingui-studio .lu-inspector-tabs {
+  display: flex;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-inspector-tabs button {
+  flex: 1;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  padding: 15px 2px;
+  font-size: 11px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-inspector-tabs button.active {
+  border-bottom-color: var(--lu-text);
+  color: var(--lu-text);
+}
+.lingui-studio .lu-inspector-content {
+  padding: 20px 16px;
+  max-height: calc(100vh - 180px);
+  overflow: auto;
+}
+.lingui-studio .lu-inspector-content > p,
+.lingui-studio .lu-parameters > p {
+  margin: 10px 0 18px;
+}
+.lingui-studio .lu-parameter,
+.lingui-studio .lu-action {
+  padding: 12px 0;
+  border-top: 1px solid var(--lu-border);
+  margin: 14px 0;
+}
+.lingui-studio .lu-workbench-error {
+  padding: 8px 24px;
+}
+.lingui-studio.lu-embedded .lu-workbench-grid {
+  min-height: 500px;
+}
+@container studio (max-width: 820px) {
+  .lingui-studio .lu-workbench-grid {
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+  }
+  .lingui-studio .lu-structure-panel {
+    max-height: 240px;
+    border-right: 0;
+    border-bottom: 1px solid var(--lu-border);
+  }
+  .lingui-studio .lu-inspector {
+    border-left: 0;
+    border-top: 1px solid var(--lu-border);
+  }
+  .lingui-studio .lu-inspector-content {
+    max-height: none;
+  }
+  .lingui-studio .lu-workbench-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+  .lingui-studio .lu-canvas {
+    padding: 20px 16px;
+  }
+}
+.lingui-studio .lu-table-editor {
+  margin: 20px 0;
+}
+.lingui-studio .lu-table-editor > h3 {
+  margin-bottom: 12px;
+}
+.lingui-studio .lu-table-editor-line {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.lingui-studio .lu-table-editor-line input {
+  width: 100%;
+}
+.lingui-studio .lu-table-editor-row {
+  border-top: 1px solid var(--lu-border);
+  margin-top: 20px;
+  padding-top: 14px;
+}

@@ -1,0 +1,97 @@
+.lu-api-scenarios,
+.lu-interaction-check {
+  margin: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--lu-border);
+  min-width: 0;
+  font-size: 12px;
+}
+.lu-api-scenarios > summary,
+.lu-interaction-check > summary {
+  cursor: pointer;
+  line-height: 1.8;
+}
+.lu-api-scenarios > summary > strong,
+.lu-interaction-check > summary > strong {
+  font-size: 13px;
+  font-weight: 500;
+}
+.lu-api-scenarios > summary > span,
+.lu-interaction-check > summary > span {
+  float: right;
+  color: var(--lu-muted);
+  font-size: 11px;
+}
+.lu-api-scenarios > p,
+.lu-interaction-check > p {
+  line-height: 1.8;
+  margin: 12px 0;
+}
+.lu-scenario-form {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  background: var(--lu-bg);
+}
+.lu-scenario-form .lu-field {
+  margin: 0;
+}
+.lu-scenario-url {
+  color: var(--lu-muted);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.lu-scenario-form textarea {
+  max-height: 240px;
+  resize: vertical;
+}
+.lu-lab-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+.lu-check-summary {
+  padding: 12px;
+  background: var(--lu-subtle);
+  border-radius: 6px;
+}
+.lu-check-cases {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  max-height: 360px;
+  overflow: auto;
+  margin: 14px 0 0;
+}
+.lu-check-cases > li {
+  border: 1px solid var(--lu-border);
+  border-radius: 6px;
+  padding: 10px;
+  min-width: 0;
+}
+.lu-check-cases summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.lu-check-status {
+  color: var(--lu-muted);
+  font-size: 11px;
+}
+.lu-check-cases .is-failed .lu-check-status {
+  color: var(--lu-danger);
+}
+.lu-check-cases .is-passed .lu-check-status {
+  color: var(--lu-accent);
+}
+.lu-check-cases p {
+  margin: 8px 0 0;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}

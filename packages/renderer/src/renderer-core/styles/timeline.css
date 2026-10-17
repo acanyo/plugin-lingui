@@ -1,0 +1,42 @@
+.lingui-surface .lg-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.lingui-surface .lg-timeline-item {
+  position: relative;
+  border-left: var(--lingui-lineWidth) solid var(--lingui-line);
+  padding: 0 0 calc(var(--lingui-spacing) * 1.5) 24px;
+  margin-left: 6px;
+}
+.lingui-surface .lg-timeline-item:last-child {
+  border-left-color: transparent;
+  padding-bottom: 0;
+}
+.lingui-surface .lg-timeline-dot {
+  position: absolute;
+  left: -5px;
+  top: 7px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--lingui-accent);
+  box-shadow: 0 0 0 4px var(--lingui-background);
+}
+.lingui-surface .lg-timeline-item h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.lingui-surface .lg-error {
+  margin-top: 16px;
+  color: var(--lingui-danger);
+  font-size: 13px;
+}
+.lingui-surface .lg-error button {
+  color: inherit;
+  background: transparent;
+  border: 0;
+  text-decoration: underline;
+}

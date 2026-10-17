@@ -1,0 +1,422 @@
+{
+  "Column": {
+    "label": "纵向布局",
+    "description": "把内容从上到下排列，适合文章段落、表单和连续步骤。"
+  },
+  "Row": {
+    "label": "横向布局",
+    "description": "把内容并排排列，适合操作按钮、标签和简短的信息组合。"
+  },
+  "Card": {
+    "label": "卡片",
+    "description": "用独立的面板组织相关内容，让页面有清楚的分组。"
+  },
+  "Text": {
+    "label": "文字",
+    "description": "呈现标题、正文或辅助说明，支持跟随作品参数更新。"
+  },
+  "Icon": {
+    "label": "图标",
+    "description": "用简洁的图标表达提示、状态或内容类型。"
+  },
+  "Button": {
+    "label": "按钮",
+    "description": "触发作品中配置的操作，例如重置、切换或提交答案。"
+  },
+  "Divider": {
+    "label": "分割线",
+    "description": "用细分隔线划分内容，保持清晰的阅读节奏。"
+  },
+  "CheckBox": {
+    "label": "确认 / 开关",
+    "description": "让读者确认一项说明，或控制一个开启与关闭的状态。"
+  },
+  "TextField": {
+    "label": "文本输入",
+    "description": "收集文本内容，支持单行、多行、数字文本和隐藏文本。"
+  },
+  "Slider": {
+    "label": "滑块",
+    "description": "通过拖动或方向键调整数值，适合范围和参数实验。"
+  },
+  "ChoicePicker": {
+    "label": "选项",
+    "description": "从一组备选内容中选择，适合测验、偏好和方案比较。"
+  },
+  "Image": {
+    "label": "图片",
+    "description": "展示自己的图片，支持说明文字、尺寸和填充方式。"
+  },
+  "Video": {
+    "label": "视频",
+    "description": "播放自己的视频资源，使用浏览器原生播放控件。"
+  },
+  "AudioPlayer": {
+    "label": "音频播放器",
+    "description": "播放自己的音频资源，为作品加入声音说明。"
+  },
+  "List": {
+    "label": "列表",
+    "description": "按横向或纵向组织重复内容，适合清单和阅读路线。"
+  },
+  "Tabs": {
+    "label": "标签页",
+    "description": "让读者在不同内容页之间切换，一次专注于一个主题。"
+  },
+  "Modal": {
+    "label": "弹窗",
+    "description": "点击触发按钮后打开详细说明，关闭后返回原来的位置。"
+  },
+  "DateTimeInput": {
+    "label": "日期与时间",
+    "description": "选择日期、时间或两者，适合计划与时间记录。"
+  },
+  "LingUI.Callout": {
+    "label": "提示容器",
+    "description": "突出一条提示、注意事项或重要结论。"
+  },
+  "LingUI.Collapse": {
+    "label": "折叠区域",
+    "description": "把补充说明收进可展开区域，保持正文简洁。"
+  },
+  "LingUI.Conditional": {
+    "label": "条件显示",
+    "description": "根据作品中的状态决定是否展示一段内容。"
+  },
+  "LingUI.NumberInput": {
+    "label": "数字输入",
+    "description": "输入真实数值，可与计算结果和图表联动。"
+  },
+  "LingUI.Progress": {
+    "label": "进度",
+    "description": "展示任务完成度或当前进展。"
+  },
+  "LingUI.Tabs": {
+    "label": "标签页",
+    "description": "保留既有作品使用的标签页能力，支持内容切换。"
+  },
+  "LingUI.Steps": {
+    "label": "多步骤",
+    "description": "将内容分成多个可切换的步骤，适合教程与引导。"
+  },
+  "LingUI.Diagram": {
+    "label": "架构图",
+    "description": "组织有层级的架构节点，支持分组和点击展开。"
+  },
+  "LingUI.DiagramNode": {
+    "label": "架构节点",
+    "description": "描述架构中的一个节点，可放入架构图并继续添加子节点。"
+  },
+  "LingUI.Timeline": {
+    "label": "时间线",
+    "description": "按时间顺序组织事件和阶段，适合过程讲解。"
+  },
+  "LingUI.TimelineItem": {
+    "label": "时间节点",
+    "description": "记录时间线中的一个阶段，包含标题与说明。"
+  },
+  "LingUI.Badge": {
+    "label": "语义徽标",
+    "description": "用紧凑的标签表达分类或语义状态。"
+  },
+  "LingUI.Quote": {
+    "label": "引用",
+    "description": "展示引用内容与署名，适合观点和摘录。"
+  },
+  "LingUI.Metric": {
+    "label": "数字指标",
+    "description": "突出一个数值指标，并补充含义说明。"
+  },
+  "LingUI.Table": {
+    "label": "对比表格",
+    "description": "通过表头与行标题比较信息，窄屏下可横向滚动。"
+  },
+  "LingUI.Section": {
+    "label": "内容章节",
+    "description": "组合章节标题、说明和正文，让长作品更容易阅读。"
+  },
+  "LingUI.Grid": {
+    "label": "自适应网格",
+    "description": "让卡片按可用宽度自动排成多列，窄屏下自然收拢。"
+  },
+  "LingUI.CodeBlock": {
+    "label": "代码片段",
+    "description": "展示代码与语言说明，支持复制代码。"
+  },
+  "LingUI.KeyValue": {
+    "label": "信息列表",
+    "description": "把名称与内容配成信息列表，适合参数和事实说明。"
+  },
+  "LingUI.BarChart": {
+    "label": "条形图",
+    "description": "通过条形长度比较数值，并显示真实数据标签。"
+  },
+  "LingUI.Switch": {
+    "label": "开关",
+    "description": "切换一项偏好，可与作品中的条件显示联动。"
+  },
+  "LingUI.Select": {
+    "label": "下拉选择",
+    "description": "在紧凑的下拉菜单中选择一项，适合分类与偏好设置。"
+  },
+  "LingUI.SegmentedControl": {
+    "label": "分段选择",
+    "description": "并排展示少量互斥选项，适合视图、范围和模式切换。"
+  },
+  "LingUI.Rating": {
+    "label": "星级评分",
+    "description": "用星级记录体验，支持清除、只读展示与自定义星数。"
+  },
+  "LingUI.Avatar": {
+    "label": "头像与身份",
+    "description": "展示头像、姓名与身份说明，没有图片时使用文字头像。"
+  },
+  "LingUI.Link": {
+    "label": "链接",
+    "description": "让读者主动访问提供的安全链接，可在新窗口打开。"
+  },
+  "LingUI.Breadcrumbs": {
+    "label": "面包屑导航",
+    "description": "展示当前所在层级，支持为上级位置配置导航链接。"
+  },
+  "LingUI.EmptyState": {
+    "label": "空状态",
+    "description": "为暂无内容的区域提供说明，也可以组合操作按钮。"
+  },
+  "LingUI.Skeleton": {
+    "label": "骨架屏",
+    "description": "展示文字、头像或卡片占位，适合讲解页面加载过程。"
+  },
+  "LingUI.Spinner": {
+    "label": "加载指示器",
+    "description": "用旋转指示器和说明表达加载状态，支持减少动态效果。"
+  },
+  "LingUI.LineChart": {
+    "label": "折线图",
+    "description": "按数据顺序展示变化趋势，支持负值与单点数据。"
+  },
+  "LingUI.DonutChart": {
+    "label": "环形图",
+    "description": "对比各部分的数值占比，显示合计、图例与百分比。"
+  },
+  "LingUI.SearchInput": {
+    "label": "搜索输入",
+    "description": "输入关键词并清空，可通过本地状态与内容筛选联动。"
+  },
+  "LingUI.ColorPicker": {
+    "label": "颜色选择",
+    "description": "通过色板或六位颜色值选择颜色，不会自动修改整份作品主题。"
+  },
+  "LingUI.MultiSelect": {
+    "label": "多选下拉",
+    "description": "筛选并选择多项，支持数量上限和清空。"
+  },
+  "LingUI.TagInput": {
+    "label": "标签输入",
+    "description": "通过回车添加标签，支持去重、逐项移除和数量限制。"
+  },
+  "LingUI.Pagination": {
+    "label": "分页导航",
+    "description": "按页码切换本地状态，可与条件显示或计算表达式联动。"
+  },
+  "LingUI.Alert": {
+    "label": "可关闭提示",
+    "description": "展示成功、信息、提醒或错误，可关闭并通过状态恢复。"
+  },
+  "LingUI.Status": {
+    "label": "状态标记",
+    "description": "用语义圆点和明确文字展示状态。"
+  },
+  "LingUI.Tooltip": {
+    "label": "悬浮说明",
+    "description": "悬停、聚焦或点击查看简短说明，支持 Esc 关闭。"
+  },
+  "LingUI.Accordion": {
+    "label": "手风琴",
+    "description": "组织多组可展开内容，支持单项或多项同时展开。"
+  },
+  "LingUI.LabeledDivider": {
+    "label": "文字分隔线",
+    "description": "用简短文字区分前后内容，适合表单与阅读流程。"
+  },
+  "LingUI.Toolbar": {
+    "label": "工具栏",
+    "description": "组织相关按钮与状态，窄屏下自然换行。"
+  },
+  "LingUI.Gauge": {
+    "label": "仪表盘",
+    "description": "展示当前数值和刻度范围，支持状态联动。"
+  },
+  "LingUI.RadarChart": {
+    "label": "雷达图",
+    "description": "用统一刻度对比三个到八个维度，并显示每项真实数值。"
+  },
+  "LingUI.Heatmap": {
+    "label": "热力表",
+    "description": "用颜色深浅和数值展示二维分布，支持表格编辑与横向滚动。"
+  },
+  "LingUI.RangeSlider": {
+    "label": "范围滑块",
+    "description": "分别调整上下限，区间值可以与内容联动。"
+  },
+  "LingUI.DateRange": {
+    "label": "日期区间",
+    "description": "选择开始和结束日期，支持日期范围约束。"
+  },
+  "LingUI.NumberStepper": {
+    "label": "数字步进",
+    "description": "输入数字或逐步增减，支持上下限与小数步长。"
+  },
+  "LingUI.PasswordInput": {
+    "label": "密码输入",
+    "description": "隐藏演示输入，支持显示与隐藏；请勿填入真实凭据。"
+  },
+  "LingUI.Combobox": {
+    "label": "搜索单选",
+    "description": "搜索选项后选择一项，支持清空与键盘操作。"
+  },
+  "LingUI.Transfer": {
+    "label": "穿梭框",
+    "description": "筛选和勾选后在待选与已选之间移动选项。"
+  },
+  "LingUI.ToggleButton": {
+    "label": "切换按钮",
+    "description": "点击切换选中状态，适合收藏或偏好展示。"
+  },
+  "LingUI.Carousel": {
+    "label": "轮播",
+    "description": "逐页查看内容，保留每页交互状态，支持手动切换。"
+  },
+  "LingUI.ScrollArea": {
+    "label": "滚动区域",
+    "description": "限定内容的可见高度，支持键盘滚动与嵌套内容。"
+  },
+  "LingUI.AspectRatio": {
+    "label": "比例容器",
+    "description": "按常见比例组织内容，长内容仍能完整展示。"
+  },
+  "LingUI.KeyboardShortcut": {
+    "label": "快捷键提示",
+    "description": "显示按键组合与操作说明，不会捕获系统快捷键。"
+  },
+  "LingUI.FileCard": {
+    "label": "文件卡片",
+    "description": "展示文件说明与自定义链接，由读者主动打开。"
+  },
+  "LingUI.AvatarGroup": {
+    "label": "头像组",
+    "description": "展示多个参与者，支持文字头像和剩余人数。"
+  },
+  "LingUI.ProgressRing": {
+    "label": "环形进度",
+    "description": "展示数值与完成比例，支持本地状态联动。"
+  },
+  "LingUI.Sparkline": {
+    "label": "迷你趋势图",
+    "description": "紧凑展示数值变化，保留每项真实数据。"
+  },
+  "LingUI.FunnelChart": {
+    "label": "漏斗图",
+    "description": "展示逐阶段递减的数据与相对于第一阶段的比例。"
+  },
+  "LingUI.TreeView": {
+    "label": "树形导航",
+    "description": "展开层级目录并选择节点，支持方向键导航和本地状态联动。"
+  },
+  "LingUI.Calendar": {
+    "label": "日历",
+    "description": "按月查看日期并选择一天，支持切换月份与键盘操作。"
+  },
+  "LingUI.CardChoice": {
+    "label": "卡片单选",
+    "description": "用带说明的卡片选择一项，适合方案比较与偏好设置。"
+  },
+  "LingUI.CheckboxGroup": {
+    "label": "复选组",
+    "description": "在一组带说明的选项中选择多项，支持本地状态联动。"
+  },
+  "LingUI.Drawer": {
+    "label": "侧边抽屉",
+    "description": "从侧边打开补充内容，支持关闭、Esc 和焦点恢复。"
+  },
+  "LingUI.SplitPane": {
+    "label": "可调分栏",
+    "description": "并排对照两组内容，调整分栏比例，窄屏自动上下排列。"
+  },
+  "LingUI.ChatMessage": {
+    "label": "对话消息",
+    "description": "展示发送者、消息正文与说明，适合对话示例和操作讲解。"
+  },
+  "LingUI.Kanban": {
+    "label": "任务看板",
+    "description": "将任务组织到不同阶段，通过选择状态移动任务，仅在当前实例生效。"
+  },
+  "LingUI.ScatterChart": {
+    "label": "散点图",
+    "description": "展示两个数值维度的分布，提供可展开的完整数据表。"
+  },
+  "LingUI.WaterfallChart": {
+    "label": "瀑布图",
+    "description": "展示各阶段数值增减及最终合计，支持负值和零值。"
+  },
+  "LingUI.Box": {
+    "label": "通用容器",
+    "description": "自由组织子组件，分别设置排列、间距、内边距和容器外观。"
+  },
+  "LingUI.Center": {
+    "label": "居中容器",
+    "description": "让内容居中，限制阅读宽度，可设置最小高度。"
+  },
+  "LingUI.Spacer": {
+    "label": "留白",
+    "description": "插入随主题间距变化的水平或垂直留白。"
+  },
+  "LingUI.Separator": {
+    "label": "方向分隔线",
+    "description": "用水平或垂直细线分隔相邻内容。"
+  },
+  "LingUI.FormGroup": {
+    "label": "表单分组",
+    "description": "用名称和说明组织相关字段，支持整组禁用。"
+  },
+  "LingUI.ButtonGroup": {
+    "label": "按钮组",
+    "description": "组合相关按钮，支持横向换行或纵向排列。"
+  },
+  "LingUI.IconButton": {
+    "label": "图标按钮",
+    "description": "用图标触发本地动作，提供可读名称与禁用状态。"
+  },
+  "LingUI.Popover": {
+    "label": "浮层",
+    "description": "在触发器旁打开任意子组件，支持外部点击、Esc 和焦点恢复。"
+  },
+  "LingUI.InlineCode": {
+    "label": "行内代码",
+    "description": "突出变量、命令或短代码，纯文本显示，不执行代码。"
+  },
+  "LingUI.Highlight": {
+    "label": "高亮文字",
+    "description": "突出一段文字，颜色跟随作品主题与指定语义。"
+  },
+  "LingUI.Dropdown": {
+    "label": "操作菜单",
+    "description": "把相关本地操作收进菜单，支持分组、禁用和键盘导航。"
+  },
+  "LingUI.Popconfirm": {
+    "label": "弹出确认",
+    "description": "在执行本地动作前确认，支持取消、Esc 和焦点恢复。"
+  },
+  "LingUI.Cascader": {
+    "label": "级联选择",
+    "description": "逐级浏览分类后选择末级条目，支持禁用整支和清空。"
+  },
+  "LingUI.TreeSelect": {
+    "label": "树形选择",
+    "description": "在可搜索的层级菜单中选择节点，支持展开、清空和键盘导航。"
+  },
+  "LingUI.DynamicInput": {
+    "label": "动态输入",
+    "description": "自由定义最多四个字段，逐行添加、删除和调整顺序。"
+  }
+}

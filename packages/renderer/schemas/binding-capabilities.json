@@ -1,0 +1,77 @@
+{
+  "ChoicePicker": [
+    "options"
+  ],
+  "List": [
+    "items"
+  ],
+  "LingUI.Select": [
+    "options"
+  ],
+  "LingUI.SegmentedControl": [
+    "options"
+  ],
+  "LingUI.Breadcrumbs": [
+    "items"
+  ],
+  "LingUI.LineChart": [
+    "data"
+  ],
+  "LingUI.DonutChart": [
+    "data"
+  ],
+  "LingUI.MultiSelect": [
+    "options"
+  ],
+  "LingUI.RadarChart": [
+    "data"
+  ],
+  "LingUI.Heatmap": [
+    "matrix"
+  ],
+  "LingUI.Combobox": [
+    "options"
+  ],
+  "LingUI.Transfer": [
+    "options"
+  ],
+  "LingUI.AvatarGroup": [
+    "members"
+  ],
+  "LingUI.Sparkline": [
+    "data"
+  ],
+  "LingUI.FunnelChart": [
+    "data"
+  ],
+  "LingUI.CardChoice": [
+    "options"
+  ],
+  "LingUI.CheckboxGroup": [
+    "options"
+  ],
+  "LingUI.TreeView": [
+    "treeItems"
+  ],
+  "LingUI.ScatterChart": [
+    "points"
+  ],
+  "LingUI.WaterfallChart": [
+    "data"
+  ],
+  "LingUI.Table": [
+    "rows"
+  ],
+  "LingUI.KeyValue": [
+    "entries"
+  ],
+  "LingUI.BarChart": [
+    "data"
+  ],
+  "LingUI.Cascader": [
+    "treeItems"
+  ],
+  "LingUI.TreeSelect": [
+    "treeItems"
+  ]
+}

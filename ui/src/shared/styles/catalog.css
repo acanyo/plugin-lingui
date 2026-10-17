@@ -1,0 +1,172 @@
+.lingui-studio .lu-catalog-layout {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: 28px;
+}
+.lingui-studio .lu-catalog-list {
+  align-self: start;
+  max-height: 560px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 4px;
+  scrollbar-width: thin;
+}
+.lingui-studio .lu-catalog-sidebar {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--lu-border);
+  border-radius: 14px;
+  background: var(--lu-bg);
+  align-self: start;
+}
+.lingui-studio .lu-catalog-count {
+  padding: 12px 4px 4px;
+}
+.lingui-studio .lu-catalog-group-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--lu-muted);
+  padding: 20px 8px 8px;
+}
+.lingui-studio .lu-catalog-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 13px;
+  min-height: 42px;
+  line-height: 1.5;
+}
+.lingui-studio .lu-catalog-item:hover {
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-catalog-item.active {
+  background: var(--lu-subtle);
+}
+.lingui-studio .lu-catalog-item code {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-catalog-details {
+  min-width: 0;
+  align-self: start;
+  position: sticky;
+  top: 24px;
+}
+.lingui-studio .lu-catalog-detail-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.lingui-studio .lu-catalog-detail-heading h2 {
+  font-size: 22px;
+  font-weight: 600;
+}
+.lingui-studio .lu-catalog-detail-heading code {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-catalog-description {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--lu-muted);
+  margin: 14px 0 24px;
+}
+.lingui-studio .lu-catalog-preview {
+  display: grid;
+  align-content: center;
+  padding: 24px;
+  overflow: auto;
+  min-height: 240px;
+  border: 1px solid var(--lu-border);
+  border-radius: 14px;
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-catalog-preview-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.lingui-studio .lu-catalog-preview-controls .lu-segment button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.lingui-studio .lu-catalog-preview-controls select {
+  max-width: 100%;
+  min-height: 36px;
+  font-size: 12px;
+}
+.lingui-studio .lu-catalog-preview-paper {
+  --lingui-document-inset: 0px;
+  --lingui-document-border: 0px;
+  min-width: 0;
+  width: 100%;
+  padding: 24px;
+  border: 1px solid var(--lu-border);
+  margin-inline: auto;
+}
+.lingui-studio .lu-catalog-preview-paper.is-mobile {
+  max-width: 375px;
+}
+.lingui-studio .lu-catalog-tip {
+  line-height: 1.8;
+  margin-top: 16px;
+}
+.lingui-studio .lu-catalog-empty {
+  padding: 24px 8px;
+  font-size: 13px;
+  text-align: center;
+}
+.lingui-studio .lu-catalog-details p {
+  margin-top: 8px;
+}
+.lingui-studio .lu-catalog-details pre {
+  padding: 18px;
+  margin-top: 16px;
+  border-radius: 8px;
+  background: var(--lu-subtle);
+  white-space: pre-wrap;
+  max-height: 600px;
+  overflow: auto;
+}
+.lingui-studio .lu-dialog-body {
+  padding: 12px 4px;
+  min-height: 0;
+}
+.lingui-studio .lu-dialog-body > p {
+  margin-bottom: 16px;
+}
+.lingui-studio .lu-dialog-body .lu-button[type='submit'] {
+  margin-top: 18px;
+}
+@container studio (max-width: 820px) {
+  .lingui-studio .lu-catalog-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lingui-studio .lu-catalog-list {
+    max-height: 250px;
+    overflow: auto;
+  }
+  .lingui-studio .lu-catalog-details {
+    position: static;
+  }
+  .lingui-studio .lu-catalog-preview {
+    padding: 12px;
+  }
+  .lingui-studio .lu-catalog-preview-paper {
+    padding: 16px;
+  }
+}

@@ -1,0 +1,393 @@
+.lingui-studio,
+.lu-studio-modal {
+  --lu-bg: #ffffff;
+  --lu-sidebar: #f9f9f9;
+  --lu-subtle: #f4f4f4;
+  --lu-hover: #eeeeee;
+  --lu-text: #0d0d0d;
+  --lu-muted: #646464;
+  --lu-border: #e5e5e5;
+  --lu-control-height: 38px;
+  --lu-control-radius: 10px;
+  --lu-danger: #b42318;
+  --lu-accent: #267566;
+}
+.lingui-studio {
+  container: studio / inline-size;
+  color: var(--lu-text);
+  background: var(--lu-bg);
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+:where(.dark, [data-theme='dark'], [data-color-scheme='dark'])
+  :is(.lingui-studio, .lu-studio-modal) {
+  --lu-bg: #212121;
+  --lu-sidebar: #171717;
+  --lu-subtle: #2f2f2f;
+  --lu-hover: #383838;
+  --lu-text: #ececec;
+  --lu-muted: #a0a0a0;
+  --lu-border: #3a3a3a;
+  --lu-danger: #ff938a;
+  --lu-accent: #89c7b2;
+}
+.lingui-studio * {
+  box-sizing: border-box;
+}
+.lingui-studio .lg-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.lingui-studio :is(h1, h2, h3, p) {
+  margin: 0;
+}
+/* Defaults must not override Halo button variants or FormKit control styles. */
+:where(.lingui-studio) :where(button, input, select, textarea) {
+  font: inherit;
+  color: inherit;
+}
+:where(.lingui-studio) :where(button) {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+:where(.lingui-studio) :where(button:disabled) {
+  opacity: 0.4;
+  cursor: default;
+}
+.lingui-studio :focus-visible {
+  outline: 2px solid var(--lu-muted);
+  outline-offset: 3px;
+  scroll-margin-block: 80px;
+}
+.lingui-studio
+  :where(textarea, select, input:not([type='checkbox']):not([type='color']):not([type='range'])),
+/* Keep native property fields consistent when host styles reset numeric/date inputs. */
+.lingui-studio .lu-properties .lu-field > :is(
+    textarea,
+    select,
+    input:not([type='checkbox']):not([type='color']):not([type='range'])
+  ) {
+  border: 1px solid var(--lu-border);
+  border-radius: var(--lu-control-radius);
+  background: var(--lu-bg);
+  color: var(--lu-text);
+  padding: 8px 10px;
+  min-width: 0;
+}
+.lingui-studio textarea {
+  resize: vertical;
+  width: 100%;
+}
+.lingui-studio textarea::placeholder,
+.lingui-studio input::placeholder {
+  color: var(--lu-muted);
+}
+.lingui-studio select {
+  padding-right: 20px;
+  max-width: 100%;
+}
+.lingui-studio input:is([type='range'], [type='checkbox']) {
+  accent-color: var(--lu-text);
+}
+.lingui-studio h3 {
+  font-size: 13px;
+  font-weight: 600;
+}
+.lingui-studio .lu-muted {
+  color: var(--lu-muted);
+  font-size: 13px;
+}
+.lingui-studio .lu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid var(--lu-border);
+  border-radius: 999px;
+  padding: 8px 15px;
+  min-height: var(--lu-control-height);
+  background: transparent;
+  color: var(--lu-text);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    background-color 140ms,
+    border-color 140ms,
+    color 140ms;
+}
+.lingui-studio .lu-button:not(.primary):not(:disabled):hover {
+  background: var(--lu-subtle);
+}
+.lingui-studio .lu-button.primary {
+  background: var(--lu-text);
+  border-color: var(--lu-text);
+  color: var(--lu-bg);
+}
+.lingui-studio .lu-button.primary:not(:disabled):hover {
+  opacity: 0.85;
+}
+/* Halo backgrounds use !important; keep custom button backgrounds and text paired. */
+.lingui-studio .lu-button.btn {
+  background-color: transparent !important;
+}
+.lingui-studio .lu-button.btn.primary {
+  background-color: var(--lu-text) !important;
+}
+.lingui-studio .lu-button.btn:not(.primary):not(:disabled):hover {
+  background-color: var(--lu-subtle) !important;
+}
+.lingui-studio .lu-button .btn-icon {
+  color: inherit;
+}
+.lingui-studio .full {
+  width: 100%;
+}
+.lingui-studio .lu-text-button {
+  background: transparent;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+.lingui-studio .lu-text-button:hover {
+  color: var(--lu-text);
+  background: var(--lu-subtle);
+}
+.lingui-studio .danger {
+  color: var(--lu-danger);
+}
+.lingui-studio .lu-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--lu-muted);
+  font-size: 20px;
+}
+.lingui-studio .lu-icon-button svg {
+  width: 18px;
+  height: 18px;
+}
+.lingui-studio .lu-icon-button:hover {
+  background: var(--lu-hover);
+  color: var(--lu-text);
+}
+.lingui-studio .lu-tag {
+  color: var(--lu-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.lingui-studio .lu-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lingui-studio.lu-dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-height: 0;
+  background: transparent;
+  flex-wrap: wrap;
+}
+.lingui-studio.lu-dialog-actions .btn-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.lingui-studio.lu-dialog-actions .btn-content svg {
+  width: 14px;
+  height: 14px;
+}
+.lingui-studio .lu-page-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.lingui-studio .lu-page-title > div:first-child {
+  min-width: 0;
+}
+.lingui-studio .lu-page-title h1 {
+  font-size: 28px;
+  letter-spacing: -0.8px;
+  line-height: 1.4;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+.lingui-studio .lu-page-title p {
+  margin-top: 8px;
+}
+.lingui-studio .lu-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.lingui-studio .lu-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+.lingui-studio .lu-field > span {
+  display: flex;
+  justify-content: space-between;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin: 12px 0;
+}
+.lingui-studio .lu-code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.65;
+  tab-size: 2;
+}
+.lingui-studio .lu-error {
+  color: var(--lu-danger);
+  font-size: 12px;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-global-error {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid var(--lu-border);
+  color: var(--lu-danger);
+  padding: 12px 24px;
+  font-size: 12px;
+}
+.lingui-studio .lu-canvas-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  color: var(--lu-muted);
+  flex-wrap: wrap;
+}
+.lingui-studio .lu-canvas-toolbar select {
+  font-size: 11px;
+  max-width: 155px;
+  padding: 5px 8px;
+}
+.lingui-studio .lu-canvas-hint {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-advanced {
+  margin: 24px 0 16px;
+  border-top: 1px solid var(--lu-border);
+  padding-top: 16px;
+}
+.lingui-studio .lu-advanced summary {
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.lingui-studio .lu-advanced textarea {
+  margin: 12px 0;
+}
+.lingui-studio .lu-search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--lu-control-height);
+  min-width: 0;
+  padding: 0 10px;
+  border: 1px solid var(--lu-border);
+  border-radius: var(--lu-control-radius);
+  background: var(--lu-bg);
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-search-field:focus-within {
+  border-color: var(--lu-muted);
+  outline: 2px solid var(--lu-border);
+  outline-offset: 2px;
+}
+.lingui-studio .lu-search-field input,
+.lingui-studio .lu-search-field input:focus-visible {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  font-size: 13px;
+}
+.lingui-studio .lu-search-field input::-webkit-search-cancel-button {
+  display: none;
+}
+.lingui-studio .lu-search-field .lu-search-clear {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-search-clear:hover {
+  background: var(--lu-subtle);
+  color: var(--lu-text);
+}
+@media (pointer: coarse) {
+  .lingui-studio {
+    --lu-control-height: 44px;
+  }
+  .lingui-studio .lu-icon-button,
+  .lingui-studio .lu-search-field .lu-search-clear {
+    min-width: 40px;
+    min-height: 40px;
+  }
+  .lingui-studio .lu-text-button {
+    min-height: 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lingui-studio * {
+    transition: none !important;
+  }
+}

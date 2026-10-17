@@ -1,0 +1,106 @@
+/* State styling shared by native fields and small compound-control actions. */
+.lingui-surface :is(input, textarea)::placeholder {
+  color: var(--lingui-muted);
+  opacity: 1;
+}
+.lingui-surface
+  :is(
+    .lg-field > input:not([type='range']),
+    .lg-field > textarea,
+    .lg-kanban-card select,
+    .lg-multi-panel input[type='search']
+  ):not(:disabled):not(:focus):hover {
+  border-color: color-mix(in srgb, var(--lingui-text) 18%, var(--lingui-border));
+}
+.lingui-surface
+  :is(
+    .lg-field > input:not([type='range']),
+    .lg-field > textarea,
+    .lg-kanban-card select,
+    .lg-multi-panel input[type='search']
+  ):focus {
+  outline: 0;
+  border-color: var(--lingui-accent);
+  box-shadow: var(--lg-focus-shadow);
+  background: var(--lingui-background);
+}
+.lingui-surface
+  :is(.lg-search-input, .lg-color-input, .lg-tag-input, .lg-password-input, .lg-number-stepper)
+  :is(button, input) {
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+.lingui-surface
+  :is(.lg-search-input, .lg-color-input, .lg-tag-input, .lg-password-input, .lg-number-stepper)
+  :is(button):focus-visible {
+  outline: 2px solid var(--lingui-accent);
+  outline-offset: -2px;
+}
+.lingui-surface
+  :is(.lg-search-input, .lg-color-input, .lg-tag-input, .lg-password-input, .lg-number-stepper):not(
+    :focus-within,
+    :has(input:disabled),
+    :has([aria-invalid='true'])
+  ):hover {
+  border-color: color-mix(in srgb, var(--lingui-text) 18%, var(--lingui-border));
+}
+.lingui-surface :is(input, textarea, select):disabled {
+  color: var(--lingui-muted);
+  cursor: not-allowed;
+}
+.lingui-surface
+  :is(.lg-search-input, .lg-color-input, .lg-password-input, .lg-number-stepper):has(
+    input:disabled
+  ) {
+  background: var(--lingui-surface);
+}
+.lingui-surface :is(.lg-field > input, .lg-field > textarea)[aria-invalid='true'],
+.lingui-surface :is(.lg-color-input, .lg-tag-input):has([aria-invalid='true']) {
+  border-color: var(--lingui-danger);
+}
+.lingui-surface
+  :is(
+    .lg-input-clear,
+    .lg-input-tag button,
+    .lg-tag-add,
+    .lg-number-stepper button,
+    .lg-password-input button,
+    .lg-transfer-actions button,
+    .lg-carousel-controls > button,
+    .lg-alert button
+  ):not(:disabled):hover {
+  background: var(--lg-hover);
+  color: var(--lingui-text);
+}
+.lingui-surface .lg-toggle-button:not(:disabled):hover {
+  border-color: var(--lingui-accent);
+}
+.lingui-surface
+  :is(.lg-field > input:not([type='range']), .lg-field > textarea, .lg-select-trigger):disabled {
+  background: var(--lingui-surface);
+}
+.lingui-surface :is(.lg-option, .lg-check):has(input:disabled) {
+  color: var(--lingui-muted);
+  cursor: not-allowed;
+}
+.lingui-surface .lg-form-group:disabled {
+  background: color-mix(in srgb, var(--lingui-surface) 50%, var(--lingui-background));
+}
+.lingui-surface .lg-form-group:disabled > legend {
+  color: var(--lingui-muted);
+}
+.lingui-surface :is(.lg-input-error, .lg-error) {
+  overflow-wrap: anywhere;
+}
+.lingui-surface :is(.lg-color-input, .lg-tag-input):has([aria-invalid='true']):focus-within,
+.lingui-surface :is(input, textarea)[aria-invalid='true']:focus {
+  border-color: var(--lingui-danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lingui-danger) 12%, transparent);
+}
+.lingui-surface .lg-disabled :disabled {
+  opacity: 1;
+}
+.lingui-surface :is(input, textarea)[readonly] {
+  background: var(--lingui-surface);
+}

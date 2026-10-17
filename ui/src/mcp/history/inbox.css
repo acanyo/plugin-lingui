@@ -1,0 +1,217 @@
+.lingui-studio.lu-mcp-inbox {
+  padding: 20px 24px;
+}
+.lu-mcp-inbox .lu-inbox-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.lu-mcp-inbox p {
+  font-size: 12px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.lu-inbox-tabs {
+  display: flex;
+  gap: 24px;
+  margin: 16px 0 20px;
+  border-bottom: 1px solid var(--lu-border);
+}
+.lu-inbox-tabs button {
+  padding: 10px 0;
+  color: var(--lu-muted);
+  border-bottom: 2px solid transparent;
+  font-size: 13px;
+}
+.lu-inbox-tabs button[aria-selected='true'] {
+  color: var(--lu-text);
+  border-color: var(--lu-accent);
+}
+.lu-inbox-tabs span {
+  font-size: 11px;
+  margin-left: 6px;
+  color: var(--lu-muted);
+}
+.lu-inbox-drafts {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 24px;
+  min-height: 350px;
+}
+.lu-inbox-sidebar {
+  min-width: 0;
+}
+.lu-inbox-sidebar nav {
+  display: grid;
+  gap: 6px;
+  max-height: 420px;
+  overflow: auto;
+  margin-top: 12px;
+}
+.lu-inbox-sidebar nav button {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px;
+  text-align: start;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  background: var(--lu-sidebar);
+  overflow-wrap: anywhere;
+}
+.lu-inbox-sidebar nav button[aria-pressed='true'] {
+  border-color: var(--lu-accent);
+  background: var(--lu-subtle);
+}
+.lu-inbox-sidebar strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+.lu-inbox-draft-type,
+.lu-inbox-sidebar small,
+.lu-inbox-activity small {
+  color: var(--lu-muted);
+  font-size: 11px;
+}
+.lu-inbox-detail {
+  min-width: 0;
+}
+.lu-inbox-detail h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.lu-inbox-changes {
+  margin: 16px 0;
+  padding: 12px;
+  background: var(--lu-sidebar);
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  font-size: 12px;
+}
+.lu-inbox-changes summary {
+  cursor: pointer;
+}
+.lu-inbox-changes ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  max-height: 130px;
+  overflow: auto;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.lu-inbox-preview-help {
+  margin-bottom: 10px;
+}
+.lu-inbox-previews {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+.lu-inbox-previews.has-base {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.lu-inbox-previews > div {
+  min-width: 0;
+  max-height: 380px;
+  overflow: auto;
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  padding: 12px;
+}
+.lu-inbox-previews h4 {
+  margin: 0 0 10px;
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+.lu-inbox-warning {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  background: var(--lu-sidebar);
+}
+.lu-mcp-inbox label:has(input[type='checkbox']) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.lu-mcp-inbox input[type='checkbox'] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--lu-accent);
+  flex-shrink: 0;
+}
+.lu-inbox-empty {
+  padding: 36px 12px;
+  text-align: center;
+  color: var(--lu-muted);
+}
+.lu-inbox-empty > svg {
+  margin: 0 auto 10px;
+}
+.lu-inbox-retention {
+  margin-top: 18px;
+}
+.lu-inbox-activity ol {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  max-height: 440px;
+  overflow: auto;
+}
+.lu-inbox-activity li {
+  display: flex;
+  align-items: start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--lu-border);
+}
+.lu-inbox-activity li > div {
+  min-width: 0;
+}
+.lu-inbox-activity strong {
+  font-size: 13px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.lu-inbox-activity code {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.lu-inbox-activity-status {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  background: var(--lu-subtle);
+  color: var(--lu-muted);
+}
+.lu-inbox-activity-status[data-status='success'] {
+  color: var(--lu-accent);
+}
+.lu-inbox-activity-status[data-status='error'] {
+  color: var(--lu-danger);
+}
+@media (max-width: 700px) {
+  .lingui-studio.lu-mcp-inbox {
+    padding: 16px;
+  }
+  .lu-inbox-drafts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .lu-inbox-sidebar nav {
+    display: flex;
+    max-height: 150px;
+    overflow: auto;
+  }
+  .lu-inbox-sidebar nav button {
+    flex: 0 0 210px;
+  }
+  .lu-inbox-previews.has-base {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

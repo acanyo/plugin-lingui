@@ -1,0 +1,190 @@
+.lingui-surface :is(.lg-alert, .lg-status) {
+  --lg-tone: var(--lingui-accent);
+}
+.lingui-surface :is(.lg-alert, .lg-status).lg-tone-success {
+  --lg-tone: var(--lingui-success);
+}
+.lingui-surface :is(.lg-alert, .lg-status).lg-tone-warning {
+  --lg-tone: light-dark(#9a6700, #e4b95b);
+}
+.lingui-surface :is(.lg-alert, .lg-status).lg-tone-danger {
+  --lg-tone: var(--lingui-danger);
+}
+.lingui-surface .lg-alert {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: var(--lingui-spacing);
+  border: 1px solid color-mix(in srgb, var(--lg-tone) 12%, var(--lg-border-subtle));
+  background: color-mix(in srgb, var(--lg-tone) 6%, var(--lingui-background));
+  border-radius: var(--lg-panel-radius);
+}
+.lingui-surface .lg-alert-symbol {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  margin-top: 1px;
+  border: 1px solid currentColor;
+  color: var(--lg-tone);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 600;
+}
+.lingui-surface .lg-alert-copy {
+  min-width: 0;
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.lingui-surface .lg-alert-copy strong {
+  font-weight: 600;
+}
+.lingui-surface .lg-alert-copy p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-alert button {
+  flex: 0 0 32px;
+  height: 32px;
+  margin-top: -4px;
+  margin-right: -4px;
+  border: 0;
+  background: transparent;
+  color: var(--lingui-muted);
+  border-radius: var(--lg-detail-radius);
+  font-size: 20px;
+  padding: 0;
+}
+.lingui-surface .lg-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  line-height: 1.5;
+  font-size: 13px;
+}
+.lingui-surface .lg-status-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--lg-tone);
+}
+.lingui-surface .lg-labeled-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--lingui-muted);
+  font-size: 12px;
+}
+.lingui-surface .lg-labeled-divider::before,
+.lingui-surface .lg-labeled-divider::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: var(--lingui-border);
+}
+.lingui-surface .lg-labeled-divider > span {
+  max-width: 70%;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.lingui-surface .lg-tooltip {
+  position: relative;
+  width: min(100%, 320px);
+}
+.lingui-surface .lg-tooltip-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 0;
+  min-height: 32px;
+  max-width: 100%;
+  line-height: 1.5;
+  background: transparent;
+  color: var(--lingui-muted);
+  border: 0;
+  text-align: left;
+  font-size: 13px;
+}
+.lingui-surface .lg-tooltip-icon {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  font-size: 11px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+.lingui-surface .lg-tooltip-content {
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 0;
+  z-index: 5;
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--lingui-background);
+  color: var(--lingui-text);
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lg-control-radius);
+  box-shadow: var(--lg-elevation);
+  line-height: 1.6;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.lingui-surface .lg-accordion {
+  border-top: 1px solid var(--lg-border-subtle);
+}
+.lingui-surface .lg-accordion details {
+  border-bottom: 1px solid var(--lg-border-subtle);
+}
+.lingui-surface .lg-accordion summary {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 0;
+  min-width: 0;
+  line-height: 1.6;
+  border-radius: var(--lg-detail-radius);
+  font-size: 14px;
+  font-weight: 500;
+}
+.lingui-surface .lg-accordion summary:hover {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-accordion summary::-webkit-details-marker {
+  display: none;
+}
+.lingui-surface .lg-accordion-arrow {
+  font-size: 18px;
+  color: var(--lingui-muted);
+  flex: 0 0 auto;
+}
+.lingui-surface .lg-accordion details[open] .lg-accordion-arrow {
+  transform: rotate(180deg);
+}
+.lingui-surface .lg-accordion-content {
+  padding: 0 0 18px;
+}
+.lingui-surface .lg-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 0;
+  border-block: 1px solid var(--lg-border-subtle);
+}
+
+.lingui-surface .lg-tooltip-content.lg-tooltip-fallback {
+  position: static;
+  display: block;
+  margin-top: 6px;
+  box-shadow: none;
+}

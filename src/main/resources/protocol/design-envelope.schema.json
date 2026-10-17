@@ -1,0 +1,278 @@
+{
+  "type": "object",
+  "properties": {
+    "document": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "lingui.document/2"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 120,
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "maxLength": 262144,
+          "minLength": 1
+        },
+        "state": {
+          "type": "object"
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,39}$"
+              },
+              "label": {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 0
+              },
+              "path": {
+                "type": "string",
+                "pattern": "^/",
+                "maxLength": 160
+              },
+              "type": {
+                "enum": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              },
+              "default": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              },
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "key",
+              "label",
+              "path",
+              "type",
+              "default"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 32
+        },
+        "integrations": {
+          "$ref": "#/$defs/integrations"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "title",
+        "source",
+        "state",
+        "parameters"
+      ],
+      "additionalProperties": false
+    },
+    "theme": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "lingui.theme/1"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 120,
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "light",
+            "dark",
+            "auto"
+          ]
+        },
+        "colors": {
+          "type": "object",
+          "properties": {
+            "background": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "surface": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "text": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "muted": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "accent": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "border": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "success": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "danger": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "line": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            }
+          },
+          "required": [
+            "background",
+            "surface",
+            "text",
+            "muted",
+            "accent",
+            "border",
+            "success",
+            "danger",
+            "line"
+          ],
+          "additionalProperties": false
+        },
+        "radius": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 32
+        },
+        "spacing": {
+          "type": "number",
+          "minimum": 4,
+          "maximum": 40
+        },
+        "iconSize": {
+          "type": "number",
+          "minimum": 12,
+          "maximum": 40
+        },
+        "lineWidth": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "shadow": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "font": {
+          "enum": [
+            "system",
+            "serif",
+            "mono"
+          ]
+        },
+        "customFont": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 120,
+              "minLength": 1
+            },
+            "faces": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "maxLength": 2048,
+                    "minLength": 1
+                  },
+                  "format": {
+                    "enum": [
+                      "woff2",
+                      "woff"
+                    ]
+                  },
+                  "weight": {
+                    "type": "string",
+                    "pattern": "^[0-9]{1,4}(?:\\s+[0-9]{1,4})?$"
+                  },
+                  "style": {
+                    "enum": [
+                      "normal",
+                      "italic"
+                    ]
+                  },
+                  "unicodeRange": {
+                    "type": "string",
+                    "maxLength": 2048,
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "url",
+                  "format",
+                  "weight",
+                  "style"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 512
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "faces"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "name",
+        "mode",
+        "colors",
+        "radius",
+        "spacing",
+        "iconSize",
+        "lineWidth",
+        "shadow",
+        "font"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "document"
+  ],
+  "additionalProperties": false
+}

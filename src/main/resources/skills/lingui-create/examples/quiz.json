@@ -1,0 +1,123 @@
+{
+  "document": {
+    "schemaVersion": "lingui.document/2",
+    "title": "JVM 内存知识测验",
+    "parameters": [],
+    "nodes": [
+      {
+        "id": "root",
+        "component": "Column",
+        "children": [
+          "intro",
+          "question",
+          "answers",
+          "heap-explanation",
+          "stack-explanation",
+          "reset"
+        ]
+      },
+      {
+        "id": "intro",
+        "component": "LingUI.Section",
+        "label": "Java 基础",
+        "title": "JVM 内存小测",
+        "description": "选择一个答案，查看对应解释。",
+        "children": []
+      },
+      {
+        "id": "question",
+        "component": "Text",
+        "text": "普通对象实例通常存放在哪个运行时内存区域？",
+        "variant": "h3"
+      },
+      {
+        "id": "answers",
+        "component": "ChoicePicker",
+        "label": "选择答案",
+        "value": {
+          "path": "/answer"
+        },
+        "variant": "mutuallyExclusive",
+        "options": [
+          {
+            "label": "Java 堆",
+            "value": "heap"
+          },
+          {
+            "label": "Java 虚拟机栈",
+            "value": "stack"
+          }
+        ]
+      },
+      {
+        "id": "heap-explanation",
+        "component": "LingUI.Conditional",
+        "condition": {
+          "op": "includes",
+          "args": [
+            {
+              "path": "/answer"
+            },
+            "heap"
+          ]
+        },
+        "child": "heap-text"
+      },
+      {
+        "id": "heap-text",
+        "component": "Text",
+        "text": "回答正确。普通对象实例通常分配在堆中，由垃圾收集器管理；具体分配还受逃逸分析等优化影响。",
+        "variant": "body"
+      },
+      {
+        "id": "stack-explanation",
+        "component": "LingUI.Conditional",
+        "condition": {
+          "op": "includes",
+          "args": [
+            {
+              "path": "/answer"
+            },
+            "stack"
+          ]
+        },
+        "child": "stack-text"
+      },
+      {
+        "id": "stack-text",
+        "component": "Text",
+        "text": "再想一想。虚拟机栈保存方法调用的栈帧，包括局部变量、操作数栈等；局部变量可以持有对象引用。",
+        "variant": "body"
+      },
+      {
+        "id": "reset",
+        "component": "Button",
+        "child": "reset-label",
+        "variant": "secondary",
+        "events": {
+          "click": {
+            "actions": [
+              {
+                "type": "local",
+                "actions": [
+                  {
+                    "type": "reset"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "reset-label",
+        "component": "Text",
+        "text": "重新作答",
+        "variant": "body"
+      }
+    ],
+    "state": {
+      "answer": []
+    }
+  }
+}

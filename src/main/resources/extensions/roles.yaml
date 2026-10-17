@@ -1,0 +1,146 @@
+apiVersion: v1alpha1
+kind: Role
+metadata:
+  name: plugin-lingui-role-view
+  labels:
+    halo.run/role-template: "true"
+  annotations:
+    rbac.authorization.halo.run/module: "灵构 UI"
+    rbac.authorization.halo.run/display-name: "查看和使用组件与主题"
+    rbac.authorization.halo.run/ui-permissions: |
+      ["plugin:plugin-lingui:library:view"]
+rules:
+  - apiGroups: ["lingui.acanyo.com"]
+    resources: ["componenttemplates", "designthemes", "fontfamilies"]
+    verbs: ["get", "list"]
+  - apiGroups: ["console.api.lingui.acanyo.com"]
+    resources: ["marketworks"]
+    verbs: ["get", "list"]
+  - apiGroups: ["console.api.lingui.acanyo.com"]
+    resources: ["componentembeds"]
+    verbs: ["get"]
+---
+apiVersion: v1alpha1
+kind: Role
+metadata:
+  name: plugin-lingui-role-manage-components
+  labels:
+    halo.run/role-template: "true"
+  annotations:
+    rbac.authorization.halo.run/module: "灵构 UI"
+    rbac.authorization.halo.run/display-name: "管理组件模板"
+    rbac.authorization.halo.run/dependencies: |
+      ["plugin-lingui-role-view"]
+    rbac.authorization.halo.run/ui-permissions: |
+      ["plugin:plugin-lingui:components:manage"]
+rules:
+  - apiGroups: ["lingui.acanyo.com"]
+    resources: ["componenttemplates"]
+    verbs: ["create", "update", "delete"]
+  - apiGroups: ["console.api.lingui.acanyo.com"]
+    resources: ["componentembeds"]
+    verbs: ["update", "delete"]
+---
+apiVersion: v1alpha1
+kind: Role
+metadata:
+  name: plugin-lingui-role-manage-themes
+  labels:
+    halo.run/role-template: "true"
+  annotations:
+    rbac.authorization.halo.run/module: "灵构 UI"
+    rbac.authorization.halo.run/display-name: "管理主题"
+    rbac.authorization.halo.run/dependencies: |
+      ["plugin-lingui-role-view"]
+    rbac.authorization.halo.run/ui-permissions: |
+      ["plugin:plugin-lingui:themes:manage"]
+rules:
+  - apiGroups: ["lingui.acanyo.com"]
+    resources: ["designthemes", "fontfamilies"]
+    verbs: ["create", "update", "delete"]
+---
+apiVersion: v1alpha1
+kind: Role
+metadata:
+  name: plugin-lingui-role-generate
+  labels:
+    halo.run/role-template: "true"
+  annotations:
+    rbac.authorization.halo.run/module: "灵构 UI"
+    rbac.authorization.halo.run/display-name: "使用 AI 生成与修改"
+    rbac.authorization.halo.run/dependencies: |
+      ["plugin-lingui-role-view"]
+    rbac.authorization.halo.run/ui-permissions: |
+      ["plugin:plugin-lingui:ai:generate"]
+rules:
+  - apiGroups: ["console.api.lingui.acanyo.com"]
+    resources: ["generate", "generate-theme"]
+    verbs: ["create"]
+---
+apiVersion: v1alpha1
+kind: Role
+metadata:
+  name: plugin-lingui-role-mcp
+  labels:
+    halo.run/role-template: "true"
+  annotations:
+    rbac.authorization.halo.run/module: "灵构 UI"
+    rbac.authorization.halo.run/display-name: "使用 MCP 创作工具"
+    rbac.authorization.halo.run/ui-permissions: |
+      ["plugin:plugin-lingui:mcp:use"]
+    rbac.authorization.halo.run/dependencies: |
+      ["plugin-lingui-role-view"]
+rules:
+  - apiGroups: ["console.api.lingui.acanyo.com"]
+    resources: ["mcp"]
+    verbs: ["create"]
+  - apiGroups: ["console.api.lingui.acanyo.com"]
+    resources: ["mcpkeys", "mcpkeys/revoke", "mcpdrafts", "mcpdrafts/loaded", "mcpactivities"]
+    verbs: ["get", "list", "create", "update", "delete"]
+---
+apiVersion: v1alpha1
+kind: Role
+metadata:
+  name: plugin-lingui-public-embeds
+  labels:
+    halo.run/role-template: "true"
+    halo.run/hidden: "true"
+    rbac.authorization.halo.run/aggregate-to-anonymous: "true"
+rules:
+  # Only individually enabled projects; no list, history, or raw model access.
+  - apiGroups: ["api.lingui.acanyo.com"]
+    resources: ["componentembeds"]
+    verbs: ["get"]
+---
+apiVersion: v1alpha1
+kind: Role
+metadata:
+  name: plugin-lingui-role-market-submit
+  labels:
+    halo.run/role-template: "true"
+  annotations:
+    rbac.authorization.halo.run/module: "灵构 UI"
+    rbac.authorization.halo.run/display-name: "连接市场账号与投稿"
+    rbac.authorization.halo.run/dependencies: |
+      ["plugin-lingui-role-view"]
+    rbac.authorization.halo.run/ui-permissions: |
+      ["plugin:plugin-lingui:market:submit"]
+rules:
+  - apiGroups: ["console.api.lingui.acanyo.com"]
+    resources: ["marketconnection", "marketsubmissions", "marketsubmissions/*"]
+    verbs: ["get", "list", "create", "update", "delete"]
+
+---
+apiVersion: v1alpha1
+kind: Role
+metadata:
+  name: plugin-lingui-mcp-transport
+  labels:
+    halo.run/role-template: "true"
+    halo.run/hidden: "true"
+    rbac.authorization.halo.run/aggregate-to-anonymous: "true"
+rules:
+  # Only the transport is public; PublicMcpEndpoint always verifies its own X-Lingui-MCP-Key.
+  - apiGroups: ["api.lingui.acanyo.com"]
+    resources: ["mcp"]
+    verbs: ["create"]

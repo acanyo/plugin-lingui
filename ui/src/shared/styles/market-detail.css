@@ -1,0 +1,187 @@
+.lingui-studio.lu-work-detail {
+  min-height: 0;
+}
+.lingui-studio .lu-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+}
+.lingui-studio .lu-market-preview {
+  min-width: 0;
+  padding: 20px;
+  border-radius: 10px;
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-market-preview .lu-canvas-toolbar {
+  margin-bottom: 20px;
+}
+.lingui-studio .lu-detail-preview {
+  width: 100%;
+  max-width: 720px;
+  min-height: 260px;
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 28px);
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  background: var(--lu-bg);
+}
+.lingui-studio .lu-detail-preview.mobile {
+  max-width: 375px;
+}
+.lingui-studio .lu-work-info {
+  min-width: 0;
+  padding: 20px 0 20px 24px;
+}
+.lingui-studio .lu-work-info h2 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-work-info > p {
+  margin-top: 12px;
+  color: var(--lu-muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.lingui-studio .lu-publisher {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  font-size: 12px;
+}
+.lingui-studio .lu-publisher small {
+  display: block;
+  margin-top: 3px;
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+.lingui-studio .lu-publisher > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-publisher-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+}
+.lingui-studio .lu-publisher-mark svg {
+  width: 18px;
+  height: 18px;
+}
+.lingui-studio .lu-work-facts {
+  padding: 20px 0;
+  margin: 24px 0 0;
+  border-top: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-work-facts > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+.lingui-studio .lu-work-facts > div:last-child {
+  margin-bottom: 0;
+}
+.lingui-studio .lu-work-facts dt {
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-work-facts dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-detail-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid var(--lu-border);
+  color: var(--lu-muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.lingui-studio .lu-detail-note svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.lingui-studio .lu-detail-save-hint {
+  margin-right: auto;
+  color: var(--lu-muted);
+  font-size: 11px;
+}
+@container studio (max-width: 700px) {
+  .lingui-studio .lu-detail-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lingui-studio .lu-market-preview {
+    padding: 16px 12px;
+  }
+  .lingui-studio .lu-detail-preview {
+    padding: 12px;
+  }
+  .lingui-studio .lu-work-info {
+    padding: 24px 8px 8px;
+  }
+  .lingui-studio .lu-work-facts {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px 24px;
+    padding-bottom: 0;
+  }
+  .lingui-studio .lu-work-facts > div {
+    margin: 0;
+  }
+  .lingui-studio .lu-detail-note {
+    display: none;
+  }
+  .lingui-studio .lu-detail-save-hint {
+    display: none;
+  }
+}
+
+.lingui-studio .lu-market-preview-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.lingui-studio .lu-market-preview-scroll {
+  max-height: 56dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--lu-border) transparent;
+}
+.lingui-studio .lu-market-preview.is-fullscreen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 0;
+  padding: 20px clamp(16px, 3vw, 40px);
+}
+.lingui-studio .lu-market-preview.is-fullscreen .lu-market-preview-scroll {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+  padding-block: 20px;
+}
+.lingui-studio .lu-market-preview.is-fullscreen .lu-detail-preview:not(.mobile) {
+  max-width: 1120px;
+}
+@media (max-width: 700px) {
+  .lingui-studio .lu-market-preview-scroll {
+    max-height: 48dvh;
+  }
+  .lingui-studio .lu-market-preview .lu-canvas-toolbar {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}

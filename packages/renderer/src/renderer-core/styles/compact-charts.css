@@ -1,0 +1,127 @@
+.lingui-surface .lg-progress-ring {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 20px;
+  margin: 0;
+}
+.lingui-surface .lg-ring-plot {
+  position: relative;
+  width: 116px;
+  flex: 0 0 116px;
+}
+.lingui-surface .lg-ring-plot svg {
+  width: 100%;
+  display: block;
+}
+.lingui-surface .lg-ring-track {
+  stroke: var(--lingui-surface);
+  stroke-width: 7;
+}
+.lingui-surface .lg-ring-value {
+  stroke: var(--lingui-accent);
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+.lingui-surface .lg-ring-plot > strong {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-progress-ring figcaption {
+  display: grid;
+  gap: 6px;
+  flex: 1 1 120px;
+  min-width: 0;
+}
+.lingui-surface .lg-ring-numeric {
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+  margin: 0;
+}
+.lingui-surface .lg-compact-chart {
+  margin: 0;
+  min-width: 0;
+  display: grid;
+  gap: 16px;
+}
+.lingui-surface .lg-compact-chart figcaption {
+  display: grid;
+  gap: 5px;
+}
+.lingui-surface .lg-spark-summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.lingui-surface .lg-spark-summary strong {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-spark-summary strong > span {
+  margin-left: 5px;
+}
+.lingui-surface .lg-spark-plot {
+  display: block;
+  width: 100%;
+  height: 84px;
+}
+.lingui-surface .lg-spark-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--lingui-muted);
+  font-size: 11px;
+}
+.lingui-surface .lg-chart-data summary {
+  font-size: 12px;
+  color: var(--lingui-muted);
+  cursor: pointer;
+  padding: 6px 0;
+}
+.lingui-surface .lg-chart-data .lg-chart-legend {
+  margin-top: 12px;
+}
+.lingui-surface .lg-funnel-stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.lingui-surface .lg-funnel-label {
+  display: flex;
+  align-items: baseline;
+  gap: 6px 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  padding: 0 2px 8px;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-funnel-label > span:first-child {
+  flex: 1 1 100px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.lingui-surface .lg-funnel-label strong {
+  font-weight: 500;
+}
+.lingui-surface .lg-funnel-stages svg {
+  width: 100%;
+  height: 30px;
+  display: block;
+}
+.lingui-surface .lg-funnel-stages path {
+  fill: currentColor;
+}

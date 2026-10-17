@@ -1,0 +1,106 @@
+.lu-recording-panel {
+  margin-top: 12px;
+  border-top: 1px solid var(--lu-border);
+  padding-top: 10px;
+}
+.lu-recording-panel > summary {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 12px;
+}
+.lu-recording-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 12px 0 8px;
+}
+.lu-recording-toolbar input {
+  min-height: 34px;
+  flex: 1 1 180px;
+  min-width: 0;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  padding: 7px 9px;
+  background: var(--lu-bg);
+}
+.lu-recording-live {
+  color: var(--lu-danger);
+  font-size: 12px;
+}
+.lu-recording-list {
+  list-style: none;
+  margin: 10px 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.lu-recording-list > li {
+  border: 1px solid var(--lu-border);
+  border-radius: 9px;
+  padding: 9px;
+}
+.lu-recording-list > li.active {
+  border-color: var(--lu-accent);
+}
+.lu-recording-name {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+  display: grid;
+  gap: 2px;
+  color: inherit;
+}
+.lu-recording-name small,
+.lu-recording-list > li > .lu-muted {
+  color: var(--lu-muted);
+  font-size: 11px;
+}
+.lu-recording-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.lu-recording-steps {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--lu-border);
+}
+.lu-recording-steps li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 12px;
+}
+.lu-recording-steps code {
+  color: var(--lu-muted);
+  width: 18px;
+}
+.lu-recording-steps small {
+  margin-left: auto;
+  color: var(--lu-danger);
+}
+.lu-recording-steps li.current {
+  color: var(--lu-accent);
+  font-weight: 600;
+}
+.lu-replay {
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+}
+.lu-replay-preview {
+  background: var(--lu-bg);
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+  max-height: 480px;
+  overflow: auto;
+}

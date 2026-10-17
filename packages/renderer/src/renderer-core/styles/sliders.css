@@ -1,0 +1,60 @@
+/* Native range semantics with a consistent track and thumb across browsers. */
+.lingui-surface input[type='range'] {
+  appearance: none;
+  height: 36px;
+  border: 0;
+  border-radius: var(--lg-control-radius);
+  background: transparent;
+  touch-action: pan-y;
+}
+.lingui-surface input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--lg-detail-radius);
+  background: linear-gradient(
+    to right,
+    var(--lingui-accent) 0 var(--lg-range-fill, 0%),
+    var(--lingui-border) var(--lg-range-fill, 0%) 100%
+  );
+}
+.lingui-surface input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -6px;
+  border: 2px solid var(--lingui-background);
+  border-radius: 50%;
+  background: var(--lingui-accent);
+  box-shadow: 0 0 0 1px var(--lingui-accent);
+}
+.lingui-surface input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: var(--lg-detail-radius);
+  background: var(--lingui-border);
+}
+.lingui-surface input[type='range']::-moz-range-progress {
+  height: 6px;
+  border-radius: var(--lg-detail-radius);
+  background: var(--lingui-accent);
+}
+.lingui-surface input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--lingui-background);
+  border-radius: 50%;
+  background: var(--lingui-accent);
+  box-shadow: 0 0 0 1px var(--lingui-accent);
+}
+.lingui-surface input[type='range']:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+@media (pointer: coarse) {
+  .lingui-surface input[type='range'] {
+    height: 44px;
+  }
+}
+@media (forced-colors: active) {
+  .lingui-surface input[type='range'] {
+    appearance: auto;
+  }
+}

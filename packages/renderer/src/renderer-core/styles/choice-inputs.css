@@ -1,0 +1,71 @@
+/* Preserve native form and keyboard behavior with the same geometry in every browser. */
+.lingui-surface
+  input:is([type='checkbox'], [type='radio']):not(.lg-segment input, .lg-rating-star input) {
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 1px solid color-mix(in srgb, var(--lingui-text) 24%, var(--lingui-border));
+  background: var(--lg-field-background);
+  vertical-align: middle;
+  cursor: inherit;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+}
+.lingui-surface input[type='checkbox']:not(.lg-segment input, .lg-rating-star input) {
+  border-radius: calc(var(--lg-detail-radius) * 0.667);
+}
+.lingui-surface input[type='radio']:not(.lg-segment input, .lg-rating-star input) {
+  border-radius: 50%;
+}
+.lingui-surface
+  input:is([type='checkbox'], [type='radio']):not(
+    .lg-segment input,
+    .lg-rating-star input
+  ):checked {
+  border-color: var(--lingui-accent);
+  background: var(--lingui-accent);
+}
+.lingui-surface
+  input[type='checkbox']:not(.lg-segment input, .lg-rating-star input):checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--lingui-on-accent);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+.lingui-surface input[type='radio']:not(.lg-segment input, .lg-rating-star input):checked::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--lingui-on-accent);
+}
+.lingui-surface
+  input:is([type='checkbox'], [type='radio']):not(
+    .lg-segment input,
+    .lg-rating-star input
+  ):disabled {
+  opacity: 0.5;
+}
+@media (forced-colors: active) {
+  .lingui-surface
+    input:is([type='checkbox'], [type='radio']):not(.lg-segment input, .lg-rating-star input) {
+    appearance: auto;
+    border: revert;
+    background: revert;
+  }
+  .lingui-surface
+    input:is([type='checkbox'], [type='radio']):not(
+      .lg-segment input,
+      .lg-rating-star input
+    )::after {
+    display: none;
+  }
+}

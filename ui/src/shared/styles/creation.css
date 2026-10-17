@@ -1,0 +1,382 @@
+.lingui-studio .lu-creation-workspace {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 136px);
+  min-height: 560px;
+}
+.lingui-studio .lu-operation-hint {
+  flex-shrink: 0;
+  padding: 8px 24px;
+  border-bottom: 1px solid var(--lu-border);
+  background: var(--lu-sidebar);
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+.lingui-studio .lu-creation-grid {
+  display: grid;
+  grid-template-columns: minmax(340px, 0.95fr) minmax(380px, 1.25fr);
+  flex: 1;
+  min-height: 0;
+}
+.lingui-studio .lu-chat-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-right: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-creation-resources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 16px;
+  padding: 12px 20px 18px;
+}
+.lingui-studio .lu-creation-resources button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  padding: 6px 4px;
+  min-height: 34px;
+  white-space: nowrap;
+  background: transparent;
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+.lingui-studio .lu-creation-resources button:hover {
+  color: var(--lu-text);
+}
+.lingui-studio .lu-creation-resources svg {
+  width: 14px;
+  height: 14px;
+}
+.lingui-studio .lu-artifact-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-artifact-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 58px;
+  padding: 12px 22px;
+  border-bottom: 1px solid var(--lu-border);
+  background: var(--lu-bg);
+  flex-shrink: 0;
+  font-size: 12px;
+}
+.lingui-studio .lu-status-dot.is-idle {
+  background: var(--lu-border);
+}
+.lingui-studio .lu-artifact-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.lingui-studio .lu-artifact-actions .lu-button {
+  min-height: 34px;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+.lingui-studio .lu-artifact-actions .lu-button.is-selected {
+  background: var(--lu-subtle);
+}
+.lingui-studio .lu-artifact-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  overscroll-behavior: contain;
+}
+.lingui-studio .lu-artifact-scroll.is-editing {
+  display: grid;
+  grid-template-rows: minmax(180px, 0.8fr) minmax(240px, 1fr);
+  overflow: hidden;
+}
+.lingui-studio .lu-artifact-scroll.is-editing .lu-artifact-canvas,
+.lingui-studio .lu-artifact-scroll.is-editing .lu-manual-editor {
+  min-height: 0;
+  overflow: auto;
+}
+.lingui-studio .lu-artifact-canvas {
+  padding: 20px 24px 12px;
+  overflow: visible;
+}
+.lingui-studio .lu-artifact-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.lingui-studio .lu-artifact-meta > span {
+  font-size: 12px;
+  color: var(--lu-muted);
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-artifact-meta select {
+  margin-left: auto;
+  padding: 6px 10px;
+  font-size: 12px;
+  min-height: 34px;
+  max-width: 160px;
+}
+.lingui-studio .lu-artifact-meta svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+.lingui-studio .lu-artifact-canvas .lu-preview-frame {
+  padding: 18px;
+  min-height: 0;
+}
+.lingui-studio .lu-artifact-canvas .lu-canvas-hint {
+  margin-top: 14px;
+  font-size: 12px;
+}
+.lingui-studio .lu-artifact-empty {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+}
+.lingui-studio .lu-empty-artifact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 180px;
+  padding: 24px;
+  margin-bottom: 28px;
+  border: 1px solid var(--lu-border);
+  border-radius: 14px;
+  background: var(--lu-bg);
+  transform: rotate(-3deg);
+}
+.lingui-studio .lu-empty-artifact svg {
+  width: 24px;
+  height: 24px;
+  color: var(--lu-muted);
+  margin-bottom: 10px;
+}
+.lingui-studio .lu-empty-artifact span {
+  display: block;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--lu-subtle);
+}
+.lingui-studio .lu-empty-artifact span:nth-of-type(2) {
+  width: 65%;
+}
+.lingui-studio .lu-empty-artifact i {
+  width: 55px;
+  height: 18px;
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  margin-top: 4px;
+}
+.lingui-studio .lu-artifact-empty h2 {
+  font-size: 16px;
+  font-weight: 500;
+}
+.lingui-studio .lu-artifact-empty p {
+  font-size: 12px;
+  line-height: 1.8;
+  margin-top: 10px;
+  color: var(--lu-muted);
+  max-width: 280px;
+}
+.lingui-studio .lu-artifact-empty > button {
+  margin-top: 24px;
+  font-size: 11px;
+  background: var(--lu-bg);
+}
+.lingui-studio .lu-artifact-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 22px;
+  border-top: 1px solid var(--lu-border);
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+.lingui-studio .lu-ai-conflict {
+  padding: 14px 20px;
+  background: var(--lu-bg);
+  border-bottom: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-ai-conflict p {
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.lingui-studio .lu-ai-conflict button {
+  font-size: 11px;
+}
+.lingui-studio .lu-manual-editor {
+  border-top: 1px solid var(--lu-border);
+  background: var(--lu-bg);
+}
+.lingui-studio .lu-manual-heading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--lu-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--lu-border);
+  font-size: 12px;
+}
+.lingui-studio .lu-manual-heading span {
+  font-size: 12px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-workbench-compact .lu-workbench-grid {
+  grid-template-columns: minmax(130px, 0.7fr) minmax(210px, 1.3fr);
+  height: auto;
+  min-height: 320px;
+}
+.lingui-studio .lu-workbench-compact .lu-structure-panel {
+  max-height: 500px;
+  border-right: 1px solid var(--lu-border);
+  border-bottom: 0;
+}
+.lingui-studio .lu-workbench-compact .lu-inspector {
+  border-left: 0;
+  border-top: 0;
+}
+.lingui-studio .lu-workbench-compact .lu-inspector-content {
+  max-height: 440px;
+}
+.lingui-studio.lu-embedded .lu-creation-workspace {
+  height: calc(85dvh - 180px);
+  min-height: 580px;
+}
+.lingui-studio.lu-standalone .lu-creation-workspace {
+  height: calc(100dvh - 64px);
+}
+.lingui-studio .lu-mobile-workspace-nav {
+  display: none;
+}
+/* An empty workspace grows with its introduction; only conversation history needs a scroll pane. */
+@container studio (min-width: 701px) {
+  .lingui-studio .lu-creation-workspace:has(.lu-artifact-empty):has(.lu-chat-welcome) {
+    height: auto;
+    min-height: max(560px, calc(100dvh - 136px));
+  }
+  .lingui-studio.lu-embedded .lu-creation-workspace:has(.lu-artifact-empty):has(.lu-chat-welcome) {
+    min-height: max(580px, calc(85dvh - 180px));
+  }
+  .lingui-studio.lu-standalone
+    .lu-creation-workspace:has(.lu-artifact-empty):has(.lu-chat-welcome) {
+    min-height: max(560px, calc(100dvh - 64px));
+  }
+  .lingui-studio
+    .lu-creation-workspace:has(.lu-artifact-empty):has(.lu-chat-welcome)
+    .lu-creation-grid {
+    min-height: min-content;
+  }
+}
+@container studio (max-width: 1000px) {
+  .lingui-studio .lu-creation-grid {
+    grid-template-columns: minmax(300px, 1fr) minmax(320px, 1.1fr);
+  }
+  .lingui-studio .lu-artifact-toolbar {
+    flex-wrap: wrap;
+    padding: 12px 16px;
+  }
+  .lingui-studio .lu-artifact-canvas {
+    padding: 16px;
+  }
+  .lingui-studio .lu-manual-heading {
+    flex-wrap: wrap;
+  }
+}
+@container studio (max-width: 700px) {
+  .lingui-studio .lu-creation-workspace,
+  .lingui-studio.lu-standalone .lu-creation-workspace,
+  .lingui-studio.lu-embedded .lu-creation-workspace {
+    height: auto;
+    min-height: 0;
+  }
+  .lingui-studio .lu-creation-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lingui-studio .lu-chat-column {
+    border-right: 0;
+    min-height: 440px;
+  }
+  .lingui-studio .lu-conversation {
+    max-height: 380px;
+  }
+  .lingui-studio .lu-artifact-panel {
+    min-height: 460px;
+    border-top: 1px solid var(--lu-border);
+  }
+  .lingui-studio .lu-mobile-workspace-nav {
+    display: flex;
+    gap: 4px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--lu-border);
+    background: var(--lu-bg);
+  }
+  .lingui-studio .lu-mobile-workspace-nav button {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--lu-muted);
+    font-size: 13px;
+  }
+  .lingui-studio .lu-mobile-workspace-nav button[aria-pressed='true'] {
+    border-color: var(--lu-border);
+    background: var(--lu-subtle);
+    color: var(--lu-text);
+    font-weight: 600;
+  }
+  .lingui-studio .lu-creation-grid[data-panel='chat'] > .lu-preview-presentation,
+  .lingui-studio .lu-creation-grid[data-panel='preview'] > .lu-chat-column {
+    display: none;
+  }
+  .lingui-studio .lu-artifact-scroll {
+    overflow: visible;
+  }
+  .lingui-studio .lu-artifact-scroll.is-editing {
+    display: block;
+    overflow: visible;
+  }
+  .lingui-studio .lu-artifact-empty {
+    min-height: 400px;
+  }
+  .lingui-studio .lu-artifact-footer {
+    flex-wrap: wrap;
+  }
+}
+@container studio (max-width: 480px) {
+  .lingui-studio .lu-workbench-compact .lu-workbench-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lingui-studio .lu-workbench-compact .lu-structure-panel {
+    border-right: 0;
+    border-bottom: 1px solid var(--lu-border);
+    max-height: 220px;
+  }
+}

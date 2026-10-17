@@ -1,0 +1,82 @@
+import { softCard, column, document, grid, section, text, dispatch } from './builders'
+export function lessonPlannerExample() {
+  return document(
+    '阅读计划',
+    [
+      column('root', ['heading', 'tabs', 'details']),
+      section(
+        'heading',
+        '给学习留一点时间',
+        '选一个日期，记下目标，再按自己的节奏阅读。',
+        [],
+        '阅读计划',
+      ),
+      {
+        id: 'tabs',
+        component: 'Tabs',
+        tabs: [
+          { title: '阅读路线', child: 'route' },
+          { title: '我的计划', child: 'plan' },
+        ],
+      },
+      column('route', ['first-card', 'second-card', 'third-card']),
+      softCard('first-card', 'first'),
+      softCard('second-card', 'second'),
+      softCard('third-card', 'third'),
+      section('first', '01 · 先抓住核心', '用十分钟读完概述，找到最想解决的一个问题。', []),
+      section('second', '02 · 跟着例子实践', '复现一个小例子，把陌生的概念变成可观察的结果。', []),
+      section(
+        'third',
+        '03 · 写下你的理解',
+        '用自己的话解释给别人听，再记录下一步想探索的内容。',
+        [],
+      ),
+      softCard('plan', 'plan-content'),
+      column('plan-content', ['fields', 'notes']),
+      grid('fields', ['date', 'time']),
+      {
+        id: 'date',
+        component: 'DateTimeInput',
+        label: '准备开始的日期',
+        enableDate: true,
+        value: { path: '/date' },
+      },
+      {
+        id: 'time',
+        component: 'DateTimeInput',
+        label: '每天阅读的时间',
+        enableTime: true,
+        value: { path: '/time' },
+      },
+      {
+        id: 'notes',
+        component: 'TextField',
+        variant: 'longText',
+        label: '这次最想理解什么？',
+        value: { path: '/notes' },
+      },
+      {
+        id: 'details',
+        component: 'Modal',
+        label: '把计划变成习惯',
+        trigger: 'trigger',
+        content: 'modal-content',
+      },
+      {
+        id: 'trigger',
+        component: 'Button',
+        variant: 'text',
+        child: 'trigger-text',
+        action: dispatch({ type: 'reset' }),
+      },
+      text('trigger-text', '阅读之前的小建议 →'),
+      column('modal-content', ['modal-intro', 'tips']),
+      text('modal-intro', '一个足够小的开始，通常比一份复杂的计划更有效。'),
+      { id: 'tips', component: 'List', children: ['tip1', 'tip2', 'tip3'] },
+      text('tip1', '把目标写成一个具体的问题。'),
+      text('tip2', '预留一段没有消息打扰的时间。'),
+      text('tip3', '完成后留下三句话笔记。'),
+    ],
+    { date: '', time: '20:30', notes: '' },
+  )
+}

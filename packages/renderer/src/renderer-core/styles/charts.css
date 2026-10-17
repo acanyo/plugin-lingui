@@ -1,0 +1,180 @@
+.lingui-surface .lg-chart {
+  min-width: 0;
+  margin: 0;
+}
+.lingui-surface .lg-chart figcaption {
+  margin-bottom: 20px;
+}
+.lingui-surface .lg-chart figcaption p {
+  margin-top: 6px;
+}
+.lingui-surface .lg-line-plot {
+  display: flex;
+  gap: 8px;
+  height: 180px;
+  margin-bottom: 16px;
+}
+.lingui-surface .lg-line-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 0 20px;
+  min-width: 24px;
+  font-size: 11px;
+  color: var(--lingui-muted);
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-line-plot svg {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  height: 100%;
+  overflow: visible;
+}
+.lingui-surface .lg-chart-grid {
+  stroke: var(--lingui-border);
+  stroke-width: 1;
+  opacity: 0.65;
+  vector-effect: non-scaling-stroke;
+}
+.lingui-surface .lg-line-path {
+  stroke: var(--lingui-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.lingui-surface .lg-line-point {
+  fill: var(--lingui-accent);
+  stroke: var(--lingui-background);
+  stroke-width: 1;
+}
+.lingui-surface .lg-chart-legend {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 88px), 1fr));
+  gap: 10px 16px;
+}
+.lingui-surface .lg-chart-legend li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  min-width: 0;
+}
+.lingui-surface .lg-legend-label {
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-chart-value {
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-donut-chart {
+  container: lingui-chart / inline-size;
+}
+.lingui-surface .lg-donut-chart .lg-chart-body {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.lingui-surface .lg-donut-plot {
+  flex: 0 1 180px;
+  position: relative;
+  min-width: 140px;
+}
+.lingui-surface .lg-donut-plot svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.lingui-surface .lg-donut-total {
+  position: absolute;
+  inset: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.4;
+}
+.lingui-surface .lg-donut-total strong {
+  font-size: 21px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.lingui-surface .lg-donut-total .lg-caption {
+  font-size: 11px;
+}
+.lingui-surface .lg-donut-track {
+  stroke: var(--lingui-surface);
+  stroke-width: 20;
+}
+.lingui-surface .lg-donut-segment {
+  stroke: currentColor;
+  stroke-width: 20;
+}
+.lingui-surface .lg-series-0 {
+  color: var(--lingui-accent);
+}
+.lingui-surface .lg-series-1 {
+  color: color-mix(in srgb, var(--lingui-accent) 75%, var(--lingui-background));
+}
+.lingui-surface .lg-series-2 {
+  color: color-mix(in srgb, var(--lingui-accent) 55%, var(--lingui-background));
+}
+.lingui-surface .lg-series-3 {
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-series-4 {
+  color: color-mix(in srgb, var(--lingui-muted) 70%, var(--lingui-background));
+}
+.lingui-surface .lg-series-5 {
+  color: var(--lingui-border);
+}
+.lingui-surface .lg-donut-chart .lg-chart-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.lingui-surface .lg-donut-chart .lg-chart-legend li {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.lingui-surface .lg-donut-chart .lg-legend-label {
+  flex: 1;
+  min-width: 0;
+}
+.lingui-surface .lg-donut-chart .lg-chart-value {
+  flex-shrink: 1;
+  min-width: 0;
+  text-align: right;
+}
+.lingui-surface .lg-donut-chart .lg-chart-legend .lg-caption {
+  flex: 0 0 42px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-legend-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: currentColor;
+}
+@container lingui-chart (max-width: 380px) {
+  .lingui-surface .lg-donut-chart .lg-chart-body {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .lingui-surface .lg-donut-plot {
+    width: 160px;
+    flex-basis: auto;
+    align-self: center;
+  }
+}

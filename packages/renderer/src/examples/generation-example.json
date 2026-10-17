@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "lingui.document/2",
+  "title": "理解一条响应式数据流",
+  "parameters": [],
+  "source": "root = Column({\"id\":\"root\",\"children\":[\"intro\",\"details\"]}, [n1, n12])\nn1 = LingUI_Section({\"id\":\"intro\",\"label\":\"响应式编程\",\"title\":\"数据如何流向订阅者\",\"description\":\"先描述数据处理过程，在订阅发生时启动工作。\",\"children\":[\"concepts\",\"code\"]}, [n2, n11])\nn2 = LingUI_Grid({\"id\":\"concepts\",\"maxColumns\":2,\"children\":[\"source-card\",\"consumer-card\"]}, [n3, n7])\nn3 = Card({\"id\":\"source-card\",\"variant\":\"soft\",\"child\":\"source\"}, [n4])\nn4 = Column({\"id\":\"source\",\"children\":[\"source-title\",\"source-body\"]}, [n5, n6])\nn5 = Text({\"id\":\"source-title\",\"variant\":\"h3\",\"text\":\"发布者\"}, [])\nn6 = Text({\"id\":\"source-body\",\"text\":\"按需求发出数据，或发出完成与错误信号。\"}, [])\nn7 = Card({\"id\":\"consumer-card\",\"variant\":\"soft\",\"child\":\"consumer\"}, [n8])\nn8 = Column({\"id\":\"consumer\",\"children\":[\"consumer-title\",\"consumer-body\"]}, [n9, n10])\nn9 = Text({\"id\":\"consumer-title\",\"variant\":\"h3\",\"text\":\"订阅者\"}, [])\nn10 = Text({\"id\":\"consumer-body\",\"text\":\"声明需求并接收结果，用背压协调消费速度。\"}, [])\nn11 = LingUI_CodeBlock({\"id\":\"code\",\"language\":\"java\",\"label\":\"Reactor 示例\",\"code\":\"Flux.just(1, 2, 3)\\n    .map(value -> value * 2)\\n    .subscribe(System.out::println);\"}, [])\nn12 = LingUI_Collapse({\"id\":\"details\",\"title\":\"查看信号说明\",\"expanded\":{\"path\":\"/open\"},\"child\":\"answer\"}, [n13])\nn13 = LingUI_KeyValue({\"id\":\"answer\",\"entries\":[{\"label\":\"onNext\",\"value\":\"传递一个数据元素。\"},{\"label\":\"onComplete\",\"value\":\"表示数据已经全部发送。\"},{\"label\":\"onError\",\"value\":\"表示流因错误终止。\"}]}, [])",
+  "state": {
+    "open": false
+  }
+}

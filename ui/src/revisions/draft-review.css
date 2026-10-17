@@ -1,0 +1,66 @@
+.lu-draft-review {
+  margin: 16px 0;
+  padding: 12px;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+}
+.lu-draft-review > header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+}
+.lu-draft-review > header > div {
+  display: flex;
+  gap: 12px;
+}
+.lu-draft-review ol {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  max-height: 280px;
+  overflow: auto;
+}
+.lu-draft-review li {
+  padding: 10px;
+  border-top: 1px solid var(--lu-border);
+  font-size: 12px;
+}
+.lu-draft-review li.has-conflict {
+  background: var(--lu-sidebar);
+}
+.lu-draft-review .formkit-outer {
+  margin-bottom: 4px;
+}
+.lu-draft-conflict {
+  display: block;
+  color: var(--lu-muted);
+  font-size: 11px;
+  margin: 4px 0;
+}
+.lu-draft-review details {
+  margin-top: 6px;
+}
+.lu-draft-review summary {
+  cursor: pointer;
+  color: var(--lu-muted);
+}
+.lu-draft-values {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+.lu-draft-values small {
+  color: var(--lu-muted);
+}
+.lu-draft-values pre {
+  font-size: 11px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 110px;
+  overflow: auto;
+  padding: 8px;
+  background: var(--lu-sidebar);
+}

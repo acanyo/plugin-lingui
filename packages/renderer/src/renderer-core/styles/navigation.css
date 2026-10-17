@@ -1,0 +1,56 @@
+.lingui-surface .lg-link {
+  color: var(--lingui-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.lingui-surface .lg-link:hover {
+  text-decoration-thickness: 2px;
+}
+.lingui-surface .lg-link-arrow {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 13px;
+  text-decoration: none;
+}
+.lingui-surface .lg-link-unavailable {
+  color: var(--lingui-muted);
+  font-size: 14px;
+}
+.lingui-surface .lg-breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+}
+.lingui-surface .lg-breadcrumbs li {
+  display: inline-flex;
+  align-items: baseline;
+  max-width: 100%;
+  gap: 12px;
+  min-width: 0;
+}
+.lingui-surface .lg-breadcrumbs a {
+  color: var(--lingui-muted);
+  text-decoration: none;
+}
+.lingui-surface .lg-breadcrumbs a:hover {
+  color: var(--lingui-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.lingui-surface .lg-breadcrumbs [aria-current] {
+  color: var(--lingui-text);
+  font-weight: 500;
+}
+.lingui-surface .lg-breadcrumb-separator {
+  color: var(--lingui-muted);
+  opacity: 0.65;
+  flex: 0 0 auto;
+}

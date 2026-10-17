@@ -1,0 +1,75 @@
+.lu-revisions {
+  padding: 0 4px 12px;
+}
+.lu-revision-grid {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 20px;
+  max-height: 65vh;
+  overflow: auto;
+}
+.lu-revision-grid nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.lu-revision-grid nav button {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  text-align: start;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--lu-subtle);
+  color: inherit;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.lu-revision-grid nav button[aria-pressed='true'] {
+  border-color: var(--lu-accent);
+}
+.lu-revision-grid small {
+  color: var(--lu-muted);
+  font-size: 11px;
+}
+.lu-revision-detail {
+  min-width: 0;
+}
+.lu-revision-detail ul {
+  padding-inline-start: 20px;
+  max-height: 130px;
+  overflow: auto;
+  font-size: 12px;
+}
+.lu-revision-previews {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.lu-revision-previews > div {
+  min-width: 0;
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  padding: 10px;
+  overflow: auto;
+}
+.lu-revision-previews h4 {
+  color: var(--lu-muted);
+  font-size: 12px;
+  margin: 0 0 10px;
+}
+@media (max-width: 700px) {
+  .lu-revision-grid,
+  .lu-revision-previews {
+    grid-template-columns: 1fr;
+  }
+  .lu-revision-grid nav {
+    flex-direction: row;
+    max-height: 100px;
+    overflow: auto;
+  }
+  .lu-revision-grid nav button {
+    flex: 0 0 150px;
+  }
+}

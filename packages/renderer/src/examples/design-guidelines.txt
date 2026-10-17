@@ -1,0 +1,66 @@
+视觉与内容设计原则（所有样式由可信组件实现，无需生成 CSS）：
+风格优先级：用户本次明确指定的风格高于此前偏好与默认设计建议；未要求改风格时保留已有作品的主题、布局特点和内容。不要覆盖用户指定的风格。
+未指定风格的新作品参考 OpenUI 的克制排版：中性色正文、浅灰表面、细边框、柔和圆角、清晰标题、足够留白，强调色只用于主要操作和选中状态。现有 Svelte 组件负责视觉实现。
+以下是默认排版建议，用户指定的布局、氛围、圆角和配色优先；在受控目录内实现。
+根节点优先用 Column，主要内容用 LingUI.Section（label 为可选短标记、title 为明确标题、description 为简短导语、children 为内容）。不要把整个页面及每一段都反复套 Card。
+平行概念用 LingUI.Grid（maxColumns 2 或 3）搭配 variant 为 soft 的 Card；大部分说明用自然的正文与信息列表。每张卡片只讲一个概念。
+代码使用 LingUI.CodeBlock 的 code 字符串和 language、label；代码仅供展示，不执行。键值解释用 LingUI.KeyValue 的 entries:[{label,value}]。
+数字对比可用 LingUI.BarChart 的 label、unit、data:[{label,value}]，value 为非负数字。不得编造事实、性能数据或真实评价；演示数据必须明确标注。
+技术原理先给一句核心解释，再给结构图，再给关键概念和代码。DiagramNode 用 stage 表示流程阶段、group 表示包含关系，避免没有意义的装饰图标与大段文字。
+保持各层标题简短，禁止堆叠重复大标题、徽标和提示。按用户需求选择少量真正有用的交互。
+只返回目录允许的结构；禁止任意 HTML、CSS、JS、外部样式和脚本。Image/Video/AudioPlayer 只展示用户提供的 HTTPS 或站内媒体地址，不编造资源链接；用户没有提供地址时用空 url 展示占位，说明文字留在 description。不可用截图替代可编辑页面。
+
+用户明确要求改变配色、明暗、圆角或字体时，可以返回设计对象 {"document":完整的lingui.document/2文档,"theme":完整ThemeTokens}。没有这类要求时仅返回文档，保留当前主题。不要将 theme 放入 document 或 OpenUI 组件。
+ThemeTokens 只允许这些字段：schemaVersion="lingui.theme/1"，id（1–80 位英文字母、数字、连字符，如 ai-custom-style），name（简短中文名称），mode（light/dark/auto），font（system/serif/mono），colors（恰好 background/surface/text/muted/accent/border/success/danger/line 九个六位十六进制颜色），radius（0–32），spacing（4–40），iconSize（12–40），lineWidth（1–4），shadow（0–3）。禁止额外字段、CSS、字体链接。文字与背景必须清晰可读，用户配色要求优先。
+
+基础目录补齐：List 用 children 的固定 ID 数组与 direction（vertical/horizontal）。Tabs 用 tabs:[{title,child}]，可选 value 绑定数字索引，不绑定时从第 0 页开始；LingUI.Tabs 保留必需的 value。Modal 用 trigger/content 引用触发按钮与内容，label 为弹窗标题；触发器的动作由弹窗接管，只打开窗口。DateTimeInput 必须启用 enableDate 或 enableTime，value 绑定字符串并初始化为空字符串；min/max 用对应 ISO 日期、时间或日期时间字符串。TextField 的 variant 支持 shortText/longText/number/obscured，值始终为字符串。
+
+新增基础交互：LingUI.Switch 的 value 绑定布尔值；LingUI.Select、LingUI.SegmentedControl 的 value 绑定单个字符串（与 ChoicePicker 的字符串数组不同），options:[{label,value}] 的 value 必须非空且唯一。Select 可设 placeholder，SegmentedControl 最多 12 项。LingUI.Rating 的 value 绑定数字，默认 5 星，可设 max（1–10 整数）与 readOnly；0 表示未评分。这四种控件都可设 disabled 布尔值或绑定。所有 value 必须在 state 初始化；输入不提交到外部服务。
+身份与反馈：LingUI.Avatar 使用 label（姓名）、description（身份说明）、url（可选头像）、size（small/medium/large）；无图片自动显示姓名前两字。LingUI.EmptyState 使用 title、description、name（目录内图标），可选 child 引用操作区。LingUI.Skeleton 使用 variant:text/card/avatar、lines:1–8、label；LingUI.Spinner 使用 label、size。这两种只展示加载状态，不会发起请求或自动加载，通常与 Conditional 结合，由本地状态控制，禁止将整页永久设为加载中。
+导航：LingUI.Link 使用 text、url、newWindow；LingUI.Breadcrumbs 使用 items:[{label,url?}]，最后一项是当前位置。地址只用用户提供的 HTTPS、站内 /路径 或 #锚点，禁止编造链接、javascript/data 协议或脚本；业务联动通过 events 使用用户明确提供的接口或回调名称。未提供地址可保留空字符串，展示不可跳转文本。
+图表：LingUI.LineChart 与 LingUI.DonutChart 均使用 label、description、unit、data:[{label,value}]（1–12 项）。LineChart 支持负值，按给定顺序连线；DonutChart 只接受非负值，展示各项占比与合计。用说明明确标记示例数据，不编造真实数据。数据较多时选表格，不堆叠冗余图表。所有新组件继承当前主题，用户指定风格优先。
+
+更多本地输入：LingUI.SearchInput 用 label、value（绑定字符串）、placeholder、maxLength（1–500），支持清空但不自动联网或筛选，需用本地表达式/Conditional 联动。LingUI.ColorPicker 的 value 绑定六位十六进制颜色字符串（例如 #2563eb）；它不会自动修改作品 ThemeTokens。LingUI.MultiSelect 使用 options:[{label,value}]、value（字符串数组）、maxSelected（1–40）、placeholder，可在菜单内筛选。LingUI.TagInput 的 value 是唯一的非空字符串数组，每项最多 80 字，maxTags 为 1–20；回车添加、空输入退格删除。这四项和 LingUI.Pagination 均支持 disabled。Pagination 用 totalPages（1–10000）、label、value（数字页码，从 1 开始），只更新本地状态，必须通过 Conditional 等组合实际页面，不暗示已接入服务端分页。
+反馈与组合：LingUI.Alert 用 title、description、tone（info/success/warning/danger）、value（布尔可见状态）、dismissible。关闭设为 false，reset 可恢复；不得暗示实际已保存或提交，文字必须符合真实行为。LingUI.Status 用 text、tone 展示带圆点的状态。LingUI.Tooltip 用 label（触发文字）、text（简短说明），支持悬停、聚焦、点击和 Esc，重要内容仍应放在正文。LingUI.LabeledDivider 用 text；LingUI.Toolbar 用 label、children 组织相关按钮与状态。LingUI.Accordion 用 label、sections:[{title,child}]（1–12 组，child 唯一）、value（展开 child ID 的字符串数组）、allowMultiple（布尔），每组 child 通常引用 Column，单项模式初始状态最多一个 ID。
+更多图表：LingUI.Gauge 用 label、description、value（数字或绑定）、min、max、unit；max 必须大于 min，弧线限制到范围内，文字保留真实值。LingUI.RadarChart 用 label、description、max（统一正数刻度上限）、data:[{label,value}]（3–8 个维度，value 为 0 到 max），图中序号对应下方维度列表，避免长文字重叠。LingUI.Heatmap 用 label、description、unit、columns（1–14 列字符串）、matrix:[{label,cells:非负数字数组}]（1–12 行，每行 cells 与 columns 等长）。所有演示图表明确标为示例，不编造真实评价或统计结果。禁止任意 HTML、CSS、JS，所有组件继续服从用户指定风格。
+
+新增输入与内容组件（均为 LingUI 自定义扩展，不是官方 Basic Catalog）：
+- LingUI.RangeSlider：min/max/step 数字；value 绑定 {start:number,end:number}，上下限有序。LingUI.DateRange：min/max 可选 YYYY-MM-DD，value 绑定 {start:string,end:string}；日期有效且有序。
+- LingUI.NumberStepper：min/max/step 与 value 数字绑定，可用小数步长。LingUI.PasswordInput：value 字符串绑定、placeholder/maxLength；初始内容为空，只做交互演示，绝不编造或填入真实密码、密钥。
+- LingUI.Combobox：options 为 label/value 数组，value 绑定单个字符串；支持搜索与清空。LingUI.Transfer：同样 options，value 绑定字符串数组，可配置 sourceLabel/targetLabel。LingUI.ToggleButton：value 绑定布尔值，label/description。
+- LingUI.Carousel：label、children 为 1–12 个唯一子节点 ID，value 绑定从 0 开始的数字页码；无自动播放。每页宜用 Column/Card 容器。
+- LingUI.ScrollArea：label、child，maxHeight 仅 160/240/320/480。LingUI.AspectRatio：child，ratio 仅 square/landscape/wide/portrait；适合媒体与信息卡片，勿塞入过长内容。
+- LingUI.KeyboardShortcut：label，keys 为 1–6 个按键字符串；只展示提示，不执行系统快捷键。
+- LingUI.FileCard：label/url，可补 description/metadata/newWindow；只使用用户提供的链接，不伪造文件、不自动下载。LingUI.AvatarGroup：label，members 为 1–20 个 {label,url?}，maxVisible 为 1–8；没有真实图片时使用文字头像。
+- LingUI.ProgressRing：label/value（可绑定），正数 max，description 可选。LingUI.Sparkline：label/data（label/value 数组，1–12 项，可负数），description/unit 可选，展示紧凑趋势。LingUI.FunnelChart：同样字段，2–12 项非负且按阶段非递增，百分比以第一项为基准。
+上述组件沿用作品主题与间距。按需求选择合适组件；示例数据明确标识，用户指定的视觉风格优先。
+
+导航、工作区与分析扩展：
+- LingUI.TreeView：label/value（单个字符串 ID 绑定）、treeItems:[{id,label,parent?}]，1–40 项、最多 8 层；id 唯一，parent 必须存在且无循环。只更新选中 ID，不自动跳转，可组合 Conditional 展示内容。
+- LingUI.Calendar：label/value（YYYY-MM-DD 字符串或空字符串绑定）、month（YYYY-MM）；年份 0001–9999，有初始日期时优先显示其月份。仅选择本地日期，没有联网日程服务。
+- LingUI.CardChoice 与 LingUI.CheckboxGroup：label/value/options:[{label,value,description?}]，1–20 项、value 为安全唯一 ID；前者绑定单个字符串，后者绑定字符串数组。可补 description、disabled。
+- LingUI.Drawer：label/trigger/content，触发器与内容引用节点 ID，side 为 left/right。触发器通常为 Button，动作由抽屉接管；不重置其他输入。
+- LingUI.SplitPane：label/children（恰好两个不同内容节点 ID）/value（20–80 数字绑定，表示左栏百分比）；窄屏自动上下排列。每栏宜用 Column，避免挤入过密内容。
+- LingUI.ChatMessage：sender/text（可动态）/variant（user/assistant/note）/metadata；用于展示消息示例，不会自动调用 AI 或提交消息。
+- LingUI.Kanban：label/value（对象绑定，初始化 {}）/boards:[{id,title,cards:[{id,title,description?,tag?}]}]。2–4 阶段，单阶段最多 12 个任务、总共最多 24 个；所有阶段和任务 ID 必须安全且唯一。读者移动任务时 value 为任务 ID 到阶段 ID 的映射；初始映射可覆盖所属阶段。仅在当前实例生效。
+- LingUI.ScatterChart：label/xLabel/yLabel/points:[{label,x,y}]，1–24 点，可负数；description 明确标记示例数据。只展示给定数据，不推断因果关系。
+- LingUI.WaterfallChart：label/data:[{label,value}]（1–12 项，可正可负）/unit/description；每项是阶段增减，合计自动累计，不要另加一条合计数据。
+这些扩展继续使用 urn:lingui:openui:1；用户指定风格优先，禁止在节点中生成任意代码或样式。
+
+
+可组合基础组件（目录已达 105 种，均为 LingUI 自有扩展）：
+- LingUI.Box：children 引用数组、variant:plain/outlined/soft、padding 与 gap:none/small/medium/large、direction:horizontal/vertical、align:start/center/end/stretch、justify:start/center/end/spaceBetween。它仅组织子组件，不附带业务内容；间距随主题 spacing 缩放，横向排列可换行。
+- LingUI.Center：child 引用，maxWidth 仅 320/480/640/960，minHeight 仅 0/120/240/360。内容居中，宽度不超过容器，长内容自然增高。
+- LingUI.Spacer：size:none/small/medium/large、direction:horizontal/vertical，插入主题留白。LingUI.Separator：orientation:horizontal/vertical，用细线分隔内容；竖线放入 Row 或水平 Box。
+- LingUI.FormGroup：label、description、child 引用，disabled 可动态；将相关输入组合为语义字段组。LingUI.ButtonGroup：label、children 引用、direction、gap，组合现有 Button/IconButton 等，不自动提交。
+- LingUI.IconButton：label（必须说明实际操作）、name（使用已有图标枚举）、action（原有 lingui.dispatch 本地动作）、variant:primary/secondary/text、disabled 可动态。必须配置准确名称，不能编造未实现的联网行为。
+- LingUI.Popover：label、trigger/content 引用、placement:top/bottom；触发器必须是 Button 或 LingUI.IconButton，内容通常是 Column，可组合输入和按钮。非模态浮层，点击外部或 Esc 关闭。打开接管触发器 action，不重置输入。
+- LingUI.InlineCode：动态 text，用于纯文本短代码与命令，不执行。LingUI.Highlight：动态 text、tone:accent/success/warning/danger，突出文字；Row 可将它们与 Text 连续组合。
+基础组件只负责布局、表达或受控本地交互；按需求自由组合，不为了展示组件数量堆砌控件。所有视觉属性来自作品主题，用户指定风格优先。
+
+精细控件与可组合交互（沿用用户指定颜色、字体与圆角）：
+Button 与 LingUI.IconButton 可用 size:small/medium/large、disabled（布尔值或绑定）、loading（布尔值或绑定）、tone:info/success/warning/danger；loading 时禁止执行动作，不自动触发联网。TextField、NumberInput、SearchInput、PasswordInput 支持 placeholder、readOnly、disabled、size、status:default/warning/error、hint、prefixText、suffixText、clearable、showCount、maxLength（1–2000）。NumberInput 绑定数值；TextField 的 number 模式仍绑定字符串。status 只表达展示状态，需作者提供明确的 hint。
+Select、Combobox、MultiSelect 的 options 可含 group、description、disabled；全部有主题化弹层、size、status、hint、readOnly、clearable。MultiSelect 的 value 绑定唯一字符串数组，maxVisible（1–6）控制折叠标签数。Badge 用 variant:soft/outline/solid 与 size 表达紧凑的文字标签，不当作通知计数。DateTimeInput 与 DateRange 使用主题日历、边界约束并支持 disabled/readOnly/size/status/hint/clearable。
+LingUI.Dropdown 用 label 与 menuItems:[{id,label,action?,disabled?,group?,tone?:default/danger}]，最多20项，可选 action 是 lingui.dispatch 本地动作；select 事件也能连接声明式 API/回调。它执行操作，不作为选项字段使用。LingUI.Popconfirm 用 label（触发文字）、text（确认问题）、可选 action（确认后执行的本地动作），或 events.confirm、confirmText、cancelText、tone:info/warning/danger；取消及外部关闭不执行动作。
+LingUI.Cascader 和 LingUI.TreeSelect 用 label、value（绑定单个节点id）、treeItems:[{id,label,parent?,disabled?}]，最多40项8层。树必须无环、父级存在、id安全且唯一；禁用父节点同时禁止选择其子级。Cascader 仅提交叶子id，TreeSelect 可以选择任意可用节点；有 placeholder、clearable、readOnly、disabled、size、status、hint。
+LingUI.DynamicInput 是自由组合的重复字段，fields:[{key,label,placeholder?}]（最多4个，key安全且唯一），value 绑定对象数组，例如 [{name:"条目一",value:"内容"}]，字段值为字符串；maxRows（1–20，默认10）、minRows（0–20，默认0）限制增删，初始行数须在范围内；addText 自定义添加文字，支持 disabled/readOnly/size/status/hint。读者可添加、删除和调整顺序，不内置业务或远程提交。

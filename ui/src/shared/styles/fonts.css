@@ -1,0 +1,210 @@
+.lingui-studio .lu-font-manager {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 36px 32px 48px;
+}
+.lingui-studio .lu-font-manager.is-compact {
+  padding: 8px 0;
+}
+.lingui-studio .lu-font-tools {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 22px;
+}
+.lingui-studio .lu-font-tools .lu-field {
+  margin: 0;
+}
+.lingui-studio .lu-font-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.lingui-studio .lu-font-card {
+  min-width: 0;
+  border: 1px solid var(--lu-border);
+  border-radius: 12px;
+  padding: 20px;
+  background: var(--lu-bg);
+}
+.lingui-studio .lu-font-card > header,
+.lingui-studio .lu-font-import > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.lingui-studio .lu-font-card h2 {
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-font-card > header > span {
+  flex-shrink: 0;
+  padding: 3px 6px;
+  border: 1px solid var(--lu-border);
+  border-radius: 5px;
+  color: var(--lu-muted);
+  font-size: 10px;
+}
+.lingui-studio .lu-font-specimen {
+  min-width: 0;
+  margin: 20px 0 12px;
+}
+.lingui-studio .lu-font-specimen > p {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-font-specimen > small {
+  display: block;
+  color: var(--lu-muted);
+  font-size: 11px;
+  margin-top: 8px;
+  line-height: 1.7;
+}
+.lingui-studio .lu-font-meta,
+.lingui-studio .lu-font-details {
+  font-size: 11px;
+  color: var(--lu-muted);
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-font-details summary {
+  cursor: pointer;
+  padding: 6px 0;
+}
+.lingui-studio .lu-font-details ul {
+  list-style: none;
+  padding: 0;
+  max-height: 220px;
+  overflow: auto;
+  margin: 8px 0;
+}
+.lingui-studio .lu-font-details li {
+  border-top: 1px solid var(--lu-border);
+  padding: 8px 0;
+}
+.lingui-studio .lu-font-details a {
+  display: block;
+  color: var(--lu-text);
+  text-decoration: underline;
+}
+.lingui-studio .lu-font-card footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  border-top: 1px solid var(--lu-border);
+  margin-top: 16px;
+  padding-top: 12px;
+}
+.lingui-studio .lu-font-card footer .lu-text-button {
+  padding: 4px 0;
+  font-size: 11px;
+}
+.lingui-studio .lu-font-empty {
+  text-align: center;
+  padding: 64px 20px;
+  border: 1px dashed var(--lu-border);
+  border-radius: 12px;
+}
+.lingui-studio .lu-font-empty > svg {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 14px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-font-empty h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.lingui-studio .lu-font-empty p {
+  color: var(--lu-muted);
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+.lingui-studio .lu-font-footnote,
+.lingui-studio .lu-font-import-note {
+  margin: 20px 0 0;
+  font-size: 11px;
+  line-height: 1.8;
+}
+.lingui-studio .lu-font-import {
+  border: 1px solid var(--lu-border);
+  border-radius: 12px;
+  padding: 22px;
+  margin: 0 0 22px;
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-font-import > header h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.lingui-studio .lu-font-import > header p {
+  font-size: 12px;
+}
+.lingui-studio .lu-font-import > .lu-segment {
+  margin: 18px 0;
+}
+.lingui-studio .lu-font-import .lu-field small {
+  font-size: 11px;
+  line-height: 1.7;
+}
+.lingui-studio .lu-font-import .lu-field textarea {
+  min-width: 0;
+  width: 100%;
+  resize: vertical;
+}
+.lingui-studio .lu-font-import .lu-error {
+  margin-top: 14px;
+}
+.lingui-studio .lu-font-import-result {
+  padding: 18px;
+  background: var(--lu-bg);
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  margin-top: 20px;
+}
+.lingui-studio .lu-font-rename {
+  margin-top: 16px;
+}
+.lingui-studio .lu-theme-manage-fonts {
+  margin-top: 10px;
+  font-size: 11px;
+}
+@media (max-width: 820px) {
+  .lingui-studio .lu-font-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 540px) {
+  .lingui-studio .lu-font-manager {
+    padding: 24px 16px;
+  }
+  .lingui-studio .lu-font-manager.is-compact {
+    padding: 0;
+  }
+  .lingui-studio .lu-font-tools {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .lingui-studio .lu-font-import,
+  .lingui-studio .lu-font-card {
+    padding: 16px;
+  }
+  .lingui-studio .lu-font-import-result {
+    padding: 12px;
+  }
+  .lingui-studio .lu-font-specimen > p {
+    font-size: 21px;
+  }
+}
+@media (pointer: coarse) {
+  .lingui-studio .lu-font-card footer .lu-text-button {
+    min-height: 40px;
+  }
+}

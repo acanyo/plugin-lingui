@@ -1,0 +1,75 @@
+.lingui-studio .lu-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-pagination-summary {
+  color: var(--lu-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-studio .lu-pagination .pagination,
+.lingui-studio .lu-pagination .pagination__controller {
+  flex: none;
+  gap: 10px;
+}
+.lingui-studio .lu-pagination .pagination__nav {
+  gap: 6px;
+  border-radius: 0;
+  box-shadow: none;
+}
+.lingui-studio .lu-pagination .pagination__btn {
+  width: var(--lu-control-height);
+  height: var(--lu-control-height);
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--lu-border);
+  border-radius: var(--lu-control-radius);
+  background: var(--lu-bg);
+  color: var(--lu-text);
+  box-shadow: none;
+}
+.lingui-studio .lu-pagination .pagination__btn:not(:disabled):hover {
+  background: var(--lu-subtle);
+}
+.lingui-studio .lu-pagination .pagination__btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.lingui-studio .lu-pagination .pagination__btn svg {
+  width: 16px;
+  height: 16px;
+}
+.lingui-studio .lu-pagination .pagination__select {
+  height: var(--lu-control-height);
+  min-width: 80px;
+  padding: 6px 26px 6px 12px;
+  border-color: var(--lu-border);
+  border-radius: var(--lu-control-radius);
+  background-color: var(--lu-bg);
+  color: var(--lu-text);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  box-shadow: none;
+}
+.lingui-studio .lu-pagination .pagination__select-label {
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+/* The API has a fixed page size. Show its range instead of an unchangeable size select. */
+.lingui-studio .lu-pagination .pagination__select-wrap:last-child {
+  display: none;
+}
+@container studio (max-width: 480px) {
+  .lingui-studio .lu-pagination {
+    gap: 16px;
+  }
+  .lingui-studio .lu-pagination .pagination {
+    margin-left: auto;
+  }
+}

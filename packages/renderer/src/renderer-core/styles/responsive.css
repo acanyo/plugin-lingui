@@ -1,0 +1,119 @@
+/* The article column and studio preview can be narrower than the viewport. */
+@container lingui (max-width: 600px) {
+  .lingui-surface {
+    font-size: 14px;
+  }
+  .lingui-surface .lg-card:not(.lg-card-plain),
+  .lingui-surface .lg-callout {
+    padding: var(--lingui-spacing);
+  }
+  .lingui-surface .lg-diagram-horizontal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .lingui-surface .lg-diagram-siblings {
+    flex-direction: column;
+  }
+  .lingui-surface .lg-diagram-node {
+    max-width: none;
+    min-width: 0;
+  }
+  .lingui-surface .lg-h1 {
+    font-size: 24px;
+  }
+}
+@container lingui (max-width: 420px) {
+  .lingui-surface .lg-diagram-group > .lg-diagram-children > .lg-diagram-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lingui-surface .lg-diagram-item > .lg-diagram-node {
+    min-height: 100px;
+  }
+  .lingui-surface .lg-diagram-group {
+    padding: 14px;
+  }
+}
+.lingui-surface .lg-diagram-horizontal > .lg-diagram-entry {
+  flex: 1;
+  min-width: 0;
+}
+.lingui-surface .lg-diagram-horizontal > .lg-flow-arrow {
+  align-self: center;
+}
+.lingui-surface .lg-diagram-horizontal > .lg-flow-arrow .lg-icon {
+  transform: rotate(-90deg);
+}
+@container lingui (max-width: 600px) {
+  .lingui-surface .lg-diagram-horizontal > .lg-flow-arrow .lg-icon {
+    transform: none;
+  }
+  .lingui-surface .lg-diagram-horizontal > .lg-diagram-entry {
+    flex: none;
+  }
+  .lingui-surface .lg-diagram-stage > .lg-diagram-node {
+    min-height: 0;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px 18px;
+    gap: 14px;
+  }
+  .lingui-surface .lg-diagram-horizontal .lg-diagram-stage > .lg-diagram-node {
+    min-height: 0;
+  }
+  .lingui-surface .lg-diagram-horizontal {
+    gap: 6px;
+  }
+  .lingui-surface .lg-flow-arrow {
+    height: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lingui-surface * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* Expand compact actions on touch screens without widening seven-column calendars. */
+@media (pointer: coarse) {
+  .lingui-surface {
+    --lg-control-height: 44px;
+  }
+  .lingui-surface
+    :is(
+      .lg-input-clear,
+      .lg-input-tag button,
+      .lg-tag-add,
+      .lg-number-stepper button,
+      .lg-password-input button,
+      .lg-calendar-heading button,
+      .lg-carousel-controls > button,
+      .lg-pagination button,
+      .lg-alert button
+    ) {
+    min-width: 40px;
+    min-height: 44px;
+  }
+  .lingui-surface .lg-input-tag button {
+    flex-basis: 40px;
+  }
+  .lingui-surface .lg-calendar-days button {
+    min-height: 44px;
+  }
+  .lingui-surface
+    :is(
+      .lg-rating-clear,
+      .lg-code-copy,
+      .lg-file-link,
+      .lg-tooltip-trigger,
+      .lg-multi-option,
+      .lg-tree-row,
+      .lg-segment > span,
+      .lg-kanban-card select
+    ) {
+    min-height: 44px;
+  }
+  .lingui-surface .lg-carousel-dots button {
+    width: 36px;
+    height: 44px;
+  }
+}

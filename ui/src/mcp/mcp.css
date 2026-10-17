@@ -1,0 +1,406 @@
+.lingui-studio .lu-mcp-page {
+  max-width: 1240px;
+  padding: 36px 32px 56px;
+  margin: 0 auto;
+}
+.lingui-studio .lu-mcp-page .btn-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.lingui-studio .lu-mcp-page-label,
+.lingui-studio .lu-mcp-readonly {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--lu-muted);
+  white-space: nowrap;
+}
+.lingui-studio .lu-mcp-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(250px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.lingui-studio .lu-mcp-connection {
+  border: 1px solid var(--lu-border);
+  border-radius: 16px;
+  padding: 24px;
+  min-width: 0;
+}
+.lingui-studio .lu-mcp-card-heading,
+.lingui-studio .lu-mcp-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.lingui-studio .lu-mcp-server-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lingui-studio .lu-mcp-page h2 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.lingui-studio .lu-mcp-server-name > svg {
+  width: 20px;
+  height: 20px;
+}
+.lingui-studio .lu-mcp-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: var(--lu-subtle);
+  color: var(--lu-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.lingui-studio .lu-mcp-status i {
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+  border-radius: 50%;
+}
+.lingui-studio .lu-mcp-status.is-ready {
+  color: var(--lu-accent);
+}
+.lingui-studio .lu-mcp-endpoint {
+  margin: 22px 0 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--lu-sidebar);
+  border: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-mcp-endpoint > span {
+  color: var(--lu-muted);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+.lingui-studio .lu-mcp-endpoint > div {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.lingui-studio .lu-mcp-endpoint code {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  line-height: 1.8;
+}
+.lingui-studio .lu-mcp-endpoint p {
+  color: var(--lu-muted);
+  font-size: 12px;
+  margin-top: 8px;
+}
+.lingui-studio .lu-mcp-connect-actions,
+.lingui-studio .lu-mcp-run-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.lingui-studio .lu-mcp-notice {
+  color: var(--lu-muted);
+  font-size: 12px;
+  margin-top: 12px;
+  line-height: 1.8;
+}
+.lingui-studio .lu-mcp-onboarding {
+  margin-top: 16px;
+}
+.lingui-studio .lu-mcp-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 22px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--lu-border);
+  font-size: 12px;
+}
+.lingui-studio .lu-mcp-facts dt {
+  color: var(--lu-muted);
+  margin-bottom: 6px;
+}
+.lingui-studio .lu-mcp-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-mcp-config {
+  margin-top: 22px;
+  border-top: 1px solid var(--lu-border);
+  padding-top: 18px;
+}
+.lingui-studio .lu-mcp-page summary {
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 0;
+}
+.lingui-studio .lu-mcp-config > p {
+  margin-top: 12px;
+  line-height: 1.8;
+}
+.lingui-studio .lu-mcp-page pre {
+  margin: 12px 0;
+  padding: 16px;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  overflow: auto;
+  max-height: 340px;
+  font:
+    11px/1.8 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  background: var(--lu-sidebar);
+  color: var(--lu-text);
+  tab-size: 2;
+}
+.lingui-studio .lu-mcp-page code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+.lingui-studio .lu-mcp-copy-feedback {
+  font-size: 12px;
+  margin-top: 12px;
+  color: var(--lu-accent);
+}
+.lingui-studio .lu-mcp-access {
+  padding: 4px 0 0;
+}
+.lingui-studio .lu-mcp-access > div {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+.lingui-studio .lu-mcp-access > div > svg {
+  color: var(--lu-muted);
+  margin-top: 3px;
+}
+.lingui-studio .lu-mcp-access h3 {
+  margin-bottom: 6px;
+}
+.lingui-studio .lu-mcp-access p {
+  color: var(--lu-muted);
+  font-size: 12px;
+  line-height: 1.85;
+}
+.lingui-studio .lu-mcp-access-note {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-mcp-error {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  color: var(--lu-danger);
+  padding: 16px;
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-mcp-error svg {
+  margin-top: 2px;
+}
+.lingui-studio .lu-mcp-tools,
+.lingui-studio .lu-mcp-skill {
+  margin-top: 36px;
+}
+.lingui-studio .lu-mcp-section-heading p {
+  margin-top: 5px;
+}
+.lingui-studio .lu-mcp-section-heading h2 > span {
+  margin-left: 6px;
+  color: var(--lu-muted);
+  font:
+    12px ui-monospace,
+    monospace;
+}
+.lingui-studio .lu-mcp-tool-layout {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.85fr) minmax(0, 1.6fr);
+  border: 1px solid var(--lu-border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 18px;
+}
+.lingui-studio .lu-mcp-tool-list {
+  border-right: 1px solid var(--lu-border);
+  padding: 10px;
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-mcp-tool-list button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 16px;
+  gap: 7px 10px;
+  width: 100%;
+  text-align: left;
+  padding: 14px 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-mcp-tool-list button + button {
+  margin-top: 3px;
+}
+.lingui-studio .lu-mcp-tool-list strong {
+  font:
+    500 12px/1.5 ui-monospace,
+    monospace;
+  overflow-wrap: anywhere;
+  color: var(--lu-text);
+}
+.lingui-studio .lu-mcp-tool-list button span {
+  grid-row: 2;
+  font-size: 11px;
+  line-height: 1.8;
+}
+.lingui-studio .lu-mcp-tool-list button svg {
+  grid-column: 2;
+  grid-row: 1;
+  opacity: 0;
+}
+.lingui-studio .lu-mcp-tool-list button:hover {
+  background: var(--lu-hover);
+}
+.lingui-studio .lu-mcp-tool-list button.active {
+  background: var(--lu-bg);
+  border-color: var(--lu-border);
+}
+.lingui-studio .lu-mcp-tool-list button.active svg {
+  opacity: 1;
+}
+.lingui-studio .lu-mcp-tool-detail {
+  min-width: 0;
+  padding: 24px;
+}
+.lingui-studio .lu-mcp-tool-detail > h3 {
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-mcp-tool-detail > p {
+  margin-top: 8px;
+}
+.lingui-studio .lu-mcp-schema {
+  margin: 14px 0 18px;
+}
+.lingui-studio .lu-mcp-schema summary {
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-mcp-tool-detail textarea {
+  font-size: 12px;
+  line-height: 1.8;
+  border-radius: 8px;
+}
+.lingui-studio .lu-mcp-run-actions > span {
+  font-size: 11px;
+}
+.lingui-studio .lu-mcp-hint {
+  margin: -4px 0 14px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-mcp-result {
+  margin-top: 20px;
+}
+.lingui-studio .lu-mcp-skill {
+  padding: 24px;
+  border: 1px solid var(--lu-border);
+  border-radius: 14px;
+}
+.lingui-studio .lu-mcp-skill > code {
+  display: block;
+  color: var(--lu-muted);
+  font-size: 11px;
+  margin: 14px 0;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-mcp-skill pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-mcp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 42px 16px;
+  border-top: 1px solid var(--lu-border);
+  margin-top: 32px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-mcp-empty > svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+.lingui-studio .lu-mcp-empty h2 {
+  font-size: 14px;
+  color: var(--lu-text);
+}
+.lingui-studio .lu-mcp-empty p {
+  font-size: 12px;
+  line-height: 1.8;
+}
+@container studio (max-width: 850px) {
+  .lingui-studio .lu-mcp-overview {
+    grid-template-columns: 1fr;
+  }
+  .lingui-studio .lu-mcp-access {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .lingui-studio .lu-mcp-access > h2,
+  .lingui-studio .lu-mcp-access-note {
+    grid-column: 1 / -1;
+  }
+  .lingui-studio .lu-mcp-access > div,
+  .lingui-studio .lu-mcp-access-note {
+    margin-top: 0;
+  }
+}
+@container studio (max-width: 580px) {
+  .lingui-studio .lu-mcp-page {
+    padding: 24px 16px 36px;
+  }
+  .lingui-studio .lu-mcp-page-label {
+    display: none;
+  }
+  .lingui-studio .lu-mcp-connection,
+  .lingui-studio .lu-mcp-skill,
+  .lingui-studio .lu-mcp-tool-detail {
+    padding: 18px;
+  }
+  .lingui-studio .lu-mcp-tool-layout,
+  .lingui-studio .lu-mcp-access {
+    grid-template-columns: 1fr;
+  }
+  .lingui-studio .lu-mcp-tool-list {
+    border-right: 0;
+    border-bottom: 1px solid var(--lu-border);
+  }
+  .lingui-studio .lu-mcp-card-heading {
+    align-items: start;
+    flex-wrap: wrap;
+  }
+  .lingui-studio .lu-mcp-facts {
+    gap: 8px;
+    font-size: 11px;
+  }
+  .lingui-studio .lu-mcp-readonly {
+    display: none;
+  }
+}

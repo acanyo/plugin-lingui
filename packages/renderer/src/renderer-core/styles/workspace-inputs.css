@@ -1,0 +1,184 @@
+.lingui-surface .lg-choice-group {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+.lingui-surface .lg-choice-group legend {
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.lingui-surface .lg-choice-options {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+.lingui-surface .lg-card-choice .lg-choice-options {
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+}
+.lingui-surface .lg-choice-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lg-control-radius);
+  background: var(--lingui-background);
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+  border-color: var(--lg-border-subtle);
+}
+.lingui-surface .lg-choice-option:not(:has(input:disabled)):hover {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-choice-option.lg-choice-selected {
+  border-color: var(--lingui-accent);
+  background: color-mix(in srgb, var(--lingui-accent) 4%, var(--lingui-background));
+}
+.lingui-surface .lg-choice-option > input {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin: 4px 0 0;
+  accent-color: var(--lingui-accent);
+}
+.lingui-surface .lg-choice-option > span {
+  min-width: 0;
+}
+.lingui-surface .lg-choice-option strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 550;
+}
+.lingui-surface .lg-choice-option .lg-caption {
+  display: block;
+  margin-top: 5px;
+}
+.lingui-surface .lg-choice-group:disabled .lg-choice-option {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.lingui-surface .lg-calendar {
+  max-width: 380px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lingui-radius);
+  background: var(--lingui-background);
+}
+.lingui-surface .lg-calendar-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 16px 0;
+}
+.lingui-surface .lg-calendar-heading strong {
+  font-size: 14px;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-calendar-heading button {
+  flex-shrink: 0;
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lg-detail-radius);
+  background: transparent;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+}
+.lingui-surface .lg-calendar-heading button:not(:disabled):hover {
+  background: var(--lg-hover);
+}
+.lingui-surface :is(.lg-calendar-week, .lg-calendar-days) {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+  text-align: center;
+}
+.lingui-surface .lg-calendar-week {
+  color: var(--lingui-muted);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.lingui-surface .lg-calendar-days button {
+  min-width: 0;
+  min-height: 40px;
+  padding: 3px 0;
+  border: 1px solid transparent;
+  border-radius: var(--lg-detail-radius);
+  background: transparent;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-calendar-days button:not(:disabled):not([aria-pressed='true']):hover {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-calendar-days .lg-calendar-adjacent {
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-calendar-days button[aria-pressed='true'] {
+  color: var(--lingui-on-accent);
+  background: var(--lingui-accent);
+}
+.lingui-surface .lg-calendar > .lg-caption {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--lingui-border);
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-tree-view {
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lingui-radius);
+  padding: 16px;
+  min-width: 0;
+}
+.lingui-surface .lg-tree-view > h3 {
+  margin-bottom: 12px;
+}
+.lingui-surface .lg-tree-row {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 40px;
+  padding: 7px 10px;
+  padding-left: calc(10px + min(calc(var(--lg-tree-depth, 0) * 16px), 25cqi));
+  border: 0;
+  border-radius: var(--lg-detail-radius);
+  background: transparent;
+  text-align: left;
+  font-size: 14px;
+}
+.lingui-surface .lg-tree-row:not(:disabled):hover {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-tree-row[aria-selected='true'] {
+  background: var(--lingui-surface);
+  font-weight: 550;
+}
+.lingui-surface .lg-tree-row > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+.lingui-surface .lg-tree-mark {
+  flex: 0 0 16px;
+  text-align: center;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-tree-check {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--lingui-accent);
+}
+@container lingui (max-width: 420px) {
+  .lingui-surface .lg-calendar {
+    padding: 14px;
+    padding: 16px;
+    border: 1px solid var(--lg-border-subtle);
+  }
+}

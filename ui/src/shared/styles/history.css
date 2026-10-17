@@ -1,0 +1,167 @@
+.lingui-studio .lu-history {
+  padding: 24px;
+}
+.lingui-studio .lu-history-intro {
+  color: var(--lu-muted);
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.lingui-studio .lu-history-tools {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.lingui-studio .lu-history-tools .lu-search-field {
+  flex: 1;
+}
+.lingui-studio .lu-history-filters {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 16px 0;
+}
+.lingui-studio .lu-history-filters button {
+  padding: 8px 12px;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--lu-muted);
+  font-size: 13px;
+  min-height: 36px;
+}
+.lingui-studio .lu-history-filters button[aria-pressed='true'] {
+  background: var(--lu-subtle);
+  color: var(--lu-text);
+}
+.lingui-studio .lu-history-filters > span {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-history-list {
+  max-height: min(52dvh, 520px);
+  overflow: auto;
+  scrollbar-width: thin;
+  padding: 2px;
+}
+.lingui-studio .lu-history-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  border-top: 1px solid var(--lu-border);
+  padding: 18px 8px;
+}
+.lingui-studio .lu-history-row:first-child {
+  border-top: 0;
+}
+.lingui-studio .lu-history-icon {
+  display: grid;
+  place-items: center;
+  color: var(--lu-muted);
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+.lingui-studio .lu-history-icon svg {
+  width: 17px;
+  height: 17px;
+}
+.lingui-studio .lu-history-open {
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+  color: var(--lu-text);
+}
+.lingui-studio .lu-history-open:hover .lu-history-title {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.lingui-studio .lu-history-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-history-title small {
+  border: 1px solid var(--lu-border);
+  border-radius: 5px;
+  padding: 1px 5px;
+  font-weight: 400;
+  font-size: 10px;
+  flex-shrink: 0;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-history-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  color: var(--lu-muted);
+  margin: 6px 0 9px;
+  line-height: 1.7;
+}
+.lingui-studio .lu-history-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-history-delete {
+  flex-shrink: 0;
+}
+.lingui-studio .lu-history-empty {
+  padding: 44px 16px;
+  text-align: center;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-history-empty > svg {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 16px;
+}
+.lingui-studio .lu-history-empty h3 {
+  color: var(--lu-text);
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.lingui-studio .lu-history-empty p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.lingui-studio .lu-history-banner {
+  margin: 0;
+  padding: 10px 24px;
+  background: var(--lu-subtle);
+  font-size: 12px;
+  line-height: 1.7;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+@media (max-width: 480px) {
+  .lingui-studio .lu-history {
+    padding: 20px 16px;
+  }
+  .lingui-studio .lu-history-row {
+    padding: 16px 0;
+    gap: 10px;
+  }
+  .lingui-studio .lu-history-icon {
+    display: none;
+  }
+  .lingui-studio .lu-history-filters {
+    flex-wrap: wrap;
+  }
+}

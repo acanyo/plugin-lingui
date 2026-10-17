@@ -1,0 +1,181 @@
+.lingui-surface .lg-badge {
+  --lg-tone-color: var(--lingui-muted);
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: var(--lg-detail-radius);
+  background: var(--lg-hover);
+  color: var(--lingui-text);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  min-height: 24px;
+}
+.lingui-surface .lg-tone-success {
+  --lg-tone-color: var(--lingui-success);
+}
+.lingui-surface .lg-tone-danger {
+  --lg-tone-color: var(--lingui-danger);
+}
+.lingui-surface .lg-badge:is(.lg-tone-info, .lg-tone-warning, .lg-tone-success, .lg-tone-danger) {
+  background: color-mix(in srgb, var(--lg-tone-color) 10%, var(--lingui-background));
+  color: var(--lg-tone-color);
+}
+.lingui-surface .lg-quote {
+  margin: 0;
+  padding: 8px 0 8px 24px;
+  border-left: 2px solid var(--lingui-text);
+}
+.lingui-surface .lg-quote blockquote {
+  margin: 0;
+  font-family: var(--lingui-font);
+  font-size: clamp(20px, 3.5cqi, 28px);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+.lingui-surface .lg-quote figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 18px;
+  color: var(--lingui-muted);
+  font-size: 12px;
+}
+.lingui-surface .lg-quote-author {
+  color: var(--lingui-text);
+}
+.lingui-surface .lg-metric {
+  min-width: 0;
+  padding: 8px 0;
+}
+.lingui-surface .lg-metric-label {
+  color: var(--lingui-muted);
+  font-size: 13px;
+}
+.lingui-surface .lg-metric-value {
+  margin: 8px 0;
+  font-size: clamp(28px, 6cqi, 40px);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-row:has(> .lg-metric) {
+  align-items: stretch;
+  gap: 24px;
+}
+.lingui-surface .lg-row > .lg-metric {
+  min-width: min(130px, 100%);
+}
+.lingui-surface .lg-table-block {
+  min-width: 0;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lg-panel-radius);
+  overflow: hidden;
+}
+.lingui-surface .lg-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+.lingui-surface .lg-table-scroll:focus-visible {
+  outline-offset: -3px;
+}
+.lingui-surface .lg-table-hint {
+  display: none;
+}
+.lingui-surface .lg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: left;
+}
+.lingui-surface .lg-table-heading {
+  color: var(--lingui-muted);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  padding: 14px 16px;
+}
+.lingui-surface .lg-table :is(th, td) {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--lg-border-subtle);
+  vertical-align: top;
+  line-height: 1.5;
+  min-width: 120px;
+  max-width: 320px;
+}
+.lingui-surface .lg-table thead th {
+  font-weight: 500;
+  background: var(--lg-field-background);
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-table tbody th {
+  font-weight: 500;
+}
+.lingui-surface .lg-table tbody td {
+  color: var(--lingui-text);
+}
+.lingui-surface .lg-table tbody tr:hover {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+.lingui-surface .lg-step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.lingui-surface .lg-step-track {
+  display: flex;
+  flex: 1;
+  min-width: 80px;
+  gap: 6px;
+}
+.lingui-surface .lg-step-segment {
+  height: 3px;
+  flex: 1;
+  background: var(--lingui-border);
+  border-radius: var(--lg-detail-radius);
+}
+.lingui-surface .lg-step-segment.lg-complete {
+  background: var(--lingui-accent);
+}
+.lingui-surface .lg-step-content {
+  min-height: 164px;
+}
+.lingui-surface .lg-step-actions > .lg-button {
+  width: auto;
+}
+.lingui-surface .lg-collapse-content .lg-layout {
+  gap: calc(var(--lingui-spacing) * 0.66);
+}
+.lingui-surface .lg-row > .lg-column {
+  gap: calc(var(--lingui-spacing) * 0.5);
+}
+.lingui-surface progress::-moz-progress-bar {
+  background: var(--lingui-accent);
+}
+@container lingui (max-width: 420px) {
+  .lingui-surface .lg-table-hint {
+    display: block;
+  }
+  .lingui-surface .lg-metric-value {
+    font-size: 30px;
+  }
+  .lingui-surface .lg-quote {
+    padding-left: 18px;
+  }
+  .lingui-surface .lg-table :is(th, td) {
+    padding: 12px;
+    padding: 12px 16px;
+    line-height: 1.5;
+  }
+}

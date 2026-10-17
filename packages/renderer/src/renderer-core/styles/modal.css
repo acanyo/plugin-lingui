@@ -1,0 +1,55 @@
+.lingui-surface .lg-modal-trigger {
+  width: fit-content;
+}
+.lingui-surface .lg-modal-trigger[role='button'] {
+  cursor: pointer;
+}
+.lingui-surface .lg-dialog {
+  color: var(--lingui-text);
+  background: var(--lingui-background);
+  font: inherit;
+  width: min(600px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 48px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding: 0;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lingui-radius);
+  box-shadow: var(--lg-overlay-shadow);
+}
+.lingui-surface .lg-dialog::backdrop {
+  background: #00000066;
+}
+.lingui-surface .lg-dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--lingui-background);
+  border-bottom: 1px solid var(--lg-border-subtle);
+}
+.lingui-surface .lg-dialog-content {
+  padding: calc(var(--lingui-spacing) * 1.5);
+}
+.lingui-surface .lg-dialog-heading h2 {
+  min-width: 0;
+}
+.lingui-surface .lg-dialog-heading button {
+  flex-shrink: 0;
+}
+.lingui-surface .lg-modal-fallback {
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lingui-radius);
+  padding: 16px;
+}
+.lingui-surface .lg-modal-fallback > summary {
+  cursor: pointer;
+  padding: 4px 0;
+  font-weight: 500;
+}

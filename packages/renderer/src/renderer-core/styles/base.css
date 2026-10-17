@@ -1,0 +1,406 @@
+lingui-component {
+  display: block;
+  min-width: 0;
+}
+.lingui-container {
+  container: lingui / inline-size;
+  width: 100%;
+  min-width: 0;
+}
+.lingui-surface {
+  --lg-control-radius: calc(var(--lingui-radius) * 0.625);
+  --lg-detail-radius: calc(var(--lingui-radius) * 0.375);
+  --lg-panel-radius: calc(var(--lingui-radius) * 0.75);
+  --lg-control-height: 40px;
+  --lg-border-subtle: color-mix(in srgb, var(--lingui-border) 65%, var(--lingui-background));
+  --lg-field-background: color-mix(in srgb, var(--lingui-surface) 55%, var(--lingui-background));
+  --lg-hover: color-mix(in srgb, var(--lingui-text) 5%, var(--lingui-background));
+  --lg-selected: color-mix(in srgb, var(--lingui-accent) 9%, var(--lingui-background));
+  --lg-focus-shadow: 0 0 0 3px color-mix(in srgb, var(--lingui-accent) 12%, transparent);
+  --lg-elevation: 0 1px 2px light-dark(#0000000d, #0000004d);
+  --lg-overlay-shadow:
+    0 2px 6px -2px light-dark(#0000000f, #00000066),
+    0 12px 28px -6px light-dark(#00000026, #00000080);
+  box-sizing: border-box;
+  background: var(--lingui-background);
+  color: var(--lingui-text);
+  font-family: var(--lingui-font);
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 0;
+  width: 100%;
+  isolation: isolate;
+  overflow-wrap: anywhere;
+  text-align: left;
+  font-variant-numeric: lining-nums;
+  -webkit-font-smoothing: antialiased;
+}
+.lingui-surface * {
+  box-sizing: border-box;
+}
+.lingui-surface [hidden] {
+  display: none !important;
+}
+.lingui-surface p,
+.lingui-surface h1,
+.lingui-surface h2,
+.lingui-surface h3,
+.lingui-surface h4 {
+  margin: 0;
+}
+.lingui-surface button,
+.lingui-surface input,
+.lingui-surface textarea,
+.lingui-surface select {
+  font: inherit;
+  color: inherit;
+}
+.lingui-surface button {
+  cursor: pointer;
+}
+.lingui-surface button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.lingui-surface :focus-visible {
+  outline: 2px solid var(--lingui-accent);
+  outline-offset: 2px;
+}
+.lingui-surface .lg-layout {
+  display: flex;
+  gap: var(--lingui-spacing);
+  min-width: 0;
+}
+.lingui-surface .lg-column {
+  flex-direction: column;
+}
+.lingui-surface .lg-row {
+  display: flex;
+  min-width: 0;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: calc(var(--lingui-spacing) * 0.66);
+}
+.lingui-surface .lg-row > :is(.lg-column, .lg-field, .lg-metric) {
+  flex: 1;
+  min-width: min(180px, 100%);
+}
+.lingui-surface .lg-h1 {
+  font-size: clamp(26px, 5cqi, 32px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  text-wrap: pretty;
+}
+.lingui-surface .lg-h2 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  text-wrap: pretty;
+}
+.lingui-surface .lg-h3 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.lingui-surface .lg-caption,
+.lingui-surface .lg-muted {
+  font-size: 13px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-icon {
+  width: var(--lingui-iconSize);
+  height: var(--lingui-iconSize);
+  flex-shrink: 0;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-card,
+.lingui-surface .lg-callout {
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lingui-radius);
+  padding: calc(var(--lingui-spacing) * 1.5);
+  box-shadow: var(--lingui-shadow);
+  background: var(--lingui-background);
+}
+.lingui-surface .lg-callout {
+  --lg-tone-color: var(--lingui-muted);
+  border-color: var(--lg-border-subtle);
+  background: color-mix(in srgb, var(--lg-tone-color) 5%, var(--lingui-background));
+  padding: var(--lingui-spacing);
+  border-radius: var(--lg-panel-radius);
+}
+.lingui-surface .lg-tone-warning {
+  --lg-tone-color: light-dark(#92621b, #e4b95b);
+}
+.lingui-surface .lg-tone-success {
+  --lg-tone-color: var(--lingui-success);
+}
+.lingui-surface .lg-tone-danger {
+  --lg-tone-color: var(--lingui-danger);
+}
+.lingui-surface .lg-callout .lg-icon {
+  color: var(--lg-tone-color);
+}
+.lingui-surface .lg-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lg-control-radius);
+  background: var(--lingui-background);
+  padding: 8px 14px;
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+  min-height: var(--lg-control-height);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.lingui-surface .lg-button:not(:disabled):hover {
+  background: var(--lg-hover);
+  border-color: color-mix(in srgb, var(--lingui-text) 25%, var(--lingui-border));
+}
+.lingui-surface .lg-button-primary {
+  background: var(--lingui-accent);
+  color: var(--lingui-on-accent);
+  border-color: transparent;
+  box-shadow: var(--lg-elevation);
+}
+.lingui-surface .lg-button-primary:not(:disabled):hover {
+  background: var(--lingui-accent-hover);
+  border-color: transparent;
+  box-shadow: none;
+}
+.lingui-surface .lg-button-primary:not(:disabled):active {
+  background: var(--lingui-accent);
+  box-shadow: none;
+}
+.lingui-surface .lg-button-text {
+  border-color: transparent;
+  background: transparent;
+  padding: 6px 8px;
+}
+.lingui-surface .lg-button-text:not(:disabled):hover {
+  border-color: transparent;
+}
+.lingui-surface button.lg-button :is(.lg-text, .lg-icon) {
+  font-size: inherit;
+  color: inherit;
+}
+.lingui-surface .lg-divider {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--lg-border-subtle);
+  margin: 0;
+}
+.lingui-surface .lg-collapse {
+  border-top: 1px solid var(--lg-border-subtle);
+}
+.lingui-surface .lg-collapse summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  font-weight: 500;
+  cursor: pointer;
+}
+.lingui-surface .lg-collapse summary::-webkit-details-marker {
+  display: none;
+}
+.lingui-surface .lg-chevron {
+  display: inline-flex;
+  color: var(--lingui-muted);
+  transition: transform 0.15s;
+}
+.lingui-surface .lg-chevron .lg-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-collapse[open] .lg-chevron {
+  transform: rotate(180deg);
+}
+.lingui-surface .lg-collapse-content {
+  padding: 0 0 16px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+  font-size: 14px;
+  min-height: var(--lg-control-height);
+  padding: 8px 0;
+  line-height: 1.5;
+}
+.lingui-surface input[type='checkbox'],
+.lingui-surface input[type='radio'] {
+  accent-color: var(--lingui-accent);
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  margin: 2px 0 0;
+}
+.lingui-surface .lg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.lingui-surface .lg-field > label,
+.lingui-surface .lg-field-heading > label,
+.lingui-surface .lg-field > span {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.lingui-surface .lg-field-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+.lingui-surface .lg-field-heading :is(.lg-field-value, .lg-caption) {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+.lingui-surface .lg-field > input:not([type='range']),
+.lingui-surface .lg-field > textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lg-control-radius);
+  background: var(--lg-field-background);
+  min-width: 0;
+  min-height: var(--lg-control-height);
+  font-size: 14px;
+  line-height: 1.5;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.lingui-surface input[type='range'] {
+  width: 100%;
+  min-width: 0;
+  min-height: 24px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  accent-color: var(--lingui-accent);
+}
+.lingui-surface progress {
+  display: block;
+  width: 100%;
+  height: 8px;
+  border: 0;
+  border-radius: calc(var(--lingui-radius) * 0.6);
+  overflow: hidden;
+  accent-color: var(--lingui-accent);
+  background: var(--lingui-surface);
+}
+.lingui-surface progress::-webkit-progress-bar {
+  background: var(--lingui-surface);
+}
+.lingui-surface progress::-webkit-progress-value {
+  background: var(--lingui-accent);
+}
+.lingui-surface .lg-choice {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.lingui-surface .lg-choice legend {
+  color: var(--lingui-text);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.lingui-surface .lg-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: var(--lg-control-height);
+  border: 1px solid transparent;
+  border-radius: var(--lg-control-radius);
+  padding: 8px 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.lingui-surface .lg-option:not(:has(input:disabled)):hover {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-option.lg-selected {
+  background: var(--lg-selected);
+  border-color: color-mix(in srgb, var(--lingui-accent) 24%, var(--lingui-border));
+}
+.lingui-surface .lg-option input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+}
+.lingui-surface .lg-tablist {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--lg-border-subtle);
+  margin-bottom: var(--lingui-spacing);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  overscroll-behavior-x: contain;
+}
+.lingui-surface .lg-tablist button {
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  white-space: nowrap;
+  color: var(--lingui-muted);
+  padding: 10px 14px;
+  min-height: var(--lg-control-height);
+  font-size: 14px;
+  font-weight: 500;
+}
+.lingui-surface .lg-tablist button[aria-selected='true'] {
+  border-bottom-color: var(--lingui-accent);
+  color: var(--lingui-text);
+}
+.lingui-surface .lg-tablist button:hover {
+  color: var(--lingui-text);
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-tablist button:focus-visible {
+  outline-offset: -3px;
+}
+.lingui-surface .lg-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.lingui-surface .lg-step-actions {
+  justify-content: space-between;
+}
+
+.lingui-surface .lg-field > textarea {
+  resize: vertical;
+  line-height: 1.6;
+}

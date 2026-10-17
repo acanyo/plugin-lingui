@@ -1,0 +1,77 @@
+.lingui-studio.lu-article-picker {
+  min-height: 0;
+  padding: 8px 12px 12px;
+}
+.lu-article-picker .lu-article-picker-heading,
+.lu-article-picker .lu-article-preview-heading,
+.lu-article-picker .lu-article-picker-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.lu-article-picker .lu-article-picker-heading {
+  border-bottom: 1px solid var(--lu-border);
+}
+.lu-article-picker .lu-project-picker-toolbar {
+  flex-wrap: wrap;
+}
+.lu-article-picker .lu-article-category {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+.lu-article-picker .lu-article-category select {
+  max-width: 180px;
+}
+.lu-article-picker .lu-article-project-detail {
+  min-width: 0;
+}
+.lu-article-picker .lu-article-preview-heading {
+  margin-bottom: 12px;
+}
+.lu-article-picker .lu-article-preview-heading p {
+  margin-top: 4px;
+  font-size: 11px;
+}
+.lu-article-picker .lu-project-picker-preview {
+  min-height: 280px;
+}
+.lu-article-picker .lu-article-picker-footer {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--lu-border);
+}
+.lu-article-picker .lu-article-picker-notice {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  background: var(--lu-sidebar);
+  font-size: 13px;
+}
+.lu-article-picker .lu-article-market-hint {
+  margin-top: 20px;
+}
+.lu-article-picker .lu-market-section-heading {
+  border-top: 0;
+  padding-top: 16px;
+}
+.lu-article-picker a {
+  text-decoration: none;
+}
+@media (max-width: 700px) {
+  .lu-article-picker .lu-article-picker-heading {
+    gap: 8px;
+  }
+  .lu-article-picker .lu-project-picker-toolbar .lu-project-search {
+    min-width: 100%;
+    max-width: none;
+  }
+  .lu-article-picker .lu-article-picker-footer .lu-button {
+    width: 100%;
+  }
+}

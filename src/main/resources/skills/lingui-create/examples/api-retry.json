@@ -1,0 +1,99 @@
+{
+  "document": {
+    "schemaVersion": "lingui.document/2",
+    "title": "服务状态查询",
+    "parameters": [],
+    "nodes": [
+      {
+        "id": "root",
+        "component": "Column",
+        "children": [
+          "intro",
+          "refresh",
+          "results"
+        ]
+      },
+      {
+        "id": "intro",
+        "component": "LingUI.Section",
+        "label": "接口演示",
+        "title": "服务状态",
+        "description": "先模拟一次失败，再点击重试。数据来自本地模拟接口。",
+        "children": []
+      },
+      {
+        "id": "refresh",
+        "component": "Button",
+        "child": "refresh-label",
+        "variant": "primary",
+        "loading": {
+          "path": "/loading"
+        },
+        "events": {
+          "click": {
+            "actions": [
+              {
+                "type": "api",
+                "name": "checkHealth",
+                "args": {}
+              }
+            ],
+            "loadingPath": "/loading",
+            "errorPath": "/error",
+            "resultPath": "/response",
+            "concurrency": "drop"
+          }
+        }
+      },
+      {
+        "id": "refresh-label",
+        "component": "Text",
+        "text": "检查 / 重试",
+        "variant": "body"
+      },
+      {
+        "id": "results",
+        "component": "List",
+        "children": [],
+        "items": [],
+        "bindings": {
+          "items": {
+            "path": "/response/items",
+            "map": {
+              "id": "/id",
+              "label": "/name",
+              "description": "/summary"
+            }
+          }
+        },
+        "dataState": {
+          "loading": {
+            "path": "/loading"
+          },
+          "error": {
+            "path": "/error"
+          },
+          "emptyText": "点击检查按钮获取状态"
+        }
+      }
+    ],
+    "state": {
+      "response": {
+        "items": []
+      },
+      "loading": false,
+      "error": ""
+    },
+    "integrations": {
+      "apis": [
+        {
+          "name": "checkHealth",
+          "label": "检查服务状态（模拟）",
+          "method": "GET",
+          "url": "/__lingui_examples__/health"
+        }
+      ],
+      "callbacks": []
+    }
+  }
+}

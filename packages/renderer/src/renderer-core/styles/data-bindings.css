@@ -1,0 +1,56 @@
+.lingui-surface .lg-data-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 128px;
+  padding: 24px;
+  border: 1px dashed var(--lingui-border);
+  border-radius: var(--lingui-radius);
+  color: var(--lingui-muted);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.lingui-surface .lg-data-state p {
+  margin: 0;
+}
+.lingui-surface .lg-data-failure strong {
+  color: var(--lingui-danger);
+}
+.lingui-surface .lg-data-loading {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--lingui-border);
+  border-top-color: var(--lingui-accent);
+  border-radius: 50%;
+  animation: lg-data-spin 1s linear infinite;
+}
+@keyframes lg-data-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lingui-surface .lg-data-loading {
+    animation: none;
+  }
+}
+.lingui-surface .lg-data-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  padding: 14px 16px;
+  color: var(--lingui-text);
+  background: var(--lingui-surface);
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lingui-radius);
+  text-align: left;
+}
+.lingui-surface .lg-data-list-item.is-selectable {
+  cursor: pointer;
+}
+.lingui-surface .lg-data-list-item.is-selectable:hover {
+  border-color: var(--lingui-accent);
+}

@@ -1,0 +1,105 @@
+.lingui-studio.lu-project-preview-dialog {
+  min-height: 0;
+}
+.lingui-studio .lu-project-preview-layout.with-history {
+  display: grid;
+  grid-template-columns: 184px minmax(0, 1fr);
+}
+.lingui-studio .lu-project-history {
+  max-height: 65dvh;
+  overflow: auto;
+  padding: 20px 12px;
+  border-right: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-project-history h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  margin-bottom: 14px;
+  font-size: 12px;
+}
+.lingui-studio .lu-project-history h3 span {
+  color: var(--lu-muted);
+  font-size: 10px;
+  font-weight: 400;
+}
+.lingui-studio .lu-project-history button {
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px 8px;
+  margin-bottom: 4px;
+  background: transparent;
+  text-align: left;
+  font-size: 12px;
+}
+.lingui-studio .lu-project-history button:hover {
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-project-history button.active {
+  border-color: var(--lu-border);
+  background: var(--lu-subtle);
+}
+.lingui-studio .lu-project-history button span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lingui-studio .lu-project-history small,
+.lingui-studio .lu-project-history time {
+  color: var(--lu-muted);
+  font-size: 10px;
+}
+.lingui-studio .lu-project-history time {
+  display: block;
+  margin-top: 6px;
+}
+.lingui-studio .lu-project-preview-stage {
+  min-width: 0;
+  padding: 20px;
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-project-preview-stage .lu-canvas-toolbar {
+  margin-bottom: 20px;
+}
+.lingui-studio .lu-project-preview-surface {
+  width: 100%;
+  max-width: 800px;
+  max-height: 60dvh;
+  min-height: 220px;
+  overflow: auto;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  background: var(--lu-bg);
+}
+.lingui-studio .lu-project-preview-surface.mobile {
+  max-width: 375px;
+}
+@container studio (max-width: 620px) {
+  .lingui-studio .lu-project-preview-layout.with-history {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lingui-studio .lu-project-history {
+    display: flex;
+    gap: 6px;
+    padding: 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--lu-border);
+  }
+  .lingui-studio .lu-project-history h3 {
+    display: none;
+  }
+  .lingui-studio .lu-project-history button {
+    flex: 0 0 152px;
+    margin: 0;
+  }
+  .lingui-studio .lu-project-preview-stage {
+    padding: 16px 12px;
+  }
+  .lingui-studio .lu-project-preview-surface {
+    padding: 12px;
+  }
+}

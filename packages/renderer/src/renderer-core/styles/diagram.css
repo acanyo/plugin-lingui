@@ -1,0 +1,202 @@
+.lingui-surface .lg-diagram {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  padding: 0;
+}
+.lingui-surface .lg-diagram-vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+.lingui-surface .lg-diagram-branch {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  min-width: 130px;
+}
+.lingui-surface .lg-diagram-entry {
+  width: 100%;
+}
+.lingui-surface .lg-flow-arrow {
+  display: grid;
+  place-items: center;
+  height: 28px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-flow-arrow .lg-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-diagram-node {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  min-width: 140px;
+  width: 100%;
+  max-width: 360px;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lg-panel-radius);
+  padding: 16px 18px;
+  background: var(--lingui-background);
+}
+.lingui-surface button.lg-diagram-node:hover {
+  background: var(--lingui-surface);
+}
+.lingui-surface .lg-diagram-accent,
+.lingui-surface .lg-diagram-accent > .lg-diagram-node {
+  border-color: var(--lingui-accent);
+  background: color-mix(in srgb, var(--lingui-accent) 4%, var(--lingui-background));
+}
+.lingui-surface .lg-diagram-stage > .lg-diagram-node {
+  max-width: none;
+  align-items: flex-start;
+  text-align: left;
+  background: var(--lg-field-background);
+  border-color: var(--lg-border-subtle);
+  padding: 20px;
+  gap: 14px;
+  border-radius: var(--lg-panel-radius);
+}
+.lingui-surface .lg-diagram-stage > .lg-diagram-node > .lg-icon {
+  color: var(--lingui-text);
+  width: 32px;
+  height: 32px;
+  padding: 7px;
+  border: 1px solid var(--lingui-border);
+  border-radius: calc(var(--lingui-radius) * 0.55);
+  background: var(--lingui-background);
+}
+.lingui-surface .lg-diagram-horizontal .lg-diagram-stage > .lg-diagram-node {
+  min-height: 150px;
+}
+.lingui-surface .lg-diagram-stage .lg-node-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+.lingui-surface .lg-diagram-stage .lg-node-description {
+  font-size: 13px;
+}
+.lingui-surface .lg-diagram-group {
+  width: 100%;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lingui-radius);
+  padding: 18px;
+  background: var(--lg-field-background);
+}
+.lingui-surface .lg-diagram-group > .lg-diagram-node {
+  flex-direction: row;
+  align-items: center;
+  max-width: none;
+  border: 0;
+  padding: 0 0 14px;
+  background: transparent;
+}
+.lingui-surface .lg-diagram-item {
+  min-width: 0;
+}
+.lingui-surface .lg-diagram-item > .lg-diagram-node {
+  min-height: 112px;
+}
+.lingui-surface .lg-diagram-group > .lg-diagram-children > .lg-diagram-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.lingui-surface .lg-diagram-group .lg-diagram-branch {
+  min-width: 0;
+}
+.lingui-surface .lg-diagram-grid .lg-diagram-node {
+  max-width: none;
+}
+.lingui-surface .lg-node-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.lingui-surface .lg-diagram-group > .lg-diagram-node > .lg-icon,
+.lingui-surface .lg-diagram-accent > .lg-diagram-node > .lg-icon {
+  color: var(--lingui-accent);
+}
+.lingui-surface .lg-diagram-branch[data-tone='success'] {
+  --lg-node-tone: var(--lingui-success);
+}
+.lingui-surface .lg-diagram-branch[data-tone='warning'] {
+  --lg-node-tone: var(--lingui-muted);
+}
+.lingui-surface .lg-diagram-branch[data-tone='danger'] {
+  --lg-node-tone: var(--lingui-danger);
+}
+.lingui-surface .lg-diagram-branch:not([data-tone='info']) > .lg-diagram-node {
+  border-color: color-mix(in srgb, var(--lg-node-tone) 18%, var(--lingui-background));
+  background: color-mix(in srgb, var(--lg-node-tone) 5%, var(--lingui-background));
+}
+.lingui-surface .lg-diagram-branch:not([data-tone='info']) > .lg-diagram-node > .lg-icon {
+  color: var(--lg-node-tone);
+}
+.lingui-surface .lg-node-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 600;
+  gap: 16px;
+}
+.lingui-surface .lg-node-description {
+  font-size: 14px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-node-expand {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-diagram-node {
+  position: relative;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lg-panel-radius);
+}
+.lingui-surface button.lg-diagram-node {
+  padding-right: 40px;
+}
+.lingui-surface .lg-node-expand .lg-icon {
+  width: 18px;
+  height: 18px;
+}
+.lingui-surface .lg-node-expand .lg-icon {
+  transition: transform 0.15s;
+}
+.lingui-surface .lg-node-expand.lg-expanded .lg-icon {
+  transform: rotate(180deg);
+}
+.lingui-surface .lg-diagram-children {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lingui-surface .lg-connector {
+  width: 24px;
+  height: 28px;
+  stroke: var(--lingui-line);
+  stroke-width: var(--lingui-lineWidth);
+}
+.lingui-surface .lg-diagram-siblings {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+  border-top: var(--lingui-lineWidth) solid var(--lingui-line);
+  padding-top: 16px;
+}
+
+.lingui-surface .lg-diagram-stage.lg-diagram-accent > .lg-diagram-node {
+  border-color: color-mix(in srgb, var(--lingui-accent) 30%, var(--lingui-border));
+  background: color-mix(in srgb, var(--lingui-accent) 5%, var(--lingui-background));
+}

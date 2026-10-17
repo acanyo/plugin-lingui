@@ -1,0 +1,77 @@
+.lingui-studio .lu-library {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 32px 48px;
+}
+.lingui-studio .lu-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 24px 0 14px;
+}
+.lingui-studio .lu-section-title h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--lu-text);
+}
+.lingui-studio .lu-count {
+  margin-left: 6px;
+  font-size: 11px;
+  font-weight: 400;
+}
+.lingui-studio .lu-library-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.lingui-studio .lu-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.lingui-studio .lu-filter-chips button {
+  border: 0;
+  background: transparent;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+.lingui-studio .lu-filter-chips button.active {
+  background: var(--lu-subtle);
+  color: var(--lu-text);
+}
+.lingui-studio .lu-search {
+  width: 180px;
+  font-size: 12px;
+}
+.lingui-studio .lu-empty {
+  padding: 36px 4px;
+}
+.lingui-studio .lu-empty h3 {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-empty p {
+  margin-top: 8px;
+}
+@container studio (max-width: 620px) {
+  .lingui-studio .lu-library {
+    padding: 24px 20px 40px;
+  }
+  .lingui-studio .lu-page-title {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .lingui-studio .lu-library-tools {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .lingui-studio .lu-search {
+    width: 100%;
+  }
+}

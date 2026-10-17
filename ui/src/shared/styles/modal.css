@@ -1,0 +1,84 @@
+.lu-studio-modal.modal-wrapper .modal-content {
+  border-radius: 16px;
+  background: var(--lu-bg);
+  color: var(--lu-text);
+}
+.lu-studio-modal.modal-wrapper .modal-content :is(.modal-header, .modal-footer) {
+  border-color: var(--lu-border);
+}
+.lu-studio-modal .modal-body {
+  overscroll-behavior: contain;
+}
+.lingui-studio.lu-modal-footer {
+  width: 100%;
+}
+.lingui-studio.lu-modal-footer > .lu-dialog-actions {
+  width: 100%;
+}
+.lingui-studio.lu-modal-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 0;
+  width: 100%;
+  background: transparent;
+}
+.lingui-studio.lu-modal-heading h2 {
+  font-size: 16px;
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lingui-studio.lu-dialog-body .formkit-outer {
+  margin-bottom: 20px;
+  padding: 0;
+  border-width: 0;
+}
+.lingui-studio.lu-dialog-body .formkit-wrapper {
+  gap: 0;
+}
+.lingui-studio.lu-dialog-body .formkit-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+.lingui-studio.lu-dialog-body .formkit-inner {
+  border: 1px solid var(--lu-border);
+  border-radius: var(--lu-control-radius);
+  background: var(--lu-bg);
+  min-height: var(--lu-control-height);
+}
+.lingui-studio.lu-dialog-body .formkit-input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+.lingui-studio.lu-dialog-body textarea.formkit-input {
+  min-height: 88px;
+}
+.lu-studio-modal.modal-wrapper .modal-content {
+  transition-property: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lu-studio-modal .modal-content,
+  .lu-studio-modal .modal-layer {
+    transition: none !important;
+  }
+}
+.lingui-studio :is(.formkit-inner):focus-within {
+  border-color: var(--lu-muted);
+  outline: 2px solid var(--lu-border);
+  outline-offset: 2px;
+}
+.lingui-studio .formkit-inner .formkit-input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.lingui-studio.lu-dialog-body .formkit-message {
+  color: var(--lu-danger);
+  font-size: 12px;
+  margin-top: 6px;
+}

@@ -1,0 +1,66 @@
+// Deliberately small, synthetic data. Demo requests never persist user input.
+export const articles = [
+  {
+    id: 'article-1',
+    name: 'Spring Flux 入门',
+    summary: '用背压连接生产者与消费者。',
+    category: '后端开发',
+    status: '已发布',
+  },
+  {
+    id: 'article-2',
+    name: 'JVM 内存结构',
+    summary: '理解堆、栈和方法区各自负责什么。',
+    category: '后端开发',
+    status: '已发布',
+  },
+  {
+    id: 'article-3',
+    name: '可组合的 UI 组件',
+    summary: '从按钮、表单和布局开始搭建交互。',
+    category: '界面设计',
+    status: '草稿',
+  },
+  {
+    id: 'article-4',
+    name: '接口错误处理',
+    summary: '把超时、网络失败和业务错误解释清楚。',
+    category: '接口实践',
+    status: '已发布',
+  },
+  {
+    id: 'article-5',
+    name: '主题与字体',
+    summary: '用统一的间距、字号和颜色建立阅读节奏。',
+    category: '界面设计',
+    status: '已发布',
+  },
+  {
+    id: 'article-6',
+    name: '响应数据绑定',
+    summary: '把接口字段映射到列表、表格和图表。',
+    category: '接口实践',
+    status: '草稿',
+  },
+  {
+    id: 'article-7',
+    name: '表单校验指南',
+    summary: '提交之前验证内容，提交之后给出反馈。',
+    category: '接口实践',
+    status: '已发布',
+  },
+  {
+    id: 'article-8',
+    name: '异步请求与并发',
+    summary: '处理连续输入，让最新请求的结果生效。',
+    category: '后端开发',
+    status: '已发布',
+  },
+  {
+    id: 'article-9',
+    name: '键盘友好的交互',
+    summary: '用焦点与语义让操作更容易。',
+    category: '界面设计',
+    status: '草稿',
+  },
+]

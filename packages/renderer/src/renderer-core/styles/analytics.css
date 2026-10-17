@@ -1,0 +1,170 @@
+.lingui-surface .lg-analytics {
+  margin: 0;
+  min-width: 0;
+}
+.lingui-surface .lg-analytics figcaption {
+  margin-bottom: 20px;
+}
+.lingui-surface .lg-analytics figcaption p {
+  margin-top: 5px;
+}
+.lingui-surface .lg-gauge-plot {
+  position: relative;
+  width: min(100%, 240px);
+  margin-inline: auto;
+}
+.lingui-surface .lg-gauge-plot svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.lingui-surface :is(.lg-gauge-track, .lg-gauge-value) {
+  stroke-width: 12;
+  stroke-linecap: round;
+}
+.lingui-surface .lg-gauge-track {
+  stroke: var(--lingui-border);
+}
+.lingui-surface .lg-gauge-value {
+  stroke: var(--lingui-accent);
+}
+.lingui-surface .lg-gauge-number {
+  position: absolute;
+  inset: 50% 15% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.35;
+}
+.lingui-surface .lg-gauge-number strong {
+  font-size: 30px;
+  font-weight: 600;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-gauge-number > span {
+  max-width: 100%;
+  text-align: center;
+  color: var(--lingui-muted);
+  font-size: 12px;
+}
+.lingui-surface .lg-gauge-scale {
+  max-width: 240px;
+  margin: 8px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--lingui-muted);
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-gauge-scale > span {
+  min-width: 0;
+}
+.lingui-surface .lg-radar-plot {
+  width: min(100%, 320px);
+  margin-inline: auto;
+}
+.lingui-surface .lg-radar-plot svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.lingui-surface .lg-radar-grid {
+  stroke: var(--lingui-border);
+  stroke-width: 1;
+}
+.lingui-surface .lg-radar-area {
+  fill: color-mix(in srgb, var(--lingui-accent) 14%, transparent);
+  stroke: var(--lingui-accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.lingui-surface .lg-radar-plot text {
+  fill: var(--lingui-muted);
+  font-size: 11px;
+  font-family: inherit;
+}
+.lingui-surface .lg-radar-legend {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+  gap: 8px 24px;
+  color: var(--lingui-muted);
+  font-size: 12px;
+}
+.lingui-surface .lg-radar-legend li {
+  padding-left: 3px;
+}
+.lingui-surface .lg-radar-legend strong {
+  display: block;
+  font-weight: 500;
+  color: var(--lingui-text);
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-heatmap-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+.lingui-surface .lg-heatmap-table {
+  border-collapse: separate;
+  border-spacing: 5px;
+  width: 100%;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-heatmap-table th {
+  font-weight: 500;
+  text-align: center;
+  padding: 4px 8px;
+  color: var(--lingui-muted);
+  white-space: nowrap;
+}
+.lingui-surface .lg-heatmap-table th[scope='row'] {
+  text-align: left;
+}
+.lingui-surface .lg-heatmap-table td {
+  padding: 0;
+  text-align: center;
+}
+.lingui-surface .lg-heatmap-table td > span {
+  display: block;
+  min-width: 44px;
+  padding: 11px 8px;
+  border-radius: var(--lg-detail-radius);
+  white-space: nowrap;
+}
+.lingui-surface .lg-heat-level-0 {
+  background: var(--lingui-surface);
+}
+.lingui-surface .lg-heat-level-1 {
+  background: color-mix(in srgb, var(--lingui-accent) 10%, var(--lingui-background));
+}
+.lingui-surface .lg-heat-level-2 {
+  background: color-mix(in srgb, var(--lingui-accent) 18%, var(--lingui-background));
+}
+.lingui-surface .lg-heat-level-3 {
+  background: color-mix(in srgb, var(--lingui-accent) 28%, var(--lingui-background));
+}
+.lingui-surface .lg-heat-level-4 {
+  background: color-mix(in srgb, var(--lingui-accent) 38%, var(--lingui-background));
+}
+.lingui-surface .lg-heatmap-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 12px;
+}
+.lingui-surface .lg-heatmap-key > span[aria-hidden] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--lg-detail-radius);
+}

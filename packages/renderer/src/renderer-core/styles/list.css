@@ -1,0 +1,24 @@
+.lingui-surface .lg-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lingui-spacing);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+.lingui-surface .lg-list > li {
+  min-width: 0;
+}
+.lingui-surface .lg-list-vertical > li + li {
+  padding-top: var(--lingui-spacing);
+  border-top: 1px solid var(--lingui-border);
+}
+.lingui-surface .lg-list-horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.lingui-surface .lg-list-horizontal > li {
+  flex: 1;
+  min-width: min(180px, 100%);
+}

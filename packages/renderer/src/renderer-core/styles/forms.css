@@ -1,0 +1,186 @@
+.lingui-surface .lg-switch-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: var(--lg-control-height);
+}
+.lingui-surface .lg-switch-copy {
+  min-width: 0;
+  font-size: 14px;
+}
+.lingui-surface .lg-switch-copy .lg-caption {
+  margin-top: 3px;
+}
+/* Keep the visual switch compact while giving it a full control hit area. */
+.lingui-surface .lg-switch {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: var(--lg-control-height);
+  border: 0;
+  border-radius: var(--lg-control-radius);
+  padding: 0;
+  background: transparent;
+}
+.lingui-surface .lg-switch > span {
+  display: block;
+  width: 36px;
+  height: 20px;
+  border: 1px solid var(--lingui-border);
+  border-radius: 99px;
+  padding: 2px;
+  background: var(--lingui-border);
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+}
+.lingui-surface .lg-switch > span::before {
+  content: '';
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--lingui-background);
+  box-shadow: 0 1px 2px #00000016;
+  transition: transform 150ms ease;
+}
+.lingui-surface .lg-switch[aria-checked='true'] > span {
+  background: var(--lingui-accent);
+  border-color: var(--lingui-accent);
+}
+.lingui-surface .lg-switch[aria-checked='true'] > span::before {
+  transform: translateX(16px);
+  background: var(--lingui-on-accent);
+}
+.lingui-surface .lg-switch:not(:disabled):hover > span {
+  border-color: var(--lingui-muted);
+}
+.lingui-surface :is(.lg-segmented-field, .lg-rating) {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+.lingui-surface :is(.lg-segmented-field, .lg-rating) legend {
+  padding: 0;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.lingui-surface .lg-segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  background: var(--lg-field-background);
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lg-control-radius);
+}
+.lingui-surface .lg-segment {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  cursor: pointer;
+}
+.lingui-surface .lg-segment > span {
+  width: 100%;
+  padding: 7px 12px;
+  min-height: 34px;
+  line-height: 1.5;
+  text-align: center;
+  font-size: 14px;
+  border-radius: var(--lg-detail-radius);
+  color: var(--lingui-muted);
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+.lingui-surface .lg-segment:hover > span {
+  color: var(--lingui-text);
+}
+.lingui-surface .lg-segment.lg-active > span {
+  color: var(--lingui-text);
+  background: var(--lingui-background);
+  box-shadow: var(--lg-elevation);
+}
+.lingui-surface :is(.lg-segment, .lg-rating-star) input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  inset: 0;
+  cursor: inherit;
+}
+.lingui-surface .lg-segment:has(input:focus-visible) > span {
+  outline: 2px solid var(--lingui-accent);
+  outline-offset: 1px;
+}
+.lingui-surface .lg-rating-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+.lingui-surface .lg-rating-stars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.lingui-surface .lg-rating-star {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 44px;
+  cursor: pointer;
+  color: var(--lingui-border);
+}
+.lingui-surface .lg-rating-star svg {
+  width: 25px;
+  height: 25px;
+  fill: currentColor;
+  stroke: var(--lingui-muted);
+  stroke-width: 0.6;
+}
+.lingui-surface .lg-rating-star.lg-active {
+  color: var(--lingui-accent);
+}
+.lingui-surface .lg-rating-star:has(input:focus-visible) {
+  outline: 2px solid var(--lingui-accent);
+  outline-offset: 1px;
+  border-radius: var(--lg-detail-radius);
+}
+.lingui-surface .lg-rating-clear {
+  border: 0;
+  padding: 6px 0;
+  background: transparent;
+  color: var(--lingui-muted);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  min-height: 36px;
+}
+.lingui-surface fieldset:disabled .lg-segment {
+  opacity: 0.5;
+  cursor: default;
+}
+.lingui-surface .lg-rating:disabled .lg-rating-star {
+  cursor: default;
+}
+.lingui-surface .lg-segment:has(input:disabled):hover > span {
+  color: var(--lingui-muted);
+}
+.lingui-surface select:disabled {
+  opacity: 0.55;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lingui-surface .lg-switch,
+  .lingui-surface .lg-switch > span,
+  .lingui-surface .lg-switch > span::before {
+    transition: none;
+  }
+}

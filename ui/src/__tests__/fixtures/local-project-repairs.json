@@ -1,0 +1,262 @@
+{
+  "北京实时天气插件": {
+    "integrations": {
+      "apis": [
+        {
+          "name": "loadWeather",
+          "label": "获取实时天气",
+          "description": "调用 Open-Meteo 接口获取北京当前天气观测值",
+          "inputExample": {},
+          "responseExample": {},
+          "url": "https://api.open-meteo.com/v1/forecast?latitude=39.9042&longitude=116.4074&current_weather=true&timezone=Asia/Shanghai",
+          "method": "GET"
+        }
+      ],
+      "callbacks": []
+    },
+    "parameters": [],
+    "schemaVersion": "lingui.document/2",
+    "state": {
+      "error": "",
+      "loaded": false,
+      "loading": false,
+      "response": {},
+      "showDetail": false
+    },
+    "title": "北京实时天气插件",
+    "source": "root = Column({\"children\":[\"title\",\"subtitle\",\"actionRow\",\"errWrap\",\"loadWrap\",\"resultWrap\",\"footer\"],\"id\":\"root\"}, [n1, n2, n3, n7, n13, n15, n39])\nn1 = Text({\"id\":\"title\",\"text\":\"北京 · 实时天气\",\"variant\":\"h2\"}, [])\nn2 = Text({\"id\":\"subtitle\",\"text\":\"数据来源：Open-Meteo 开放接口 · 时区 Asia/Shanghai · 纬度 39.9042 / 经度 116.4074\",\"variant\":\"caption\"}, [])\nn3 = Row({\"align\":\"center\",\"children\":[\"fetchBtn\",\"hintText\"],\"id\":\"actionRow\"}, [n4, n6])\nn4 = Button({\"child\":\"fetchBtnLabel\",\"disabled\":{\"path\":\"/loading\"},\"events\":{\"click\":{\"actions\":[{\"args\":{},\"name\":\"loadWeather\",\"type\":\"api\"}],\"concurrency\":\"drop\",\"errorPath\":\"/error\",\"loadingPath\":\"/loading\",\"onError\":[{\"actions\":[{\"path\":\"/loaded\",\"type\":\"setState\",\"value\":false}],\"type\":\"local\"}],\"onSuccess\":[{\"actions\":[{\"path\":\"/loaded\",\"type\":\"setState\",\"value\":true},{\"path\":\"/error\",\"type\":\"setState\",\"value\":\"\"}],\"type\":\"local\"}],\"resultPath\":\"/response\"}},\"id\":\"fetchBtn\",\"loading\":{\"path\":\"/loading\"},\"size\":\"medium\",\"variant\":\"primary\"}, [n5])\nn5 = Text({\"id\":\"fetchBtnLabel\",\"text\":\"获取实时天气\"}, [])\nn6 = Text({\"id\":\"hintText\",\"text\":\"点击后请求一次接口，只展示最新一次观测结果。\",\"variant\":\"caption\"}, [])\nn7 = LingUI_Conditional({\"child\":\"errBox\",\"condition\":{\"args\":[{\"path\":\"/error\"},\"\"],\"op\":\"neq\"},\"id\":\"errWrap\"}, [n8])\nn8 = Column({\"children\":[\"errAlert\",\"retryRow\"],\"id\":\"errBox\"}, [n9, n10])\nn9 = LingUI_Alert({\"description\":{\"path\":\"/error\"},\"dismissible\":false,\"id\":\"errAlert\",\"title\":\"天气获取失败\",\"tone\":\"danger\",\"value\":{\"path\":\"/error\"}}, [])\nn10 = Row({\"children\":[\"retryBtn\"],\"id\":\"retryRow\"}, [n11])\nn11 = Button({\"child\":\"retryBtnLabel\",\"disabled\":{\"path\":\"/loading\"},\"events\":{\"click\":{\"actions\":[{\"args\":{},\"name\":\"loadWeather\",\"type\":\"api\"}],\"concurrency\":\"drop\",\"errorPath\":\"/error\",\"loadingPath\":\"/loading\",\"onError\":[{\"actions\":[{\"path\":\"/loaded\",\"type\":\"setState\",\"value\":false}],\"type\":\"local\"}],\"onSuccess\":[{\"actions\":[{\"path\":\"/loaded\",\"type\":\"setState\",\"value\":true},{\"path\":\"/error\",\"type\":\"setState\",\"value\":\"\"}],\"type\":\"local\"}],\"resultPath\":\"/response\"}},\"id\":\"retryBtn\",\"variant\":\"secondary\"}, [n12])\nn12 = Text({\"id\":\"retryBtnLabel\",\"text\":\"重新获取\"}, [])\nn13 = LingUI_Conditional({\"child\":\"loadText\",\"condition\":{\"path\":\"/loading\"},\"id\":\"loadWrap\"}, [n14])\nn14 = Text({\"id\":\"loadText\",\"text\":\"正在获取最新天气数据…\",\"variant\":\"body\"}, [])\nn15 = LingUI_Conditional({\"child\":\"resultCard\",\"condition\":{\"path\":\"/loaded\"},\"id\":\"resultWrap\"}, [n16])\nn16 = Card({\"child\":\"resultCol\",\"id\":\"resultCard\",\"variant\":\"soft\"}, [n17])\nn17 = Column({\"children\":[\"resultTitle\",\"obsRow\",\"metricsRow\",\"weatherRow\",\"divider\",\"detailToggle\",\"detailWrap\",\"updateNote\"],\"id\":\"resultCol\"}, [n18, n19, n23, n27, n30, n31, n33, n38])\nn18 = Text({\"id\":\"resultTitle\",\"text\":\"当前天气\",\"variant\":\"h3\"}, [])\nn19 = Row({\"align\":\"center\",\"children\":[\"obsLabel\",\"obsValue\",\"dayStatus\"],\"id\":\"obsRow\"}, [n20, n21, n22])\nn20 = Text({\"id\":\"obsLabel\",\"text\":\"观测时间（当地时间）\",\"variant\":\"caption\"}, [])\nn21 = Text({\"id\":\"obsValue\",\"text\":{\"path\":\"/response/current_weather/time\"},\"variant\":\"body\"}, [])\nn22 = LingUI_Status({\"id\":\"dayStatus\",\"text\":{\"args\":{\"expression\":{\"args\":[{\"args\":[{\"path\":\"/response/current_weather/is_day\"},1],\"op\":\"eq\"},\"白天\",\"夜间\"],\"op\":\"if\"}},\"call\":\"lingui.evaluate\",\"returnType\":\"string\"},\"tone\":\"info\"}, [])\nn23 = Row({\"align\":\"stretch\",\"children\":[\"mTemp\",\"mWind\",\"mDir\"],\"id\":\"metricsRow\"}, [n24, n25, n26])\nn24 = LingUI_Metric({\"description\":\"摄氏度，2 米高度气温\",\"id\":\"mTemp\",\"label\":\"温度 · °C\",\"value\":{\"path\":\"/response/current_weather/temperature\"}}, [])\nn25 = LingUI_Metric({\"description\":\"10 米高度风速\",\"id\":\"mWind\",\"label\":\"风速 · km/h\",\"value\":{\"path\":\"/response/current_weather/windspeed\"}}, [])\nn26 = LingUI_Metric({\"description\":{\"args\":{\"expression\":{\"args\":[{\"args\":[{\"args\":[{\"path\":\"/response/current_weather/winddirection\"},315],\"op\":\"gte\"},{\"args\":[{\"path\":\"/response/current_weather/winddirection\"},45],\"op\":\"lt\"}],\"op\":\"or\"},\"偏北风\",{\"args\":[{\"args\":[{\"path\":\"/response/current_weather/winddirection\"},135],\"op\":\"lt\"},\"偏东风\",{\"args\":[{\"args\":[{\"path\":\"/response/current_weather/winddirection\"},225],\"op\":\"lt\"},\"偏南风\",\"偏西风\"],\"op\":\"if\"}],\"op\":\"if\"}],\"op\":\"if\"}},\"call\":\"lingui.evaluate\",\"returnType\":\"string\"},\"id\":\"mDir\",\"label\":\"风向 · °\",\"value\":{\"path\":\"/response/current_weather/winddirection\"}}, [])\nn27 = Row({\"align\":\"stretch\",\"children\":[\"mWeather\",\"mCode\"],\"id\":\"weatherRow\"}, [n28, n29])\nn28 = LingUI_Metric({\"description\":\"由 WMO 天气代码换算\",\"id\":\"mWeather\",\"label\":\"天气状况\",\"value\":{\"args\":{\"expression\":{\"args\":[{\"args\":[{\"path\":\"/response/current_weather/weathercode\"},0],\"op\":\"eq\"},\"晴朗\",{\"args\":[{\"args\":[{\"path\":\"/response/current_weather/weathercode\"},3],\"op\":\"lte\"},\"多云\",{\"args\":[{\"args\":[{\"path\":\"/response/current_weather/weathercode\"},48],\"op\":\"lte\"},\"有雾\",{\"args\":[{\"args\":[{\"path\":\"/response/current_weather/weathercode\"},67],\"op\":\"lte\"},\"有雨\",{\"args\":[{\"args\":[{\"path\":\"/response/current_weather/weathercode\"},86],\"op\":\"lte\"},\"有雪\",\"雷阵雨\"],\"op\":\"if\"}],\"op\":\"if\"}],\"op\":\"if\"}],\"op\":\"if\"}],\"op\":\"if\"}},\"call\":\"lingui.evaluate\",\"returnType\":\"string\"}}, [])\nn29 = LingUI_Metric({\"description\":\"WMO 天气代码原始值\",\"id\":\"mCode\",\"label\":\"天气代码\",\"value\":{\"path\":\"/response/current_weather/weathercode\"}}, [])\nn30 = Divider({\"id\":\"divider\"}, [])\nn31 = Button({\"action\":{\"functionCall\":{\"args\":{\"actions\":[{\"path\":\"/showDetail\",\"type\":\"toggleState\"}]},\"call\":\"lingui.dispatch\"}},\"child\":\"toggleLabel\",\"id\":\"detailToggle\",\"size\":\"small\",\"variant\":\"text\"}, [n32])\nn32 = Text({\"id\":\"toggleLabel\",\"text\":\"查看 / 收起接口字段\"}, [])\nn33 = LingUI_Conditional({\"child\":\"detailCol\",\"condition\":{\"path\":\"/showDetail\"},\"id\":\"detailWrap\"}, [n34])\nn34 = Column({\"children\":[\"d1\",\"d2\",\"d3\"],\"id\":\"detailCol\"}, [n35, n36, n37])\nn35 = Text({\"id\":\"d1\",\"text\":\"接口：GET https://api.open-meteo.com/v1/forecast\",\"variant\":\"caption\"}, [])\nn36 = Text({\"id\":\"d2\",\"text\":\"参数：latitude=39.9042&longitude=116.4074&current_weather=true&timezone=Asia/Shanghai\",\"variant\":\"caption\"}, [])\nn37 = Text({\"id\":\"d3\",\"text\":\"返回字段：current_weather 中的 temperature、windspeed、winddirection、weathercode、time、is_day\",\"variant\":\"caption\"}, [])\nn38 = Text({\"id\":\"updateNote\",\"text\":\"温度单位 °C，风速单位 km/h，风向 0° 表示正北。数据来自公开气象接口，仅供参考。\",\"variant\":\"caption\"}, [])\nn39 = Text({\"id\":\"footer\",\"text\":\"插件说明：点击按钮后由宿主或预览环境发起请求，数据仅保存在当前作品状态中。\",\"variant\":\"caption\"}, [])"
+  },
+  "知识测验": {
+    "schemaVersion": "lingui.document/1",
+    "title": "知识测验",
+    "parameters": [],
+    "messages": [
+      {
+        "version": "v0.9.1",
+        "createSurface": {
+          "surfaceId": "main",
+          "catalogId": "urn:lingui:catalog:1"
+        }
+      },
+      {
+        "version": "v0.9.1",
+        "updateComponents": {
+          "surfaceId": "main",
+          "components": [
+            {
+              "id": "root",
+              "component": "Card",
+              "child": "content"
+            },
+            {
+              "id": "content",
+              "component": "Column",
+              "children": [
+                "heading",
+                "title",
+                "choices",
+                "submit",
+                "feedback",
+                "retry"
+              ]
+            },
+            {
+              "id": "heading",
+              "component": "Row",
+              "children": [
+                "icon",
+                "caption"
+              ]
+            },
+            {
+              "id": "icon",
+              "component": "Icon",
+              "name": "book"
+            },
+            {
+              "id": "caption",
+              "component": "Text",
+              "text": "知识测验",
+              "variant": "h3"
+            },
+            {
+              "id": "title",
+              "component": "Text",
+              "text": "下面哪一个区域主要存储对象实例？",
+              "variant": "h2"
+            },
+            {
+              "id": "choices",
+              "component": "ChoicePicker",
+              "label": "单选 · JVM 运行时数据区",
+              "value": {
+                "path": "/answer"
+              },
+              "variant": "mutuallyExclusive",
+              "options": [
+                {
+                  "label": "程序计数器",
+                  "value": "counter"
+                },
+                {
+                  "label": "堆内存",
+                  "value": "heap"
+                },
+                {
+                  "label": "虚拟机栈",
+                  "value": "stack"
+                },
+                {
+                  "label": "本地方法栈",
+                  "value": "native"
+                }
+              ]
+            },
+            {
+              "id": "submit",
+              "component": "Button",
+              "child": "submitLabel",
+              "variant": "primary",
+              "action": {
+                "functionCall": {
+                  "call": "lingui.dispatch",
+                  "args": {
+                    "actions": [
+                      {
+                        "type": "setState",
+                        "path": "/submitted",
+                        "value": true
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "submitLabel",
+              "component": "Text",
+              "text": "提交答案",
+              "variant": "body"
+            },
+            {
+              "id": "retry",
+              "component": "LingUI.Conditional",
+              "condition": {
+                "path": "/submitted"
+              },
+              "child": "reset"
+            },
+            {
+              "id": "reset",
+              "component": "Button",
+              "child": "resetLabel",
+              "variant": "text",
+              "action": {
+                "functionCall": {
+                  "call": "lingui.dispatch",
+                  "args": {
+                    "actions": [
+                      {
+                        "type": "reset"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "resetLabel",
+              "component": "Text",
+              "text": "重新作答",
+              "variant": "body"
+            },
+            {
+              "id": "feedback",
+              "component": "LingUI.Conditional",
+              "condition": {
+                "path": "/submitted"
+              },
+              "child": "result"
+            },
+            {
+              "id": "result",
+              "component": "LingUI.Callout",
+              "tone": {
+                "call": "lingui.evaluate",
+                "args": {
+                  "expression": {
+                    "op": "if",
+                    "args": [
+                      {
+                        "op": "includes",
+                        "args": [
+                          {
+                            "path": "/answer"
+                          },
+                          "heap"
+                        ]
+                      },
+                      "success",
+                      "warning"
+                    ]
+                  }
+                }
+              },
+              "child": "resultContent"
+            },
+            {
+              "id": "resultContent",
+              "component": "Column",
+              "children": [
+                "resultTitle",
+                "explanation"
+              ]
+            },
+            {
+              "id": "resultTitle",
+              "component": "Text",
+              "text": {
+                "call": "lingui.evaluate",
+                "args": {
+                  "expression": {
+                    "op": "if",
+                    "args": [
+                      {
+                        "op": "includes",
+                        "args": [
+                          {
+                            "path": "/answer"
+                          },
+                          "heap"
+                        ]
+                      },
+                      "回答正确",
+                      "再想一想，正确答案是堆内存"
+                    ]
+                  }
+                }
+              },
+              "variant": "h3"
+            },
+            {
+              "id": "explanation",
+              "component": "Text",
+              "text": "堆是 JVM 中存储对象实例的主要区域，由所有线程共享，通常也是垃圾收集器管理的核心区域。",
+              "variant": "body"
+            }
+          ]
+        }
+      },
+      {
+        "version": "v0.9.1",
+        "updateDataModel": {
+          "surfaceId": "main",
+          "value": {
+            "answer": [],
+            "submitted": false
+          }
+        }
+      }
+    ]
+  }
+}

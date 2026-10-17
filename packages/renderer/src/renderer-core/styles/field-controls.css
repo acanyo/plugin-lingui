@@ -1,0 +1,379 @@
+/* Shared sizes and states preserve the author's theme tokens, including zero radius. */
+.lingui-surface .lg-size-small {
+  --lg-control-height: 32px;
+}
+.lingui-surface .lg-size-large {
+  --lg-control-height: 48px;
+}
+.lingui-surface .lg-button.lg-size-small {
+  padding: 5px 10px;
+  font-size: 13px;
+}
+.lingui-surface .lg-button.lg-size-large {
+  padding: 11px 18px;
+  font-size: 15px;
+}
+.lingui-surface .lg-icon-button {
+  width: var(--lg-control-height);
+  height: var(--lg-control-height);
+  padding: 8px;
+}
+.lingui-surface .lg-button-spinner {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: lg-control-spin 800ms linear infinite;
+}
+@keyframes lg-control-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.lingui-surface .lg-button-tone-success {
+  --lg-button-color: var(--lingui-success);
+  --lg-button-foreground: var(--lingui-on-success);
+}
+.lingui-surface .lg-button-tone-danger {
+  --lg-button-color: var(--lingui-danger);
+  --lg-button-foreground: var(--lingui-on-danger);
+}
+.lingui-surface .lg-button-tone-warning {
+  --lg-button-color: light-dark(#92621b, #e4b95b);
+  --lg-button-foreground: light-dark(#ffffff, #000000);
+}
+.lingui-surface
+  .lg-button:is(.lg-button-tone-success, .lg-button-tone-danger, .lg-button-tone-warning) {
+  color: var(--lg-button-color);
+}
+.lingui-surface
+  .lg-button-primary:is(.lg-button-tone-success, .lg-button-tone-danger, .lg-button-tone-warning) {
+  background: var(--lg-button-color);
+  color: var(--lg-button-foreground);
+}
+.lingui-surface
+  .lg-button-primary:is(
+    .lg-button-tone-success,
+    .lg-button-tone-danger,
+    .lg-button-tone-warning
+  ):hover:not(:disabled) {
+  background: color-mix(in srgb, var(--lg-button-color) 88%, var(--lg-button-foreground));
+}
+.lingui-surface .lg-input-shell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--lg-control-height);
+  padding: 0 10px;
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lg-control-radius);
+  background: var(--lg-field-background);
+  transition:
+    border-color 150ms,
+    box-shadow 150ms;
+}
+.lingui-surface .lg-input-shell:not(.lg-disabled, .lg-readonly):hover {
+  border-color: color-mix(in srgb, var(--lingui-text) 18%, var(--lingui-border));
+}
+.lingui-surface .lg-input-shell:focus-within {
+  border-color: var(--lingui-accent);
+  box-shadow: var(--lg-focus-shadow);
+  background: var(--lingui-background);
+}
+.lingui-surface .lg-input-shell > :is(input, textarea) {
+  flex: 1 1 0;
+  width: 100%;
+  min-width: 0;
+  min-height: calc(var(--lg-control-height) - 2px);
+  padding: 7px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 14px;
+  line-height: 1.5;
+  outline: 0;
+  box-shadow: none;
+}
+.lingui-surface .lg-input-shell > textarea {
+  resize: vertical;
+  padding: 10px 0;
+  min-height: 104px;
+}
+.lingui-surface .lg-input-multiline {
+  align-items: flex-start;
+}
+.lingui-surface .lg-input-multiline > button {
+  margin-top: 6px;
+}
+.lingui-surface .lg-input-shell > .lg-icon,
+.lingui-surface .lg-input-clear > .lg-icon {
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+.lingui-surface .lg-input-clear {
+  display: inline-flex;
+  flex: 0 0 28px;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  padding: 5px;
+  border: 0;
+  border-radius: var(--lg-detail-radius);
+  background: transparent;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-input-clear:focus-visible {
+  outline-offset: -2px;
+}
+.lingui-surface input[type='search']::-webkit-search-cancel-button {
+  display: none;
+}
+.lingui-surface .lg-input-affix {
+  flex: 0 1 auto;
+  max-width: 35%;
+  color: var(--lingui-muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.lingui-surface .lg-field-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.lingui-surface .lg-input-count {
+  white-space: nowrap;
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-input-shell:is(.lg-disabled, .lg-readonly) {
+  background: var(--lingui-surface);
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-input-shell.lg-readonly {
+  color: var(--lingui-text);
+}
+.lingui-surface .lg-field-status-error {
+  --lg-state-color: var(--lingui-danger);
+}
+.lingui-surface .lg-field-status-warning {
+  --lg-state-color: light-dark(#92621b, #e4b95b);
+}
+.lingui-surface
+  :is(.lg-field-status-error, .lg-field-status-warning)
+  > :is(.lg-input-shell, .lg-select-trigger, .lg-selection-control, .lg-tag-input) {
+  border-color: var(--lg-state-color);
+}
+.lingui-surface
+  :is(.lg-field-status-error, .lg-field-status-warning)
+  > :is(.lg-input-shell, .lg-select-trigger, .lg-selection-control, .lg-tag-input):is(
+    :focus-within,
+    [aria-expanded='true']
+  ) {
+  border-color: var(--lg-state-color);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lg-state-color) 12%, transparent);
+}
+.lingui-surface .lg-field-status-error > .lg-caption,
+.lingui-surface .lg-field-status-error > .lg-field-meta .lg-caption {
+  color: var(--lingui-danger);
+}
+.lingui-surface .lg-select-option:disabled {
+  color: var(--lingui-muted);
+  opacity: 0.55;
+  background: transparent;
+}
+.lingui-surface .lg-option-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lingui-surface .lg-option-copy small {
+  font-size: 12px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-option-group {
+  padding: 10px 9px 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-option-group:not(:first-child) {
+  margin-top: 4px;
+  border-top: 1px solid var(--lg-border-subtle);
+}
+.lingui-surface .lg-option-empty {
+  padding: 24px 12px;
+  font-size: 13px;
+  color: var(--lingui-muted);
+  text-align: center;
+}
+.lingui-surface .lg-selection-search {
+  position: sticky;
+  top: -5px;
+  z-index: 1;
+  background: var(--lingui-background);
+  padding: 4px 3px 8px;
+}
+.lingui-surface .lg-selection-search input {
+  width: 100%;
+  min-width: 0;
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lg-control-radius);
+  background: var(--lg-field-background);
+  font-size: 13px;
+}
+.lingui-surface .lg-selection-control {
+  display: flex;
+  align-items: center;
+  min-height: var(--lg-control-height);
+  min-width: 0;
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lg-control-radius);
+  background: var(--lg-field-background);
+}
+.lingui-surface .lg-selection-control > .lg-select-trigger {
+  border: 0;
+  background: transparent;
+  flex: 1;
+  width: auto;
+  padding: 8px 10px;
+  min-height: calc(var(--lg-control-height) - 2px);
+  box-shadow: none;
+}
+.lingui-surface .lg-selection-control:focus-within,
+.lingui-surface .lg-selection-control:has([aria-expanded='true']) {
+  border-color: var(--lingui-accent);
+  box-shadow: var(--lg-focus-shadow);
+  background: var(--lingui-background);
+}
+.lingui-surface .lg-selected-tags {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 78%;
+  padding: 4px 0 4px 6px;
+}
+.lingui-surface .lg-selected-tags .lg-input-tag {
+  max-width: 160px;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+.lingui-surface .lg-input-tag > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lingui-surface .lg-panel-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px 1px;
+  margin-top: 5px;
+  border-top: 1px solid var(--lg-border-subtle);
+}
+.lingui-surface .lg-panel-footer > button:last-child {
+  margin-left: auto;
+}
+.lingui-surface .lg-badge {
+  border: 1px solid transparent;
+}
+.lingui-surface .lg-badge.lg-tone-info {
+  --lg-tone-color: var(--lingui-accent);
+}
+.lingui-surface .lg-badge.lg-tone-warning {
+  --lg-tone-color: light-dark(#92621b, #e4b95b);
+}
+.lingui-surface .lg-badge.lg-badge-outline {
+  border-color: color-mix(in srgb, var(--lg-tone-color) 30%, var(--lingui-border));
+  background: transparent;
+  color: var(--lg-tone-color);
+}
+.lingui-surface .lg-badge.lg-badge-solid {
+  background: var(--lg-tone-color);
+  color: var(--lingui-on-accent);
+}
+.lingui-surface .lg-badge.lg-badge-solid.lg-tone-success {
+  color: var(--lingui-on-success);
+}
+.lingui-surface .lg-badge.lg-badge-solid.lg-tone-danger {
+  color: var(--lingui-on-danger);
+}
+.lingui-surface .lg-badge.lg-badge-solid.lg-tone-warning {
+  color: light-dark(#ffffff, #000000);
+}
+.lingui-surface .lg-badge-size-medium {
+  min-height: 28px;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+.lingui-surface .lg-badge-size-large {
+  min-height: 32px;
+  padding: 5px 12px;
+  font-size: 14px;
+}
+.lingui-surface .lg-date-icon .lg-icon {
+  width: 17px;
+  height: 17px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-date-panel {
+  padding: 12px;
+}
+.lingui-surface .lg-date-panel .lg-calendar-days {
+  gap: 3px;
+}
+.lingui-surface .lg-date-panel .lg-calendar-days button {
+  padding: 4px;
+  min-height: 32px;
+}
+.lingui-surface .lg-date-panel .lg-calendar-heading {
+  margin-bottom: 8px;
+}
+.lingui-surface .lg-time-entry {
+  margin-top: 12px;
+}
+.lingui-surface .lg-chevron-right {
+  display: inline-flex;
+  transform: rotate(-90deg);
+}
+.lingui-surface .lg-chevron-left {
+  display: inline-flex;
+  transform: rotate(90deg);
+}
+.lingui-surface .lg-chevron-right .lg-icon,
+.lingui-surface .lg-chevron-left .lg-icon {
+  width: 16px;
+  height: 16px;
+}
+.lingui-surface .lg-chevron-right.lg-chevron-open {
+  transform: rotate(0);
+}
+@media (pointer: coarse) {
+  .lingui-surface .lg-size-small {
+    --lg-control-height: 44px;
+  }
+  .lingui-surface .lg-input-clear {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lingui-surface .lg-button-spinner {
+    animation: none;
+    border-style: dotted;
+  }
+}

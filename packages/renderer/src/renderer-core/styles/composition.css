@@ -1,0 +1,124 @@
+.lingui-surface:has(> .lg-column > .lg-section) {
+  padding: var(--lingui-document-inset, clamp(24px, 4cqi, 40px));
+  border-radius: var(--lingui-radius);
+  border: var(--lingui-document-border, 1px) solid var(--lingui-border);
+}
+.lingui-surface .lg-section {
+  min-width: 0;
+  padding: 0;
+}
+.lingui-surface .lg-section + .lg-section {
+  padding-top: calc(var(--lingui-spacing) * 1.6);
+  border-top: 1px solid var(--lg-border-subtle);
+}
+.lingui-surface .lg-section-heading {
+  margin-bottom: var(--lingui-spacing);
+  max-width: 68ch;
+}
+.lingui-surface .lg-eyebrow {
+  margin-bottom: 8px;
+  color: var(--lingui-muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+.lingui-surface .lg-section-heading h2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.lingui-surface .lg-section-description {
+  margin-top: 8px;
+  color: var(--lingui-muted);
+  line-height: 1.6;
+  text-wrap: pretty;
+  font-size: 14px;
+}
+.lingui-surface > .lg-column > .lg-section:first-child > .lg-section-heading h2 {
+  font-size: clamp(24px, 4cqi, 30px);
+  letter-spacing: -0.035em;
+}
+.lingui-surface > .lg-column:has(> .lg-section) {
+  gap: calc(var(--lingui-spacing) * 1.8);
+}
+.lingui-surface .lg-section-content {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--lingui-spacing) * 1.33);
+}
+.lingui-surface .lg-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lingui-spacing);
+  align-items: stretch;
+}
+.lingui-surface .lg-grid > * {
+  min-width: 0;
+}
+.lingui-surface .lg-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.lingui-surface .lg-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.lingui-surface .lg-card-soft {
+  background: var(--lg-field-background);
+  border-color: var(--lg-border-subtle);
+  box-shadow: none;
+}
+.lingui-surface .lg-card-plain {
+  border: 0;
+  padding: 8px 0;
+  box-shadow: none;
+  background: transparent;
+}
+.lingui-surface .lg-grid .lg-card:not(.lg-card-plain) {
+  padding: calc(var(--lingui-spacing) * 1.25);
+  border-radius: var(--lingui-radius);
+}
+.lingui-surface .lg-grid .lg-column {
+  gap: calc(var(--lingui-spacing) * 0.66);
+}
+.lingui-surface .lg-grid .lg-h3 {
+  font-size: 15px;
+}
+.lingui-surface .lg-grid .lg-card > .lg-column > .lg-body {
+  color: var(--lingui-muted);
+  font-size: 14px;
+}
+.lingui-surface .lg-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+@container lingui (max-width: 760px) {
+  .lingui-surface .lg-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container lingui (max-width: 560px) {
+  .lingui-surface .lg-grid-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@container lingui (max-width: 420px) {
+  .lingui-surface .lg-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lingui-surface .lg-section-heading {
+    margin-bottom: 20px;
+  }
+  .lingui-surface .lg-grid .lg-card:not(.lg-card-plain) {
+    padding: var(--lingui-spacing);
+    padding: calc(var(--lingui-spacing) * 1.25);
+    border-radius: var(--lingui-radius);
+  }
+}

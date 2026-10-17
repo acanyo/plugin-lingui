@@ -1,0 +1,149 @@
+.lingui-surface .lg-code-block {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--lg-field-background);
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lg-panel-radius);
+}
+.lingui-surface .lg-code-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  color: var(--lingui-muted);
+  border-bottom: 1px solid var(--lg-border-subtle);
+  font-size: 12px;
+}
+.lingui-surface .lg-code-copy {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--lg-detail-radius);
+  padding: 5px 8px;
+  font-size: 12px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-code-toolbar > span {
+  min-width: 0;
+}
+.lingui-surface .lg-code-copy:hover {
+  color: var(--lingui-text);
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-code-block pre {
+  margin: 0;
+  padding: 20px;
+  overflow: auto;
+  tab-size: 2;
+  font:
+    13px/1.65 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    monospace;
+  white-space: pre;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+.lingui-surface .lg-code-block code {
+  font: inherit;
+}
+.lingui-surface .lg-data-heading {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.lingui-surface .lg-key-value dl {
+  margin: 0;
+}
+.lingui-surface .lg-key-value > h3 {
+  margin-bottom: 12px;
+}
+.lingui-surface .lg-key-value-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.32fr) minmax(0, 1fr);
+  gap: 12px 24px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--lg-border-subtle);
+  font-size: 14px;
+}
+.lingui-surface .lg-key-value-row:last-child {
+  border-bottom: 0;
+}
+.lingui-surface .lg-key-value dt {
+  color: var(--lingui-muted);
+  font-size: 13px;
+}
+.lingui-surface .lg-key-value dd {
+  margin: 0;
+}
+.lingui-surface .lg-bar-chart {
+  margin: 0;
+}
+.lingui-surface .lg-bar-chart figcaption {
+  margin-bottom: 20px;
+}
+.lingui-surface .lg-bar-chart figcaption .lg-caption {
+  margin-top: 6px;
+}
+.lingui-surface .lg-chart-data {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lingui-spacing);
+}
+.lingui-surface .lg-chart-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+.lingui-surface .lg-chart-value {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+.lingui-surface .lg-chart-unit {
+  font-weight: 400;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-chart-track {
+  height: 8px;
+  border-radius: calc(var(--lingui-radius) * 0.5);
+  background: var(--lingui-surface);
+  overflow: hidden;
+}
+.lingui-surface .lg-chart-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--lingui-accent);
+}
+@container lingui (max-width: 420px) {
+  .lingui-surface .lg-code-block pre {
+    padding: 18px;
+    font-size: 12px;
+    padding: 20px;
+    font:
+      13px/1.65 ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      Consolas,
+      monospace;
+  }
+  .lingui-surface .lg-code-toolbar {
+    padding: 10px 14px;
+  }
+  .lingui-surface .lg-key-value-row {
+    gap: 8px 16px;
+  }
+}

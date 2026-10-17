@@ -1,0 +1,129 @@
+plugins {
+    id 'java'
+    id "io.freefair.lombok" version "9.2.0"
+    id "run.halo.plugin.devtools" version "0.8.0"
+}
+
+group 'com.acanyo.halo.plugin.lingui'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('run.halo.tools.platform:plugin:2.26.0')
+    compileOnly 'run.halo.app:api'
+    compileOnly 'run.halo.aifoundation:api:1.0.0'
+    implementation('com.networknt:json-schema-validator:1.5.9') {
+        // Use Halo's logging facade and binding across the plugin classloader boundary.
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+    }
+
+    testImplementation 'run.halo.app:api'
+    testImplementation 'run.halo.aifoundation:api:1.0.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+    options.release = 21
+}
+
+tasks.named('generatePluginComponentsIdx') {
+    notCompatibleWithConfigurationCache('This task invokes "Task.project" at execution time, which is not supported with configuration cache.')
+}
+
+halo {
+    version = '2.26.0'
+}
+
+tasks.register('processUiResources', Sync) {
+    from project(':ui').layout.buildDirectory.dir('dist')
+    into layout.buildDirectory.dir('resources/main/console')
+    dependsOn project(':ui').tasks.named('assemble')
+    shouldRunAfter tasks.named('processResources')
+}
+
+tasks.named('classes') {
+    dependsOn tasks.named('processUiResources')
+}
+
+tasks.named('check') {
+    dependsOn project(':ui').tasks.named('check')
+}
+
+tasks.register('processReaderResources', Sync) {
+    from project(':ui').layout.buildDirectory.dir('reader')
+    from 'src/main/resources/reader'
+    into layout.buildDirectory.dir('resources/main/reader')
+    dependsOn project(':ui').tasks.named('assemble')
+    shouldRunAfter tasks.named('processResources')
+}
+tasks.named('classes') { dependsOn tasks.named('processReaderResources') }
+tasks.named('processResources') {
+    // DevTools normally writes this during JAR creation; local reloads also need a versioned descriptor.
+    inputs.property('pluginVersion', project.version)
+    doLast(run.halo.gradle.YamlPluginVersionSupport.configurePluginYamlVersion(
+        project, file('src/main/resources/plugin.yaml')))
+    exclude 'reader/**'
+    from('packages/renderer/schemas/catalog.json') { into 'protocol' }
+    from('packages/renderer/src/examples/generation-example.json') { into 'protocol' }
+    from('packages/renderer/src/examples/design-guidelines.txt') { into 'protocol' }
+    from('LICENSE') { into 'META-INF/licenses' }
+    from('packages/renderer/src/openui/generation-guidelines.txt') {
+        into 'protocol'
+        rename { 'openui-guidelines.txt' }
+    }
+    from('packages/renderer/schemas/OpenUI-LICENSE') { into 'META-INF/licenses' }
+}
+haloPlugin {
+    openApi {
+        useExistingServer = true
+        groupingRules {
+            linguiApi {
+                displayName = 'LingUI management API'
+                pathsToMatch = ['/apis/lingui.acanyo.com/v1alpha1/**', '/apis/console.api.lingui.acanyo.com/v1alpha1/**']
+            }
+        }
+        groupedApiMappings = ['/v3/api-docs/linguiApi': 'linguiApi.json']
+        generator { outputDir = file("${projectDir}/ui/src/api/generated") }
+    }
+}
+
+tasks.register('exportApiContract', JavaExec) {
+    group = 'development'
+    description = 'Bootstrap OpenAPI from actual Java models when a Halo server is unavailable'
+    dependsOn tasks.named('compileTestJava'), tasks.named('processResources')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.acanyo.halo.plugin.lingui.contracts.ExportApiContract'
+    args layout.buildDirectory.file('api-docs/openapi/v3_0/linguiApi.json').get().asFile.absolutePath
+}
+
+// Prepare the development classpath without creating an installable plugin JAR.
+tasks.register('syncLocalComponentIndex', Copy) {
+    dependsOn tasks.named('generatePluginComponentsIdx')
+    shouldRunAfter tasks.named('processResources')
+    from(layout.buildDirectory.file('tmp/META-INF/plugin-components.idx'))
+    into(layout.buildDirectory.dir('resources/main/META-INF'))
+}
+tasks.named('compileTestJava') { mustRunAfter tasks.named('syncLocalComponentIndex') }
+tasks.named('test') { mustRunAfter tasks.named('syncLocalComponentIndex') }
+tasks.register('prepareLocalPlugin', Copy) {
+    group = 'development'
+    description = 'Prepare classes, component index and runtime dependencies for local Halo reloads'
+    dependsOn tasks.named('classes'), tasks.named('syncLocalComponentIndex')
+    from configurations.runtimeClasspath
+    into layout.buildDirectory.dir('libs')
+}

@@ -1,0 +1,281 @@
+.lingui-studio .lu-draft-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 24px;
+  border: 1px solid var(--lu-border);
+  background: var(--lu-sidebar);
+  border-radius: 10px;
+  margin: 28px 0 36px;
+}
+.lingui-studio .lu-draft-notice > svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-draft-notice strong {
+  font-size: 13px;
+  font-weight: 500;
+}
+.lingui-studio .lu-draft-notice p {
+  margin-top: 6px;
+  color: var(--lu-muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.lingui-studio .lu-draft-notice > span {
+  margin-left: auto;
+}
+.lingui-studio .lu-draft-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 60px 20px;
+  border: 1px dashed var(--lu-border);
+  border-radius: 12px;
+}
+.lingui-studio .lu-draft-empty > svg {
+  width: 30px;
+  height: 30px;
+  color: var(--lu-muted);
+  margin-bottom: 20px;
+}
+.lingui-studio .lu-draft-empty h2 {
+  font-size: 18px;
+  font-weight: 500;
+}
+.lingui-studio .lu-draft-empty p {
+  color: var(--lu-muted);
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 12px 0 24px;
+}
+.lingui-studio .lu-draft-list article {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-project-symbol {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+}
+.lingui-studio .lu-project-symbol svg {
+  width: 19px;
+  height: 19px;
+}
+.lingui-studio .lu-draft-name {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-draft-name h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.lingui-studio .lu-draft-state {
+  color: var(--lu-muted);
+  background: var(--lu-subtle);
+  border-radius: 5px;
+  padding: 3px 8px;
+  font-size: 12px;
+}
+.lingui-studio.lu-submission-editor {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 28px;
+  padding: 20px 8px;
+}
+.lingui-studio .lu-submission-preview {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  background: var(--lu-sidebar);
+  align-self: start;
+}
+.lingui-studio .lu-submission-preview > p {
+  margin-top: 20px;
+  line-height: 1.8;
+}
+.lingui-studio .lu-form-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.lingui-studio .lu-submission-editor form > p,
+.lu-submission-editor form > p {
+  margin: 12px 0 20px;
+}
+@media (max-width: 700px) {
+  .lingui-studio.lu-submission-editor {
+    grid-template-columns: 1fr;
+  }
+}
+@container studio (max-width: 620px) {
+  .lingui-studio .lu-draft-notice {
+    padding: 16px;
+  }
+  .lingui-studio .lu-draft-notice > span {
+    display: none;
+  }
+  .lingui-studio .lu-draft-list article {
+    flex-wrap: wrap;
+  }
+  .lingui-studio .lu-draft-list .lu-toolbar-actions {
+    width: 100%;
+    padding-left: 60px;
+  }
+}
+.lingui-studio.lu-submission-editor .formkit-outer {
+  margin-bottom: 16px;
+  min-width: 0;
+}
+.lingui-studio.lu-submission-editor .formkit-label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 12px;
+}
+.lingui-studio.lu-submission-editor .formkit-input {
+  width: 100%;
+}
+.lingui-studio.lu-submission-editor .formkit-message {
+  color: var(--lu-danger);
+  font-size: 11px;
+  margin-top: 6px;
+}
+.lingui-studio.lu-submission-editor form > * {
+  border-width: 0;
+}
+.lingui-studio.lu-submission-editor .formkit-outer {
+  padding: 0;
+}
+.lingui-studio.lu-submission-editor .formkit-wrapper {
+  gap: 0;
+}
+.lingui-studio.lu-submission-editor .formkit-inner {
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  background: var(--lu-bg);
+  min-height: 36px;
+}
+.lingui-studio.lu-submission-editor .formkit-inner .formkit-input {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.lingui-studio.lu-submission-editor .formkit-outer[data-invalid] .formkit-inner {
+  border-color: var(--lu-danger);
+}
+.lingui-studio .lu-market-account {
+  flex-wrap: wrap;
+}
+.lingui-studio .lu-market-account > div:first-of-type {
+  flex: 1;
+  min-width: min(100%, 180px);
+}
+.lingui-studio .lu-market-account > div:first-of-type p {
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-market-account .lu-toolbar-actions {
+  flex-wrap: wrap;
+}
+.lingui-studio .lu-my-submissions {
+  margin-bottom: 36px;
+}
+.lingui-studio .lu-draft-state[data-status='PENDING'] {
+  color: #806012;
+  background: #fcf6e6;
+}
+.lingui-studio .lu-draft-state[data-status='REJECTED'] {
+  color: var(--lu-danger);
+}
+.lingui-studio.lu-market-connect {
+  padding: 12px 8px;
+}
+.lingui-studio.lu-market-connect p,
+.lingui-studio.lu-market-connect li {
+  font-size: 13px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.lingui-studio.lu-market-connect ol {
+  margin: 20px 0;
+  padding-left: 20px;
+  list-style: decimal;
+}
+.lingui-studio.lu-market-connect li {
+  margin: 10px 0;
+}
+.lingui-studio.lu-market-connect a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.lingui-studio.lu-market-connect form {
+  margin: 20px 0;
+}
+.lingui-studio.lu-market-connect .formkit-outer {
+  margin-bottom: 18px;
+}
+.lingui-studio.lu-market-connect .formkit-label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.lingui-studio.lu-market-connect .formkit-inner {
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.lingui-studio.lu-market-connect .formkit-input {
+  width: 100%;
+}
+.lingui-studio.lu-market-connect .formkit-message {
+  color: var(--lu-danger);
+  margin-top: 6px;
+  font-size: 12px;
+}
+.lingui-studio .lu-market-target {
+  display: grid;
+  gap: 10px;
+  margin: 24px 0;
+  font-size: 13px;
+}
+.lingui-studio .lu-remote-detail {
+  padding: 12px 8px;
+}
+@media (max-width: 480px) {
+  .lingui-studio .lu-form-pair {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}
+.lingui-studio .lu-remote-detail > .lingui-renderer-host {
+  margin: 24px 0;
+}
+
+.lingui-studio .lu-theme-submission-picker .lu-project-picker-item > .lu-theme-thumbnail {
+  display: flex;
+  width: 62px;
+  flex: 0 0 62px;
+  padding: 8px;
+  gap: 5px;
+  margin: 0;
+}
+.lingui-studio .lu-theme-submission-picker .lu-project-picker-item > span:not(.lu-theme-thumbnail) {
+  flex: 1;
+  min-width: 0;
+}
+.lingui-studio .lu-theme-submission-picker .lu-theme-mini-body {
+  display: none;
+}

@@ -1,0 +1,104 @@
+.lu-interaction-graph {
+  min-width: 0;
+}
+.lu-graph-trigger,
+.lu-graph-end {
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  padding: 10px;
+  background: var(--lu-bg);
+  font-size: 12px;
+}
+.lu-graph-trigger strong {
+  overflow-wrap: anywhere;
+}
+.lu-graph-branches {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 12px 0;
+  overflow: auto;
+}
+.lu-graph-branches > section {
+  min-width: 130px;
+  border: 1px dashed var(--lu-border);
+  border-radius: 8px;
+  padding: 8px;
+}
+.lu-graph-branches h4 {
+  font-size: 12px;
+  margin: 0 0 10px;
+}
+.lu-graph-branches ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.lu-graph-branches li {
+  position: relative;
+  padding-bottom: 22px;
+}
+.lu-graph-branches li:after {
+  content: '↓';
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  color: var(--lu-muted);
+}
+.lu-graph-node {
+  display: grid;
+  gap: 6px;
+  text-align: left;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+  background: var(--lu-bg);
+  color: inherit;
+  overflow-wrap: anywhere;
+  font-size: 11px;
+  cursor: pointer;
+}
+.lu-graph-node[aria-pressed='true'],
+.lu-graph-branches [data-phase='start'] .lu-graph-node {
+  border-color: var(--lu-accent);
+  box-shadow: 0 0 0 1px var(--lu-accent);
+}
+.lu-graph-branches [data-phase='error'] .lu-graph-node {
+  border-color: #dc2626;
+}
+.lu-graph-branches [data-phase='success'] .lu-graph-node {
+  border-color: #16a34a;
+}
+.lu-graph-tools {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+.lu-graph-tools button {
+  border: 1px solid var(--lu-border);
+  border-radius: 4px;
+  background: var(--lu-bg);
+  color: inherit;
+  cursor: pointer;
+  font-size: 11px;
+}
+.lu-graph-edit {
+  border-top: 1px solid var(--lu-border);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+.lu-graph-branches .lu-error {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .lu-graph-branches {
+    grid-template-columns: 1fr;
+  }
+  .lu-graph-branches > section {
+    min-width: 0;
+  }
+}

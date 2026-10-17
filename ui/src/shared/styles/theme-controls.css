@@ -1,0 +1,167 @@
+.lingui-studio .lu-theme-controls {
+  min-width: 0;
+  border: 1px solid var(--lu-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.lingui-studio .lu-theme-controls-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--lu-border);
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-theme-controls-heading > strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+}
+.lingui-studio .lu-theme-controls-heading > button {
+  flex-shrink: 0;
+  font-size: 11px;
+  padding-inline: 0;
+}
+.lingui-studio .lu-theme-control-section {
+  padding: 20px 18px;
+}
+.lingui-studio .lu-theme-control-section + .lu-theme-control-section {
+  border-top: 1px solid var(--lu-border);
+}
+.lingui-studio .lu-theme-control-section h2 {
+  margin-bottom: 16px;
+}
+.lingui-studio .lu-theme-control-section > .lu-muted {
+  font-size: 12px;
+  margin: -6px 0 18px;
+}
+.lingui-studio .lu-theme-control-section .lu-field:last-child {
+  margin-bottom: 0;
+}
+.lingui-studio .lu-theme-color-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px;
+  align-items: center;
+  gap: 6px 10px;
+  margin-top: 10px;
+  font-size: 12px;
+}
+.lingui-studio .lu-theme-color-control {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  padding: 3px 7px 3px 3px;
+  min-width: 0;
+}
+.lingui-studio .lu-theme-color-control:focus-within {
+  border-color: var(--lu-muted);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--lu-text) 6%, transparent);
+}
+.lingui-studio .lu-theme-color-control input[type='color'] {
+  appearance: none;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+}
+.lingui-studio .lu-theme-color-control input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.lingui-studio .lu-theme-color-control input[type='color']::-webkit-color-swatch {
+  border: 1px solid #80808040;
+  border-radius: 5px;
+}
+.lingui-studio .lu-theme-color-control input[type='color']::-moz-color-swatch {
+  border: 1px solid #80808040;
+  border-radius: 5px;
+}
+.lingui-studio .lu-theme-color-control input:not([type='color']) {
+  width: 100%;
+  min-width: 0;
+  padding: 3px 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  box-shadow: none;
+}
+.lingui-studio .lu-theme-color-control.invalid {
+  border-color: var(--lu-danger);
+}
+.lingui-studio .lu-theme-color-error {
+  grid-column: 1 / -1;
+  color: var(--lu-danger);
+  font-size: 11px;
+}
+.lingui-studio .lu-theme-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.lingui-studio .lu-theme-slider > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+}
+.lingui-studio .lu-theme-slider output {
+  color: var(--lu-text);
+  font-variant-numeric: tabular-nums;
+}
+.lingui-studio .lu-theme-slider output small {
+  color: var(--lu-muted);
+  font-size: 10px;
+}
+.lingui-studio .lu-theme-slider input {
+  width: 100%;
+  min-width: 0;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+}
+.lingui-studio .lu-theme-controls .lu-advanced {
+  margin: 0;
+  padding: 18px;
+}
+.lingui-studio .lu-theme-controls .lu-advanced > * + * {
+  margin-top: 12px;
+}
+.lingui-studio .lu-theme-controls input[type='file'] {
+  width: 100%;
+  font-size: 11px;
+}
+.lingui-studio .lu-theme-controls input[type='file']::file-selector-button {
+  border: 1px solid var(--lu-border);
+  border-radius: 6px;
+  padding: 6px;
+  margin-right: 8px;
+  background: var(--lu-subtle);
+  color: var(--lu-text);
+}
+.lingui-studio .lu-theme-controls > :is(.danger, .lu-error) {
+  margin: 8px 18px 18px;
+}
+@media (pointer: coarse) {
+  .lingui-studio .lu-theme-color-control {
+    min-height: 44px;
+  }
+  .lingui-studio .lu-theme-slider input {
+    min-height: 32px;
+  }
+}

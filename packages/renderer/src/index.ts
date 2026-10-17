@@ -1,0 +1,6 @@
+export * from './core'
+export { mountRenderer, renderStatic, type RendererHandle } from './mount/mount'
+export { registerCustomElements } from './mount/custom-elements'
+export { isComponentReference, loadComponentReference } from './mount/reference'
+export { componentRegistry } from './renderer-core/registry'
+export { default as SvelteRenderer } from './renderer-core/LinguiRenderer.svelte'

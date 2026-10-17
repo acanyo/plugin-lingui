@@ -1,0 +1,152 @@
+.lingui-surface .lg-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--lg-control-height);
+  padding: 8px 12px;
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lg-control-radius);
+  background: var(--lg-field-background);
+  color: var(--lingui-text);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: start;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
+}
+.lingui-surface .lg-select-trigger:not(:disabled, [aria-readonly='true']):hover {
+  border-color: color-mix(in srgb, var(--lingui-text) 18%, var(--lingui-border));
+}
+.lingui-surface .lg-select-trigger:is(:focus-visible, [aria-expanded='true']) {
+  outline: 0;
+  border-color: var(--lingui-accent);
+  box-shadow: var(--lg-focus-shadow);
+  background: var(--lingui-background);
+}
+.lingui-surface .lg-select-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lingui-surface .lg-select-trigger.lg-select-placeholder {
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-select-trigger[aria-readonly='true'] {
+  cursor: default;
+  background: var(--lingui-surface);
+}
+.lingui-surface .lg-select-trigger:disabled {
+  color: var(--lingui-muted);
+  background: var(--lingui-surface);
+}
+.lingui-surface .lg-select-trigger > .lg-select-chevron {
+  display: inline-flex;
+  flex: 0 0 auto;
+  transition: transform 150ms ease;
+}
+.lingui-surface .lg-select-trigger > .lg-select-chevron .lg-icon,
+.lingui-surface .lg-select-check .lg-icon {
+  width: 16px;
+  height: 16px;
+}
+.lingui-surface .lg-select-trigger[aria-expanded='true'] > .lg-select-chevron {
+  transform: rotate(180deg);
+}
+.lingui-surface .lg-select-panel {
+  position: fixed;
+  inset: auto;
+  z-index: 1000;
+  margin: 0;
+  padding: 5px;
+  min-width: 0;
+  max-width: calc(100vw - 16px);
+  max-height: 320px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lg-panel-radius);
+  background: var(--lingui-background);
+  color: var(--lingui-text);
+  box-shadow: var(--lg-overlay-shadow);
+}
+.lingui-surface .lg-select-panel::backdrop {
+  background: transparent;
+  pointer-events: none;
+}
+.lingui-surface .lg-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: var(--lg-detail-radius);
+  background: transparent;
+  color: var(--lingui-text);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: start;
+}
+.lingui-surface .lg-select-option > span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.lingui-surface .lg-select-option-empty {
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-select-option[aria-selected='true'] {
+  background: var(--lg-selected);
+  font-weight: 500;
+}
+.lingui-surface .lg-select-option:is(:hover, .lg-select-option-active) {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-select-option-active {
+  border-color: var(--lg-border-subtle);
+}
+.lingui-surface .lg-select-check {
+  display: inline-flex;
+  flex: 0 0 16px;
+  width: 16px;
+  color: var(--lingui-accent);
+}
+.lingui-surface .lg-select-check .lg-icon {
+  color: inherit;
+}
+@media (pointer: coarse) {
+  .lingui-surface .lg-select-option {
+    min-height: 44px;
+  }
+}
+@media (forced-colors: active) {
+  .lingui-surface .lg-select-trigger,
+  .lingui-surface .lg-select-panel {
+    border-color: ButtonText;
+  }
+  .lingui-surface .lg-select-trigger:disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+  .lingui-surface .lg-select-option-active {
+    outline: 1px solid Highlight;
+    outline-offset: -2px;
+  }
+  .lingui-surface .lg-select-option[aria-selected='true'] {
+    border-color: Highlight;
+  }
+  .lingui-surface .lg-select-check {
+    color: ButtonText;
+  }
+}

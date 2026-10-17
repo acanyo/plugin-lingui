@@ -1,0 +1,5 @@
+LingUI uses OpenUI Lang and the Svelte OpenUI renderer.
+Packages: @openuidev/lang-core 0.4.1, @openuidev/svelte-lang 0.4.1
+Upstream: https://www.openui.com/docs/api-reference/svelte-lang
+License: MIT (META-INF/licenses/OpenUI-LICENSE)
+The 100 custom components use LingUI's catalog urn:lingui:openui:1.

@@ -1,0 +1,10 @@
+node_modules/
+**/build/
+**/dist/
+ui/src/api/generated/
+packages/renderer/src/protocol/generated/
+packages/renderer/schemas/
+pnpm-lock.yaml
+.agents/
+.codex/
+output/

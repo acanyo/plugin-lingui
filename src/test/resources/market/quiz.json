@@ -1,0 +1,270 @@
+{
+  "schemaVersion": "lingui.marketplace/1",
+  "title": "知识测验",
+  "description": "验证受控作品包的兼容性",
+  "category": "交互组件",
+  "author": "验收作者",
+  "version": "1.0.0",
+  "license": "MIT",
+  "notes": "",
+  "instance": {
+    "schemaVersion": "lingui.instance/1",
+    "document": {
+      "schemaVersion": "lingui.document/1",
+      "title": "知识测验",
+      "parameters": [],
+      "messages": [
+        {
+          "version": "v0.9.1",
+          "createSurface": {
+            "surfaceId": "main",
+            "catalogId": "urn:lingui:catalog:1"
+          }
+        },
+        {
+          "version": "v0.9.1",
+          "updateComponents": {
+            "surfaceId": "main",
+            "components": [
+              {
+                "id": "root",
+                "component": "Card",
+                "child": "content"
+              },
+              {
+                "id": "content",
+                "component": "Column",
+                "children": [
+                  "heading",
+                  "title",
+                  "choices",
+                  "submit",
+                  "feedback",
+                  "retry"
+                ]
+              },
+              {
+                "id": "heading",
+                "component": "Row",
+                "children": [
+                  "icon",
+                  "caption"
+                ]
+              },
+              {
+                "id": "icon",
+                "component": "Icon",
+                "name": "book"
+              },
+              {
+                "id": "caption",
+                "component": "Text",
+                "text": "知识测验",
+                "variant": "h3"
+              },
+              {
+                "id": "title",
+                "component": "Text",
+                "text": "下面哪一个区域主要存储对象实例？",
+                "variant": "h2"
+              },
+              {
+                "id": "choices",
+                "component": "ChoicePicker",
+                "label": "单选 · JVM 运行时数据区",
+                "value": {
+                  "path": "/answer"
+                },
+                "variant": "mutuallyExclusive",
+                "options": [
+                  {
+                    "label": "程序计数器",
+                    "value": "counter"
+                  },
+                  {
+                    "label": "堆内存",
+                    "value": "heap"
+                  },
+                  {
+                    "label": "虚拟机栈",
+                    "value": "stack"
+                  },
+                  {
+                    "label": "本地方法栈",
+                    "value": "native"
+                  }
+                ]
+              },
+              {
+                "id": "submit",
+                "component": "Button",
+                "child": "submitLabel",
+                "variant": "primary",
+                "action": {
+                  "functionCall": {
+                    "call": "lingui.dispatch",
+                    "args": {
+                      "actions": [
+                        {
+                          "type": "setState",
+                          "path": "/submitted",
+                          "value": true
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "id": "submitLabel",
+                "component": "Text",
+                "text": "提交答案",
+                "variant": "body"
+              },
+              {
+                "id": "retry",
+                "component": "LingUI.Conditional",
+                "condition": {
+                  "path": "/submitted"
+                },
+                "child": "reset"
+              },
+              {
+                "id": "reset",
+                "component": "Button",
+                "child": "resetLabel",
+                "variant": "text",
+                "action": {
+                  "functionCall": {
+                    "call": "lingui.dispatch",
+                    "args": {
+                      "actions": [
+                        {
+                          "type": "reset"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "id": "resetLabel",
+                "component": "Text",
+                "text": "重新作答",
+                "variant": "body"
+              },
+              {
+                "id": "feedback",
+                "component": "LingUI.Conditional",
+                "condition": {
+                  "path": "/submitted"
+                },
+                "child": "result"
+              },
+              {
+                "id": "result",
+                "component": "LingUI.Callout",
+                "tone": {
+                  "call": "lingui.evaluate",
+                  "args": {
+                    "expression": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "includes",
+                          "args": [
+                            {
+                              "path": "/answer"
+                            },
+                            "heap"
+                          ]
+                        },
+                        "success",
+                        "warning"
+                      ]
+                    }
+                  }
+                },
+                "child": "resultContent"
+              },
+              {
+                "id": "resultContent",
+                "component": "Column",
+                "children": [
+                  "resultTitle",
+                  "explanation"
+                ]
+              },
+              {
+                "id": "resultTitle",
+                "component": "Text",
+                "text": {
+                  "call": "lingui.evaluate",
+                  "args": {
+                    "expression": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "includes",
+                          "args": [
+                            {
+                              "path": "/answer"
+                            },
+                            "heap"
+                          ]
+                        },
+                        "回答正确",
+                        "再想一想，正确答案是堆内存"
+                      ]
+                    }
+                  }
+                },
+                "variant": "h3"
+              },
+              {
+                "id": "explanation",
+                "component": "Text",
+                "text": "堆是 JVM 中存储对象实例的主要区域，由所有线程共享，通常也是垃圾收集器管理的核心区域。",
+                "variant": "body"
+              }
+            ]
+          }
+        },
+        {
+          "version": "v0.9.1",
+          "updateDataModel": {
+            "surfaceId": "main",
+            "value": {
+              "answer": [],
+              "submitted": false
+            }
+          }
+        }
+      ]
+    },
+    "parameters": {},
+    "theme": {
+      "schemaVersion": "lingui.theme/1",
+      "id": "pure",
+      "name": "Pure · 纯净白",
+      "mode": "light",
+      "colors": {
+        "background": "#ffffff",
+        "surface": "#f7f7f8",
+        "text": "#0d0d0d",
+        "muted": "#666666",
+        "accent": "#2563eb",
+        "border": "#e5e5e5",
+        "success": "#247548",
+        "danger": "#b83d38",
+        "line": "#e5e5e5"
+      },
+      "radius": 16,
+      "spacing": 18,
+      "iconSize": 20,
+      "lineWidth": 1,
+      "shadow": 0,
+      "font": "system"
+    }
+  }
+}

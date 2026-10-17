@@ -1,0 +1,6 @@
+packages:
+  - ui
+  - packages/**
+onlyBuiltDependencies:
+  - "@parcel/watcher"
+  - esbuild

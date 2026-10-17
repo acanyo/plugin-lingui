@@ -1,0 +1,172 @@
+.lingui-studio.lu-external-ai {
+  padding: 24px;
+}
+.lingui-studio .lu-external-ai-intro {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.lingui-studio .lu-external-ai-mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  height: 44px;
+  border: 1px solid var(--lu-border);
+  border-radius: 12px;
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-external-ai-intro h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.lingui-studio .lu-external-ai p {
+  font-size: 12px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-external-ai-intro p {
+  margin-top: 4px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-external-ai-steps {
+  display: grid;
+  gap: 18px;
+  list-style: none;
+  padding: 24px 0;
+  margin: 0;
+}
+.lingui-studio .lu-external-ai-steps li {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+}
+.lingui-studio .lu-external-ai-steps li > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 24px;
+  height: 24px;
+  font-size: 11px;
+  border: 1px solid var(--lu-border);
+  border-radius: 50%;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-external-ai-steps strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+.lingui-studio .lu-external-ai-steps p {
+  margin-top: 3px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-external-ai-connection {
+  border: 1px solid var(--lu-border);
+  border-radius: 12px;
+  padding: 18px;
+}
+.lingui-studio .lu-external-ai-connection label {
+  font-size: 13px;
+  font-weight: 500;
+}
+.lingui-studio .lu-external-ai-connection .formkit-help {
+  font-size: 12px;
+  color: var(--lu-muted);
+  line-height: 1.8;
+  margin-top: 8px;
+}
+.lingui-studio .lu-external-ai-endpoint {
+  display: grid;
+  gap: 8px;
+}
+.lingui-studio .lu-external-ai-endpoint > span {
+  color: var(--lu-muted);
+  font-size: 11px;
+}
+.lingui-studio .lu-external-ai code {
+  font:
+    11px/1.8 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-external-ai-help {
+  margin-top: 12px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-external-ai-notice {
+  margin-top: 12px;
+  color: var(--lu-danger);
+}
+.lingui-studio .lu-external-ai-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.lingui-studio .lu-external-ai-feedback {
+  color: var(--lu-accent);
+  margin-top: 10px;
+}
+.lingui-studio .lu-external-ai details {
+  border-top: 1px solid var(--lu-border);
+  margin-top: 18px;
+  padding-top: 12px;
+}
+.lingui-studio .lu-external-ai summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-external-ai pre {
+  max-height: 220px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 14px;
+  margin-top: 12px;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  background: var(--lu-sidebar);
+  font:
+    11px/1.8 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+}
+.lingui-studio .lu-external-ai-scope {
+  margin-top: 18px;
+  color: var(--lu-muted);
+}
+.lingui-studio .lu-external-ai-scope > p + p {
+  margin-top: 8px;
+}
+.lingui-studio .lu-external-ai-scope > p:first-child {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+}
+.lingui-studio .lu-external-ai-scope svg {
+  margin-top: 3px;
+}
+.lingui-studio .lu-external-ai-scope code {
+  display: inline-block;
+}
+.lingui-studio .lu-external-ai-scope strong {
+  color: var(--lu-text);
+  font-weight: 500;
+}
+@media (max-width: 600px) {
+  .lingui-studio.lu-external-ai {
+    padding: 18px 16px;
+  }
+  .lingui-studio .lu-external-ai-mark {
+    display: none;
+  }
+  .lingui-studio .lu-external-ai-connection {
+    padding: 14px;
+  }
+  .lingui-studio .lu-external-ai-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

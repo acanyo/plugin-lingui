@@ -1,0 +1,109 @@
+.lu-integrations {
+  padding: 0 24px 24px;
+}
+.lu-integration-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 28px;
+  min-height: 420px;
+}
+.lu-integration-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-right: 20px;
+  border-right: 1px solid var(--lu-border);
+  min-width: 0;
+}
+.lu-integration-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+.lu-integration-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 10px;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+.lu-integration-item code {
+  grid-row: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--lu-muted);
+  font-size: 12px;
+}
+.lu-integration-item span {
+  font-size: 11px;
+}
+.lu-integration-item:hover,
+.lu-integration-item.active {
+  background: var(--lu-subtle);
+  border-color: var(--lu-border);
+}
+.lu-integration-form {
+  min-width: 0;
+}
+.lu-api-test-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.lu-integration-welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px;
+}
+.lu-integrations pre,
+.lu-data-bindings pre {
+  max-height: 260px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.lu-dependency-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 0;
+}
+.lu-dependency-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+}
+.lu-dependency-item code {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 640px) {
+  .lu-integrations {
+    padding: 0 12px 16px;
+  }
+  .lu-integration-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .lu-integration-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--lu-border);
+    padding: 0 0 16px;
+  }
+  .lu-integration-list {
+    max-height: 160px;
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "plugin-lingui",
+  "description": "灵构 UI · 面向 Halo 的 AI 交互创作工作台，支持 AI 对话生成、可视化组件搭建、主题定制、MCP / Skill 接入与组件市场。",
+  "private": true,
+  "author": {
+    "name": "acanyo",
+    "url": "https://xhhao.com"
+  },
+  "homepage": "https://github.com/acanyo/plugin-lingui#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acanyo/plugin-lingui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/acanyo/plugin-lingui/issues"
+  },
+  "license": "GPL-3.0-only",
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "build": "pnpm build:renderer && pnpm build:ui",
+    "test": "pnpm build:renderer && pnpm --filter @lingui/console test:unit --run",
+    "generate:catalog": "python3 scripts/generate-catalog.py && node scripts/compile-validators.mjs",
+    "format": "pnpm --filter @lingui/renderer format && pnpm --filter @lingui/console format",
+    "studio": "pnpm --filter @lingui/console studio",
+    "export:api-applications": "node scripts/export-api-applications.mjs",
+    "build:renderer": "pnpm --filter @lingui/renderer build",
+    "build:ui": "pnpm --filter @lingui/console build",
+    "check": "pnpm --filter @lingui/renderer check && pnpm --filter @lingui/console type-check"
+  }
+}

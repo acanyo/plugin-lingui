@@ -1,0 +1,59 @@
+plugins {
+    id 'base'
+    id "com.github.node-gradle.node" version "7.1.0"
+}
+
+group 'com.acanyo.halo.plugin.lingui.ui'
+
+node {
+    nodeProjectDir = rootProject.projectDir
+    pnpmVersion = '10.33.0'
+    // With a system Node, node-gradle otherwise invokes whichever pnpm is on PATH.
+    def executable = System.getProperty('os.name').toLowerCase().contains('windows')
+        ? 'pnpm.cmd' : 'bin/pnpm'
+    pnpmCommand = pnpmWorkDir.file("pnpm-v${pnpmVersion.get()}/${executable}").get().asFile.absolutePath
+}
+
+tasks.register('pnpmBuildRenderer', PnpmTask) {
+    group = 'build'
+    pnpmCommand = ['--filter', '@lingui/renderer', 'run', 'build']
+    dependsOn tasks.named('pnpmInstall')
+    inputs.dir(rootProject.layout.projectDirectory.dir('packages/renderer/src'))
+    inputs.dir(rootProject.layout.projectDirectory.dir('packages/renderer/schemas'))
+    inputs.files(fileTree(dir: rootProject.file('packages/renderer'), includes: ['*.ts', '*.js', '*.json']))
+    outputs.dir(rootProject.layout.projectDirectory.dir('packages/renderer/dist'))
+    outputs.dir(layout.buildDirectory.dir('reader'))
+}
+
+tasks.register('pnpmBuild', PnpmTask) {
+    group = 'build'
+    description = 'Build the UI project using pnpm'
+    pnpmCommand = ['--filter', '@lingui/console', 'run', 'build']
+    dependsOn tasks.named('pnpmBuildRenderer')
+    inputs.dir(layout.projectDirectory.dir('src'))
+    inputs.dir(rootProject.layout.projectDirectory.dir('packages/renderer/dist'))
+    inputs.files(fileTree(
+        dir: layout.projectDirectory,
+        includes: ['*.cjs', '*.ts', '*.js', '*.json', '*.yaml']))
+    outputs.dir(layout.buildDirectory.dir('dist'))
+}
+
+tasks.register('pnpmCheck', PnpmTask) {
+    group = 'verification'
+    description = 'Run unit tests for the UI project using pnpm'
+    pnpmCommand = ['--filter', '@lingui/console', 'run', 'test:unit', '--run']
+    dependsOn tasks.named('pnpmBuildRenderer')
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('pnpmCheck')
+}
+
+tasks.named('assemble') {
+    dependsOn tasks.named('pnpmBuild')
+}
+
+tasks.withType(PnpmTask).configureEach {
+    workingDir = rootProject.layout.projectDirectory
+    environment.put('npm_config_manage_package_manager_versions', 'false')
+}

@@ -1,0 +1,197 @@
+.lingui-surface :is(.lg-range-field, .lg-transfer) {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 12px;
+}
+.lingui-surface :is(.lg-range-field, .lg-transfer) > legend {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 0 10px;
+}
+.lingui-surface .lg-range-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 22px;
+  line-height: 1.4;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-range-summary > span:nth-child(2) {
+  color: var(--lingui-muted);
+  font-size: 14px;
+}
+.lingui-surface .lg-range-controls {
+  display: grid;
+  gap: 12px;
+}
+.lingui-surface .lg-range-controls label {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-range-controls input {
+  width: 100%;
+  min-width: 0;
+  accent-color: var(--lingui-accent);
+  margin: 0;
+}
+.lingui-surface .lg-date-range {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  gap: 12px;
+}
+.lingui-surface :is(.lg-number-stepper, .lg-password-input) {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--lingui-border);
+  border-radius: var(--lg-control-radius);
+  padding: 3px;
+  background: var(--lg-field-background);
+  min-height: var(--lg-control-height);
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.lingui-surface :is(.lg-number-stepper, .lg-password-input):focus-within {
+  border-color: var(--lingui-accent);
+  box-shadow: var(--lg-focus-shadow);
+}
+.lingui-surface :is(.lg-number-stepper, .lg-password-input) input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  padding: 6px 8px;
+  background: transparent;
+  color: var(--lingui-text);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.lingui-surface :is(.lg-number-stepper, .lg-password-input) input:focus {
+  outline: 0;
+}
+.lingui-surface .lg-number-stepper input {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+}
+.lingui-surface .lg-number-stepper input::-webkit-inner-spin-button {
+  appearance: none;
+}
+.lingui-surface :is(.lg-number-stepper, .lg-password-input) button {
+  flex: 0 0 auto;
+  min-width: 32px;
+  min-height: 32px;
+  border: 0;
+  border-radius: var(--lg-detail-radius);
+  padding: 4px 10px;
+  background: transparent;
+  color: var(--lingui-text);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.lingui-surface .lg-toggle-field {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+.lingui-surface .lg-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: var(--lg-control-height);
+  max-width: 100%;
+  text-align: left;
+  line-height: 1.5;
+  border: 1px solid var(--lingui-border);
+  background: var(--lingui-background);
+  color: var(--lingui-text);
+  padding: 8px 14px;
+  border-radius: var(--lg-control-radius);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.lingui-surface .lg-toggle-button[aria-pressed='true'] {
+  border-color: var(--lingui-accent);
+  color: var(--lingui-accent);
+  background: color-mix(in srgb, var(--lingui-accent) 8%, var(--lingui-background));
+}
+.lingui-surface .lg-transfer {
+  container: lingui-transfer / inline-size;
+}
+.lingui-surface .lg-transfer-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 10px;
+}
+.lingui-surface .lg-transfer-list {
+  flex: 1 1 160px;
+  min-width: 0;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lg-panel-radius);
+  overflow: hidden;
+}
+.lingui-surface .lg-transfer-list h4 {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  margin: 0;
+  border-bottom: 1px solid var(--lg-border-subtle);
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--lg-field-background);
+}
+.lingui-surface .lg-transfer-options {
+  padding: 6px;
+  max-height: 220px;
+  min-height: 120px;
+  overflow: auto;
+  scrollbar-width: thin;
+  overscroll-behavior: contain;
+}
+.lingui-surface .lg-transfer-options > .lg-caption {
+  padding: 12px 6px;
+}
+.lingui-surface .lg-transfer-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+.lingui-surface .lg-transfer-actions button {
+  border: 1px solid var(--lingui-border);
+  background: var(--lingui-background);
+  color: var(--lingui-text);
+  padding: 8px 10px;
+  min-height: 38px;
+  border-radius: var(--lg-detail-radius);
+  font-size: 12px;
+}
+@container lingui-transfer (max-width: 440px) {
+  .lingui-surface .lg-transfer-list {
+    flex-basis: 100%;
+    border: 1px solid var(--lg-border-subtle);
+    border-radius: var(--lg-panel-radius);
+  }
+  .lingui-surface .lg-transfer-arrow {
+    display: inline-block;
+    transform: rotate(90deg);
+  }
+  .lingui-surface .lg-transfer-actions {
+    flex-direction: row;
+    width: 100%;
+  }
+}

@@ -1,0 +1,147 @@
+.lingui-surface .lg-workspace-chart {
+  min-width: 0;
+  margin: 0;
+  padding: 20px;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lingui-radius);
+}
+.lingui-surface .lg-workspace-chart figcaption .lg-caption {
+  margin-top: 6px;
+}
+.lingui-surface .lg-workspace-chart-svg {
+  display: block;
+  width: 100%;
+  max-height: 300px;
+  height: auto;
+  overflow: visible;
+  margin-top: 12px;
+}
+.lingui-surface .lg-workspace-chart-svg text {
+  fill: var(--lingui-muted);
+  font-family: var(--lingui-font);
+  font-size: 9px;
+}
+.lingui-surface .lg-chart-grid {
+  fill: none;
+  stroke: var(--lingui-border);
+  stroke-width: 0.6;
+}
+.lingui-surface .lg-chart-axis {
+  fill: none;
+  stroke: var(--lingui-muted);
+  stroke-width: 0.7;
+}
+.lingui-surface .lg-scatter-dot {
+  fill: var(--lingui-accent);
+  opacity: 0.8;
+  stroke: var(--lingui-background);
+  stroke-width: 1.5;
+}
+.lingui-surface .lg-scatter-axis-labels {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.lingui-surface .lg-scatter-axis-labels .lg-caption {
+  font-size: 11px;
+}
+.lingui-surface .lg-workspace-chart-table {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+.lingui-surface .lg-workspace-chart table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: left;
+}
+.lingui-surface .lg-workspace-chart :is(th, td) {
+  padding: 8px;
+  border-bottom: 1px solid var(--lg-border-subtle);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-workspace-chart th {
+  font-weight: 500;
+}
+.lingui-surface .lg-chart-values {
+  margin-top: 14px;
+  border-top: 1px solid var(--lg-border-subtle);
+  padding-top: 12px;
+}
+.lingui-surface .lg-chart-values summary {
+  font-size: 12px;
+  color: var(--lingui-muted);
+  cursor: pointer;
+}
+.lingui-surface .lg-waterfall-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 20px;
+}
+.lingui-surface .lg-waterfall-total strong {
+  min-width: 0;
+  text-align: right;
+  font-size: 26px;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+.lingui-surface .lg-waterfall-total small {
+  display: inline-block;
+  margin-left: 6px;
+  color: var(--lingui-muted);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.lingui-surface .lg-waterfall-positive {
+  fill: var(--lingui-success);
+  background: var(--lingui-success);
+}
+.lingui-surface .lg-waterfall-negative {
+  fill: var(--lingui-danger);
+  background: var(--lingui-danger);
+}
+.lingui-surface .lg-waterfall-sum {
+  fill: var(--lingui-accent);
+  background: var(--lingui-accent);
+}
+.lingui-surface .lg-waterfall-legend {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  font-size: 12px;
+}
+.lingui-surface .lg-waterfall-legend li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+}
+.lingui-surface .lg-waterfall-legend li > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lingui-surface .lg-waterfall-legend strong {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-waterfall-marker {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+}
+@container lingui (max-width: 420px) {
+  .lingui-surface .lg-workspace-chart {
+    padding: 14px;
+  }
+}

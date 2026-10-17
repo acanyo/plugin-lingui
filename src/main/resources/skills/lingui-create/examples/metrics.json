@@ -1,0 +1,63 @@
+{
+  "document": {
+    "schemaVersion": "lingui.document/2",
+    "title": "项目运行概览",
+    "parameters": [],
+    "nodes": [
+      {
+        "id": "root",
+        "component": "Column",
+        "children": [
+          "intro",
+          "metrics",
+          "note"
+        ]
+      },
+      {
+        "id": "intro",
+        "component": "LingUI.Section",
+        "label": "项目概览",
+        "title": "本周运行情况",
+        "description": "先查看关键数据，再处理需要关注的变化。",
+        "children": []
+      },
+      {
+        "id": "metrics",
+        "component": "Row",
+        "children": [
+          "requests",
+          "latency",
+          "success"
+        ]
+      },
+      {
+        "id": "requests",
+        "component": "LingUI.Metric",
+        "label": "请求次数",
+        "value": "12,840",
+        "description": "较上周增加 8.2% · 示例数据"
+      },
+      {
+        "id": "latency",
+        "component": "LingUI.Metric",
+        "label": "平均响应 · ms",
+        "value": "186",
+        "description": "较上周减少 24 ms · 示例数据"
+      },
+      {
+        "id": "success",
+        "component": "LingUI.Metric",
+        "label": "成功率 · %",
+        "value": "99.9",
+        "description": "示例数据，请接入真实来源"
+      },
+      {
+        "id": "note",
+        "component": "Text",
+        "text": "这些静态值用于布局参考，不代表接口实时数据。",
+        "variant": "caption"
+      }
+    ],
+    "state": {}
+  }
+}

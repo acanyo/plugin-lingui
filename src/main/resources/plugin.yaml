@@ -1,0 +1,23 @@
+apiVersion: plugin.halo.run/v1alpha1
+kind: Plugin
+metadata:
+  name: plugin-lingui
+spec:
+  enabled: true
+  requires: ">=2.26.0"
+  pluginDependencies:
+    ai-foundation: ">=1.0.0 & <2.0.0"
+  author:
+    name: acanyo
+    website: https://xhhao.com
+  logo: logo.png
+  homepage: https://github.com/acanyo/plugin-lingui#readme
+  repo: https://github.com/acanyo/plugin-lingui
+  issues: https://github.com/acanyo/plugin-lingui/issues
+  displayName: "灵构 UI"
+  description: "通过 AI 对话与可视化搭建，像积木一样组合交互组件；支持主题定制、组件市场及 MCP / Skill 接入，可嵌入 Halo 文章、侧边栏、页脚与主题模板。"
+  settingName: plugin-lingui-settings
+  configMapName: plugin-lingui-config
+  license:
+    - name: "GPL-3.0"
+      url: "https://www.gnu.org/licenses/gpl-3.0.html"

@@ -1,0 +1,150 @@
+.lingui-surface .lg-menu-control {
+  width: fit-content;
+  max-width: 100%;
+}
+.lingui-surface .lg-menu-control .lg-select-chevron {
+  display: inline-flex;
+  transition: transform 150ms;
+}
+.lingui-surface .lg-menu-control .lg-chevron-open {
+  transform: rotate(180deg);
+}
+.lingui-surface .lg-menu-control .lg-select-chevron .lg-icon {
+  width: 16px;
+  height: 16px;
+}
+.lingui-surface .lg-select-option.lg-menu-danger {
+  color: var(--lingui-danger);
+}
+.lingui-surface .lg-confirm-panel {
+  padding: 14px;
+}
+.lingui-surface .lg-confirm-copy {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+}
+.lingui-surface .lg-confirm-copy > .lg-icon {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  color: var(--lg-tone-color);
+}
+.lingui-surface .lg-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+}
+.lingui-surface .lg-cascader-columns {
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior: contain;
+}
+.lingui-surface .lg-cascader-column {
+  flex: 1 0 148px;
+  min-width: 148px;
+  padding: 0 4px;
+  max-height: 280px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.lingui-surface .lg-cascader-column + .lg-cascader-column {
+  border-left: 1px solid var(--lg-border-subtle);
+}
+.lingui-surface .lg-cascader-column .lg-select-option[aria-pressed='true'] {
+  background: var(--lg-selected);
+  font-weight: 500;
+}
+.lingui-surface .lg-tree-select-row {
+  display: flex;
+  align-items: center;
+  padding-left: calc(var(--lg-tree-level) * 16px);
+}
+.lingui-surface .lg-tree-select-row > .lg-select-option {
+  flex: 1;
+  min-width: 0;
+}
+.lingui-surface .lg-tree-expand,
+.lingui-surface .lg-tree-spacer {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--lg-detail-radius);
+}
+.lingui-surface .lg-tree-expand:hover:not(:disabled) {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-dynamic-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lg-panel-radius);
+  background: var(--lingui-background);
+}
+.lingui-surface .lg-dynamic-index {
+  flex: 0 0 20px;
+  align-self: center;
+  font-size: 12px;
+  color: var(--lingui-muted);
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-dynamic-fields {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(130px, 100%), 1fr));
+  gap: 10px;
+}
+.lingui-surface .lg-dynamic-fields label {
+  font-size: 12px;
+}
+.lingui-surface .lg-dynamic-fields input {
+  min-height: var(--lg-control-height);
+}
+.lingui-surface .lg-dynamic-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  align-self: flex-end;
+  padding-bottom: 5px;
+}
+.lingui-surface .lg-dynamic-empty {
+  padding: 20px 16px;
+  border: 1px dashed var(--lingui-border);
+  border-radius: var(--lg-panel-radius);
+  background: var(--lingui-surface);
+  color: var(--lingui-muted);
+  font-size: 13px;
+  text-align: center;
+}
+.lingui-surface .lg-dynamic-add {
+  width: 100%;
+  border-style: dashed;
+  background: transparent;
+}
+@container lingui (max-width: 480px) {
+  .lingui-surface .lg-dynamic-row {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px;
+  }
+  .lingui-surface .lg-dynamic-actions {
+    width: 100%;
+    justify-content: flex-end;
+    padding-bottom: 0;
+  }
+  .lingui-surface .lg-dynamic-fields {
+    grid-template-columns: 1fr;
+  }
+}

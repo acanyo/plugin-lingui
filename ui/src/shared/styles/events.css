@@ -1,0 +1,294 @@
+.lu-event-editor {
+  display: grid;
+  gap: 16px;
+}
+.lu-event-editor-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.lu-event-editor-heading h3 {
+  font-size: 14px;
+  margin: 0 0 4px;
+}
+.lu-event-configured {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--lu-muted);
+  border: 1px solid var(--lu-border);
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+.lu-event-empty {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  padding: 18px 16px;
+  background: var(--lu-sidebar);
+  border: 1px dashed var(--lu-border);
+  border-radius: 9px;
+  color: var(--lu-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.lu-event-steps {
+  display: grid;
+  gap: 12px;
+}
+.lu-event-step {
+  padding: 14px;
+  background: var(--lu-bg);
+  border: 1px solid var(--lu-border);
+  border-radius: 9px;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.lu-event-step > header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.lu-event-step > header > .lu-field {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+.lu-event-step-number {
+  font-size: 11px;
+  color: var(--lu-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 14px;
+}
+.lu-event-step-tools {
+  display: flex;
+  gap: 2px;
+}
+.lu-event-step-tools button {
+  width: 26px;
+  height: 30px;
+  border: 0;
+  background: var(--lu-sidebar);
+  border-radius: 5px;
+  color: var(--lu-muted);
+}
+.lu-event-step-tools button:disabled {
+  opacity: 0.3;
+}
+.lu-event-http-row {
+  display: grid;
+  grid-template-columns: 85px minmax(0, 1fr);
+  gap: 10px;
+}
+.lu-event-two-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+.lu-event-extra {
+  border: 1px solid var(--lu-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-width: 0;
+}
+.lu-event-extra > summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--lu-muted);
+}
+.lu-event-extra[open] > summary {
+  margin-bottom: 14px;
+}
+.lu-event-extra .lu-field {
+  margin-top: 10px;
+}
+.lu-event-binding-help {
+  font-size: 11px;
+  color: var(--lu-muted);
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.lu-event-binding-help code {
+  font-size: 10px;
+  background: var(--lu-subtle);
+  padding: 1px 3px;
+  border-radius: 3px;
+}
+.lu-event-save {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.lu-event-startup {
+  border: 1px solid var(--lu-border);
+  background: var(--lu-sidebar);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.lu-event-startup label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lu-event-startup input {
+  accent-color: var(--lu-accent);
+}
+.lu-event-startup p {
+  margin: 6px 0 0;
+  color: var(--lu-muted);
+}
+.lu-event-add {
+  justify-self: start;
+}
+.lu-event-debugger {
+  margin-top: 20px;
+  border-top: 1px solid var(--lu-border);
+  padding-top: 16px;
+}
+.lu-event-debugger > summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+.lu-event-debug-count {
+  float: right;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--lu-muted);
+}
+.lu-event-debug-settings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 16px 0 10px;
+}
+.lu-event-debug-list {
+  padding: 0;
+  margin: 14px 0 0;
+  list-style: none;
+  max-height: 330px;
+  overflow: auto;
+  display: grid;
+  gap: 8px;
+}
+.lu-event-debug-list > li {
+  padding: 10px 12px;
+  border: 1px solid var(--lu-border);
+  border-left: 3px solid #c5cbd3;
+  border-radius: 6px;
+  font-size: 11px;
+}
+.lu-event-debug-list > li.is-error {
+  border-left-color: var(--lu-danger);
+}
+.lu-event-debug-list > li.is-success {
+  border-left-color: var(--lu-accent);
+}
+.lu-event-debug-list header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.lu-event-debug-list time {
+  color: var(--lu-muted);
+  font-size: 10px;
+}
+.lu-event-debug-list strong {
+  flex: 1;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.lu-event-debug-list header > span {
+  color: var(--lu-muted);
+}
+.lu-event-debug-list p {
+  color: var(--lu-danger);
+  overflow-wrap: anywhere;
+  margin: 6px 0 0;
+}
+.lu-event-debug-list details {
+  margin-top: 6px;
+  color: var(--lu-muted);
+}
+.lu-event-debug-list pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 10px;
+  max-height: 180px;
+  overflow: auto;
+  padding: 8px;
+  background: var(--lu-sidebar);
+}
+.lu-event-debug-empty {
+  padding: 16px 0;
+  font-size: 12px;
+  color: var(--lu-muted);
+}
+.lu-debug-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(120px, 0.65fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+.lu-event-debug-settings > div {
+  display: flex;
+  gap: 14px;
+}
+.lu-debug-run > summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  cursor: pointer;
+}
+.lu-debug-run > summary > strong {
+  flex: 1;
+}
+.lu-debug-steps {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+.lu-debug-steps > li {
+  padding: 10px 0;
+  border-top: 1px solid var(--lu-border);
+}
+.lu-event-debug-list .lu-debug-http {
+  color: var(--lu-text);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lu-debug-http code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.lu-debug-http b {
+  font-size: 10px;
+  font-weight: 500;
+}
+.lu-debug-state {
+  margin-top: 8px;
+}
+.lu-artifact-canvas > .lu-event-debugger {
+  margin: 12px 16px 16px;
+}
+@media (max-width: 540px) {
+  .lu-debug-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lu-event-step {
+    padding: 11px;
+  }
+  .lu-event-two-columns {
+    grid-template-columns: 1fr;
+  }
+}

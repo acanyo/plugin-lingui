@@ -1,0 +1,146 @@
+.lingui-surface .lg-color-picker {
+  min-width: 0;
+}
+.lingui-surface :is(.lg-color-toggle, .lg-color-expand) {
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  border: 0;
+  border-radius: var(--lg-detail-radius);
+  background: transparent;
+}
+.lingui-surface :is(.lg-color-toggle, .lg-color-expand):not(:disabled):hover {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-color-swatch {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--lg-detail-radius);
+  box-shadow: inset 0 0 0 1px #00000020;
+}
+.lingui-surface .lg-color-expand[aria-expanded='true'] .lg-select-chevron {
+  transform: rotate(180deg);
+}
+/* Expand in the document flow so narrow previews never clip the palette. */
+.lingui-surface .lg-color-panel {
+  min-width: 0;
+  margin: 8px 0 0;
+  padding: 14px;
+  border: 1px solid var(--lg-border-subtle);
+  border-radius: var(--lg-panel-radius);
+  background: var(--lingui-background);
+  box-shadow: var(--lg-elevation);
+}
+.lingui-surface .lg-color-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.lingui-surface .lg-color-done {
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 0;
+  border-radius: var(--lg-detail-radius);
+  background: var(--lingui-surface);
+  color: var(--lingui-text);
+  font-size: 12px;
+}
+.lingui-surface .lg-color-done:hover {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-color-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(32px, 1fr));
+  gap: 4px;
+  margin: 8px 0 12px;
+}
+.lingui-surface .lg-color-presets button {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 36px;
+  padding: 4px;
+  border: 1px solid transparent;
+  border-radius: var(--lg-detail-radius);
+  background: transparent;
+}
+.lingui-surface .lg-color-presets button > span {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--lg-detail-radius);
+  box-shadow: inset 0 0 0 1px #00000020;
+}
+.lingui-surface .lg-color-presets button[aria-pressed='true'] {
+  border-color: var(--lingui-text);
+  background: var(--lingui-surface);
+}
+.lingui-surface .lg-color-presets button:hover {
+  background: var(--lg-hover);
+}
+.lingui-surface .lg-color-adjustments {
+  display: grid;
+  gap: 6px;
+  border-top: 1px solid var(--lingui-border);
+  padding-top: 12px;
+}
+.lingui-surface .lg-color-channel {
+  display: grid;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--lingui-muted);
+}
+.lingui-surface .lg-color-channel > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.lingui-surface .lg-color-channel output {
+  font-variant-numeric: tabular-nums;
+}
+.lingui-surface .lg-color-channel input[type='range']::-webkit-slider-runnable-track {
+  height: 8px;
+  background: var(--lg-color-track);
+  box-shadow: inset 0 0 0 1px #00000014;
+}
+.lingui-surface .lg-color-channel input[type='range']::-webkit-slider-thumb {
+  margin-top: -5px;
+  background: var(--lg-color-thumb);
+  box-shadow: 0 0 0 1px var(--lingui-muted);
+}
+.lingui-surface .lg-color-channel input[type='range']::-moz-range-track {
+  height: 8px;
+  background: var(--lg-color-track);
+}
+.lingui-surface .lg-color-channel input[type='range']::-moz-range-progress {
+  background: transparent;
+}
+.lingui-surface .lg-color-channel input[type='range']::-moz-range-thumb {
+  background: var(--lg-color-thumb);
+  box-shadow: 0 0 0 1px var(--lingui-muted);
+}
+@media (pointer: coarse) {
+  .lingui-surface :is(.lg-color-toggle, .lg-color-expand) {
+    flex-basis: 40px;
+    width: 40px;
+    height: 44px;
+  }
+  .lingui-surface :is(.lg-color-presets button, .lg-color-done) {
+    min-height: 44px;
+  }
+  .lingui-surface .lg-color-presets {
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+  }
+}
+@media (forced-colors: active) {
+  .lingui-surface :is(.lg-color-swatch, .lg-color-presets button > span) {
+    forced-color-adjust: none;
+    border: 1px solid CanvasText;
+  }
+}

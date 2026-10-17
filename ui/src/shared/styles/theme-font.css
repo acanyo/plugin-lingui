@@ -1,0 +1,161 @@
+.lingui-studio .lu-theme-font-picker {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.lingui-studio .lu-theme-font-picker legend {
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.lingui-studio .lu-theme-font-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--lu-border);
+  border-radius: 9px;
+  background: var(--lu-bg);
+  color: var(--lu-text);
+  font-size: 12px;
+  text-align: left;
+}
+.lingui-studio .lu-theme-font-trigger > span,
+.lingui-studio .lu-theme-font-row > span > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lingui-studio .lu-theme-font-trigger:hover,
+.lingui-studio .lu-theme-font-trigger[aria-expanded='true'] {
+  border-color: var(--lu-muted);
+}
+.lingui-studio .lu-theme-font-trigger > svg,
+.lingui-studio .lu-theme-font-row > svg {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+}
+.lingui-studio .lu-theme-font-trigger[aria-expanded='true'] > svg {
+  transform: rotate(180deg);
+}
+.lingui-studio .lu-theme-font-panel {
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid var(--lu-border);
+  border-radius: 10px;
+  background: var(--lu-bg);
+}
+.lingui-studio .lu-theme-font-panel .lu-search-field {
+  min-width: 0;
+  width: 100%;
+}
+.lingui-studio .lu-theme-font-panel .lu-search-field input {
+  font-size: 12px;
+}
+.lingui-studio .lu-theme-font-list {
+  max-height: 224px;
+  margin: 8px -2px 0;
+  padding: 2px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--lu-border) transparent;
+}
+.lingui-studio .lu-theme-font-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 7px 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--lu-text);
+  text-align: left;
+}
+.lingui-studio .lu-theme-font-row > span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  font-size: 12px;
+}
+.lingui-studio .lu-theme-font-row small {
+  color: var(--lu-muted);
+  font-size: 10px;
+}
+.lingui-studio .lu-theme-font-row:hover,
+.lingui-studio .lu-theme-font-row[aria-selected='true'] {
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-theme-font-trigger:focus-visible,
+.lingui-studio .lu-theme-font-row:focus-visible {
+  outline: 2px solid var(--lu-accent);
+  outline-offset: 1px;
+}
+.lingui-studio .lu-theme-font-empty {
+  margin: 0;
+  padding: 20px 4px;
+  color: var(--lu-muted);
+  font-size: 12px;
+  text-align: center;
+}
+.lingui-studio .lu-theme-font-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  margin-top: 8px;
+  border-top: 1px solid var(--lu-border);
+  color: var(--lu-muted);
+  font-size: 11px;
+}
+.lingui-studio .lu-theme-font-footer .lu-text-button {
+  min-height: 28px;
+  padding: 4px;
+  font-size: 11px;
+}
+.lingui-studio .lu-theme-font-preview {
+  margin-top: 10px;
+  padding: 12px;
+  min-width: 0;
+  border-radius: 8px;
+  background: var(--lu-sidebar);
+}
+.lingui-studio .lu-theme-font-preview .lu-font-specimen {
+  margin: 0;
+}
+.lingui-studio .lu-theme-font-preview > p,
+.lingui-studio .lu-theme-font-preview .lu-font-specimen > p {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.lingui-studio .lu-theme-font-preview > small,
+.lingui-studio .lu-theme-font-preview .lu-font-specimen > small {
+  display: block;
+  margin-top: 4px;
+  color: var(--lu-muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+@media (pointer: coarse) {
+  .lingui-studio .lu-theme-font-trigger {
+    min-height: 44px;
+  }
+  .lingui-studio .lu-theme-font-footer .lu-text-button {
+    min-height: 40px;
+  }
+}

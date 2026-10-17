@@ -1,0 +1,538 @@
+{
+  "Column": [
+    "mount"
+  ],
+  "Row": [
+    "mount"
+  ],
+  "Card": [
+    "mount"
+  ],
+  "Text": [
+    "mount"
+  ],
+  "Icon": [
+    "mount"
+  ],
+  "Button": [
+    "click",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "Divider": [
+    "mount"
+  ],
+  "CheckBox": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "mount"
+  ],
+  "TextField": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "clear",
+    "mount"
+  ],
+  "Slider": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "mount"
+  ],
+  "ChoicePicker": [
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "mount"
+  ],
+  "Image": [
+    "load",
+    "error",
+    "mount"
+  ],
+  "Video": [
+    "load",
+    "error",
+    "play",
+    "pause",
+    "ended",
+    "timeUpdate",
+    "mount"
+  ],
+  "AudioPlayer": [
+    "load",
+    "error",
+    "play",
+    "pause",
+    "ended",
+    "timeUpdate",
+    "mount"
+  ],
+  "List": [
+    "select",
+    "retry",
+    "mount"
+  ],
+  "Tabs": [
+    "change",
+    "mount"
+  ],
+  "Modal": [
+    "open",
+    "close",
+    "cancel",
+    "mount"
+  ],
+  "DateTimeInput": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "clear",
+    "mount"
+  ],
+  "LingUI.Switch": [
+    "change",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.Select": [
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "clear",
+    "mount"
+  ],
+  "LingUI.SegmentedControl": [
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.Rating": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "clear",
+    "mount"
+  ],
+  "LingUI.Avatar": [
+    "mount"
+  ],
+  "LingUI.Link": [
+    "click",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.Breadcrumbs": [
+    "click",
+    "retry",
+    "mount"
+  ],
+  "LingUI.EmptyState": [
+    "mount"
+  ],
+  "LingUI.Skeleton": [
+    "mount"
+  ],
+  "LingUI.Spinner": [
+    "mount"
+  ],
+  "LingUI.LineChart": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.DonutChart": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.SearchInput": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "clear",
+    "search",
+    "mount"
+  ],
+  "LingUI.ColorPicker": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "mount"
+  ],
+  "LingUI.MultiSelect": [
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "clear",
+    "mount"
+  ],
+  "LingUI.TagInput": [
+    "add",
+    "remove",
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "mount"
+  ],
+  "LingUI.Pagination": [
+    "change",
+    "mount"
+  ],
+  "LingUI.Alert": [
+    "close",
+    "mount"
+  ],
+  "LingUI.Status": [
+    "mount"
+  ],
+  "LingUI.Tooltip": [
+    "mount"
+  ],
+  "LingUI.Accordion": [
+    "change",
+    "mount"
+  ],
+  "LingUI.LabeledDivider": [
+    "mount"
+  ],
+  "LingUI.Toolbar": [
+    "mount"
+  ],
+  "LingUI.Gauge": [
+    "mount"
+  ],
+  "LingUI.RadarChart": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.Heatmap": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.RangeSlider": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "mount"
+  ],
+  "LingUI.DateRange": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "clear",
+    "mount"
+  ],
+  "LingUI.NumberStepper": [
+    "change",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.PasswordInput": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "clear",
+    "mount"
+  ],
+  "LingUI.Combobox": [
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "clear",
+    "mount"
+  ],
+  "LingUI.Transfer": [
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.ToggleButton": [
+    "change",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.Carousel": [
+    "change",
+    "mount"
+  ],
+  "LingUI.ScrollArea": [
+    "mount"
+  ],
+  "LingUI.AspectRatio": [
+    "mount"
+  ],
+  "LingUI.KeyboardShortcut": [
+    "mount"
+  ],
+  "LingUI.FileCard": [
+    "click",
+    "mount"
+  ],
+  "LingUI.AvatarGroup": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.ProgressRing": [
+    "mount"
+  ],
+  "LingUI.Sparkline": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.FunnelChart": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.CardChoice": [
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "mount"
+  ],
+  "LingUI.CheckboxGroup": [
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "mount"
+  ],
+  "LingUI.TreeView": [
+    "select",
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.Calendar": [
+    "select",
+    "change",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.Drawer": [
+    "open",
+    "close",
+    "cancel",
+    "mount"
+  ],
+  "LingUI.SplitPane": [
+    "change",
+    "mount"
+  ],
+  "LingUI.ChatMessage": [
+    "mount"
+  ],
+  "LingUI.Kanban": [
+    "change",
+    "move",
+    "mount"
+  ],
+  "LingUI.ScatterChart": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.WaterfallChart": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.Box": [
+    "mount"
+  ],
+  "LingUI.Center": [
+    "mount"
+  ],
+  "LingUI.Spacer": [
+    "mount"
+  ],
+  "LingUI.Separator": [
+    "mount"
+  ],
+  "LingUI.FormGroup": [
+    "submit",
+    "invalid",
+    "mount"
+  ],
+  "LingUI.ButtonGroup": [
+    "mount"
+  ],
+  "LingUI.IconButton": [
+    "click",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.Popover": [
+    "open",
+    "close",
+    "mount"
+  ],
+  "LingUI.InlineCode": [
+    "mount"
+  ],
+  "LingUI.Highlight": [
+    "mount"
+  ],
+  "LingUI.Callout": [
+    "mount"
+  ],
+  "LingUI.Collapse": [
+    "change",
+    "mount"
+  ],
+  "LingUI.Conditional": [
+    "mount"
+  ],
+  "LingUI.NumberInput": [
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "mount"
+  ],
+  "LingUI.Progress": [
+    "mount"
+  ],
+  "LingUI.Tabs": [
+    "change",
+    "mount"
+  ],
+  "LingUI.Steps": [
+    "change",
+    "mount"
+  ],
+  "LingUI.Diagram": [
+    "mount"
+  ],
+  "LingUI.DiagramNode": [
+    "change",
+    "mount"
+  ],
+  "LingUI.Timeline": [
+    "mount"
+  ],
+  "LingUI.TimelineItem": [
+    "mount"
+  ],
+  "LingUI.Badge": [
+    "mount"
+  ],
+  "LingUI.Quote": [
+    "mount"
+  ],
+  "LingUI.Metric": [
+    "mount"
+  ],
+  "LingUI.Table": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.Section": [
+    "mount"
+  ],
+  "LingUI.Grid": [
+    "mount"
+  ],
+  "LingUI.CodeBlock": [
+    "mount"
+  ],
+  "LingUI.KeyValue": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.BarChart": [
+    "retry",
+    "mount"
+  ],
+  "LingUI.Dropdown": [
+    "select",
+    "open",
+    "close",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.Popconfirm": [
+    "open",
+    "close",
+    "confirm",
+    "cancel",
+    "focus",
+    "blur",
+    "mount"
+  ],
+  "LingUI.Cascader": [
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "clear",
+    "mount"
+  ],
+  "LingUI.TreeSelect": [
+    "retry",
+    "change",
+    "focus",
+    "blur",
+    "clear",
+    "mount"
+  ],
+  "LingUI.DynamicInput": [
+    "add",
+    "remove",
+    "reorder",
+    "change",
+    "focus",
+    "blur",
+    "input",
+    "enter",
+    "mount"
+  ]
+}
