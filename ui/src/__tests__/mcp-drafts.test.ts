@@ -46,7 +46,6 @@ function detail(target = false): DraftDetail {
       id: 'draft-one',
       title: '外部草稿',
       kind: 'component',
-      keyName: 'Codex',
       createdAt: '2026-10-15T00:00:00Z',
       ...(target ? { workName: 'work-one', baseRevision: 1 } : {}),
     },

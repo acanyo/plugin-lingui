@@ -14,8 +14,6 @@ public class McpActivity extends AbstractExtension {
     @Data
     public static class ActivitySpec {
         private String owner;
-        private String keyId;
-        private String keyName;
         private String operation;
         private String summary;
         private String workName;

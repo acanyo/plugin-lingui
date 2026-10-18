@@ -1,11 +1,11 @@
 package com.acanyo.halo.plugin.lingui.ai.mcp.history;
 
 import static com.acanyo.halo.plugin.lingui.ai.mcp.history.McpHistoryDtos.*;
-import com.acanyo.halo.plugin.lingui.ai.mcp.access.McpKeyService.Grant;
 import com.acanyo.halo.plugin.lingui.model.McpActivity;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Instant;
+import java.time.Duration;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
@@ -24,32 +24,29 @@ public class McpActivityService {
     private final ObjectMapper mapper = new ObjectMapper();
     public McpActivityService(ReactiveExtensionClient client) { this.client = client; }
 
-    public Mono<Map<String, Object>> trace(Grant grant, JsonNode message, Supplier<Mono<Map<String, Object>>> action) {
+    public Mono<Map<String, Object>> trace(String owner, String operation, Map<String, Object> arguments,
+        Supplier<Mono<Map<String, Object>>> action) {
         return Mono.defer(() -> {
-            String method = message.path("method").asText();
-            if (!message.has("id") || !"2.0".equals(message.path("jsonrpc").asText())
-                || !Set.of("tools/call", "resources/read").contains(method)) return action.get();
             long started = System.nanoTime();
             return action.get().flatMap(result -> {
-                JsonNode reply = mapper.valueToTree(result);
-                boolean failed = reply.has("error") || reply.path("result").path("isError").asBoolean(false);
-                JsonNode feedback = reply.path("result").path("structuredContent");
+                JsonNode feedback = mapper.valueToTree(result);
+                boolean failed = feedback.path("isError").asBoolean(false);
                 boolean needsFix = feedback.has("valid") && !feedback.path("valid").asBoolean();
-                String requested = message.path("params").path("name").asText();
-                String operation = method.equals("resources/read") ? "read_skill" : TOOLS.contains(requested) ? requested : "unknown_tool";
-                var args = message.path("params").path("arguments");
+                String tool = TOOLS.contains(operation) ? operation : "unknown_tool";
                 var record = new McpActivity();
-                record.setMetadata(McpRecordOwner.metadata("mcp-activity-" + UUID.randomUUID(), grant.owner()));
+                record.setMetadata(McpRecordOwner.metadata("mcp-activity-" + UUID.randomUUID(), owner));
                 var spec = new McpActivity.ActivitySpec();
-                spec.setOwner(grant.owner()); spec.setKeyId(grant.keyId()); spec.setKeyName(grant.keyName());
-                spec.setOperation(operation); spec.setStatus(failed ? "error" : needsFix ? "needs-fix" : "success");
-                spec.setSummary(summary(operation, feedback, needsFix));
-                String work = args.path("workName").asText();
-                spec.setWorkName(!failed && Set.of("get_current_work", "submit_design_draft").contains(operation)
+                spec.setOwner(owner);
+                spec.setOperation(tool); spec.setStatus(failed ? "error" : needsFix ? "needs-fix" : "success");
+                spec.setSummary(summary(tool, feedback, needsFix));
+                Object requestedWork = arguments.get("workName");
+                String work = requestedWork instanceof String value ? value : "";
+                spec.setWorkName(!failed && Set.of("get_current_work", "submit_design_draft").contains(tool)
                     && work.matches("[a-zA-Z0-9][a-zA-Z0-9._-]{0,159}") ? work : "");
                 spec.setCreatedAt(Instant.now().toString()); spec.setElapsedMs((System.nanoTime() - started) / 1_000_000);
                 record.setSpec(spec);
-                return client.create(record).then(prune(grant.owner())).thenReturn(result)
+                return client.create(record).then(prune(owner)).thenReturn(result)
+                    .timeout(Duration.ofSeconds(1))
                     .onErrorResume(error -> {
                         LOG.warn("Lingui MCP activity persistence failed: {}", error.getClass().getSimpleName());
                         return Mono.just(result);
@@ -74,7 +71,6 @@ public class McpActivityService {
             case "get_guidance" -> "读取设计、交互或数据规则";
             case "validate_design" -> needsFix ? "设计预检未通过，需要修正" : "设计预检";
             case "submit_design_draft" -> "提交创作草稿，等待用户预览和确认";
-            case "read_skill" -> "读取创作 Skill";
             default -> "未识别的工具调用";
         };
     }
@@ -90,7 +86,7 @@ public class McpActivityService {
         return records(owner).sort(Comparator.comparing((McpActivity item) -> item.getSpec().getCreatedAt()).reversed())
             .take(300).map(record -> {
                 var s = record.getSpec();
-                return new ActivityInfo(record.getMetadata().getName(), s.getKeyId(), s.getKeyName(), s.getOperation(),
+                return new ActivityInfo(record.getMetadata().getName(), s.getOperation(),
                     s.getSummary(), s.getWorkName(), s.getStatus(), s.getCreatedAt(), s.getElapsedMs());
             }).collectList().map(ActivityList::new);
     }

@@ -1,7 +1,6 @@
 package com.acanyo.halo.plugin.lingui.ai.mcp.history;
 
 import static com.acanyo.halo.plugin.lingui.ai.mcp.history.McpHistoryDtos.*;
-import com.acanyo.halo.plugin.lingui.ai.mcp.access.McpKeyService.Grant;
 import com.acanyo.halo.plugin.lingui.ai.mcp.access.McpOwnerPermissions;
 import com.acanyo.halo.plugin.lingui.ai.validation.DesignValidator;
 import com.acanyo.halo.plugin.lingui.model.ComponentTemplate;
@@ -30,12 +29,12 @@ public class McpDraftService {
         this.client = client; this.validator = validator; this.permissions = permissions;
     }
 
-    public Mono<DraftInfo> submit(Grant grant, JsonNode input) {
-        return Mono.fromCallable(() -> prepare(grant, input)).subscribeOn(Schedulers.boundedElastic())
-            .flatMap(draft -> authorizeTarget(grant, draft.getSpec()).then(Mono.defer(() ->
+    public Mono<DraftInfo> submit(String owner, JsonNode input) {
+        return Mono.fromCallable(() -> prepare(owner, input)).subscribeOn(Schedulers.boundedElastic())
+            .flatMap(draft -> authorizeTarget(owner, draft.getSpec()).then(Mono.defer(() ->
                 client.fetch(McpDraft.class, draft.getMetadata().getName())
                     .flatMap(existing -> sameSubmission(existing, draft))
-                    .switchIfEmpty(records(grant.owner()).count().flatMap(count -> {
+                    .switchIfEmpty(records(owner).count().flatMap(count -> {
                         if (count >= 100) return Mono.error(bad("已保留 100 份外部 AI 草稿，请在工作台删除不需要的草稿后重试"));
                         return client.create(draft).map(this::info)
                             .onErrorResume(error -> client.fetch(McpDraft.class, draft.getMetadata().getName())
@@ -44,8 +43,7 @@ public class McpDraftService {
             )));
     }
 
-    private McpDraft prepare(Grant grant, JsonNode input) {
-        if (!grant.submitDrafts()) throw bad("此密钥未授权提交草稿，请创建勾选「允许提交创作草稿」的密钥");
+    private McpDraft prepare(String owner, JsonNode input) {
         validator.parse(input.toString());
         var fields = input.fieldNames();
         var allowed = Set.of("submissionId", "title", "summary", "kind", "design", "workName", "baseRevision");
@@ -72,20 +70,19 @@ public class McpDraftService {
         }
         if (design.toString().getBytes(StandardCharsets.UTF_8).length > 262144) throw bad("设计不能超过 256 KiB");
         var draft = new McpDraft();
-        String id = "mcp-draft-" + UUID.nameUUIDFromBytes((grant.owner() + "\0" + grant.keyId() + "\0" + submission).getBytes(StandardCharsets.UTF_8));
-        draft.setMetadata(McpRecordOwner.metadata(id, grant.owner()));
+        String id = "mcp-draft-" + UUID.nameUUIDFromBytes((owner + "\0" + submission).getBytes(StandardCharsets.UTF_8));
+        draft.setMetadata(McpRecordOwner.metadata(id, owner));
         var spec = new McpDraft.DraftSpec();
-        spec.setOwner(grant.owner()); spec.setKeyId(grant.keyId()); spec.setKeyName(grant.keyName());
+        spec.setOwner(owner);
         spec.setTitle(title); spec.setSummary(summary); spec.setKind(kind); spec.setWorkName(work);
         spec.setBaseRevision(revision); spec.setCreatedAt(Instant.now().toString()); spec.setDesign(design.toString());
         draft.setSpec(spec);
         return draft;
     }
 
-    private Mono<Void> authorizeTarget(Grant grant, McpDraft.DraftSpec spec) {
+    private Mono<Void> authorizeTarget(String owner, McpDraft.DraftSpec spec) {
         if (spec.getWorkName().isEmpty()) return Mono.empty();
-        if (!grant.allows(spec.getWorkName())) return Mono.error(bad("此密钥未授权目标项目，不能向该项目提交草稿"));
-        return permissions.requireWork(grant.owner(), spec.getWorkName())
+        return permissions.requireWork(owner, spec.getWorkName())
             .then(client.fetch(ComponentTemplate.class, spec.getWorkName())
                 .filter(work -> work.getMetadata().getDeletionTimestamp() == null)
                 .switchIfEmpty(Mono.error(bad("目标项目不存在或已删除，请改为新作品草稿")))).then();
@@ -124,7 +121,7 @@ public class McpDraftService {
     private DraftInfo info(McpDraft draft) {
         var s = draft.getSpec();
         return new DraftInfo(draft.getMetadata().getName(), s.getTitle(), s.getSummary(), s.getKind(),
-            s.getWorkName(), s.getBaseRevision(), s.getKeyName(), s.getCreatedAt(), s.getLoadedAt());
+            s.getWorkName(), s.getBaseRevision(), s.getCreatedAt(), s.getLoadedAt());
     }
     private static String text(JsonNode node, String name, int max, boolean required) {
         if (!node.has(name) && !required) return "";

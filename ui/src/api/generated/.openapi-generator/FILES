@@ -9,7 +9,6 @@ api/lingui-ai-api.ts
 api/lingui-embeds-api.ts
 api/lingui-market-api.ts
 api/lingui-mcp-history-api.ts
-api/lingui-mcp-keys-api.ts
 base.ts
 common.ts
 configuration.ts
@@ -24,7 +23,6 @@ models/community-work.ts
 models/component-template-list.ts
 models/component-template.ts
 models/copy-operation.ts
-models/create-mcp-key-request.ts
 models/design-theme-list.ts
 models/design-theme.ts
 models/draft-detail.ts
@@ -39,7 +37,6 @@ models/generate-theme-request.ts
 models/generation-event.ts
 models/generation-problem.ts
 models/index.ts
-models/issued-mcp-key.ts
 models/json-patch-inner.ts
 models/lingui-font-spec.ts
 models/lingui-template-spec.ts
@@ -49,8 +46,6 @@ models/market-connection.ts
 models/market-revision.ts
 models/market-submit-request.ts
 models/market-version-request.ts
-models/mcp-key-info.ts
-models/mcp-key-list.ts
 models/metadata.ts
 models/move-operation.ts
 models/my-market-detail.ts

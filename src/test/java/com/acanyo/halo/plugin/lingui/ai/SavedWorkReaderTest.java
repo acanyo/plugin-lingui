@@ -7,6 +7,8 @@ import com.acanyo.halo.plugin.lingui.ai.validation.DesignValidator;
 import com.acanyo.halo.plugin.lingui.model.ComponentTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 import run.halo.app.extension.Metadata;
 import run.halo.app.extension.ReactiveExtensionClient;
@@ -41,6 +43,14 @@ class SavedWorkReaderTest {
         when(client.fetch(ComponentTemplate.class, "legacy")).thenReturn(Mono.just(work));
         assertThatThrownBy(() -> reader.read("legacy").block()).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("打开并保存");
         work.getMetadata().setDeletionTimestamp(java.time.Instant.now());
-        assertThatThrownBy(() -> reader.read("legacy").block()).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("已删除");
+        assertThatThrownBy(() -> reader.read("legacy").block())
+            .isInstanceOfSatisfying(ResponseStatusException.class, error -> {
+                assertThat(error.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+                assertThat(error.getReason()).contains("已删除");
+            });
+        when(client.fetch(ComponentTemplate.class, "missing")).thenReturn(Mono.empty());
+        assertThatThrownBy(() -> reader.read("missing").block())
+            .isInstanceOfSatisfying(ResponseStatusException.class, error ->
+                assertThat(error.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND));
     }
 }

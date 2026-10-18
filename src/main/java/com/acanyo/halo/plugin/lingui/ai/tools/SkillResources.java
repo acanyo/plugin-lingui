@@ -32,7 +32,7 @@ public class SkillResources {
 
     public String get(String topic) {
         var text = texts.get(topic);
-        if (text == null) throw new IllegalArgumentException("未知参考，请选择 interactions、theme、data、layout 或 examples");
+        if (text == null) throw new IllegalArgumentException("未知参考，请选择 skill、interactions、theme、data、layout 或 examples");
         return text;
     }
 }

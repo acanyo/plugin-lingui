@@ -1,5 +1,5 @@
 import type { ThemeTokens } from '@lingui/renderer'
-import { EXTERNAL_MCP_PATH, SKILL_URI } from './client'
+import { OFFICIAL_MCP_PATH, SKILL_TOOL } from './connection'
 
 /** Resolve only an explicitly supplied Halo site; the standalone frontend has no MCP server. */
 export function endpointForHaloSite(site: string): string {
@@ -8,7 +8,7 @@ export function endpointForHaloSite(site: string): string {
     throw new Error('请输入 HTTP 或 HTTPS 站点地址，不要在地址中包含账号或令牌。')
   if (url.pathname !== '/' || url.search || url.hash)
     throw new Error('请输入 Halo 站点根地址，例如 https://halo.example.com，不含控制台路径。')
-  return new URL(EXTERNAL_MCP_PATH, url.origin).href
+  return new URL(OFFICIAL_MCP_PATH, url.origin).href
 }
 
 export interface ExternalAiContext {
@@ -24,8 +24,8 @@ export interface ExternalAiContext {
 export function externalAiInstructions(context: ExternalAiContext): string {
   const steps = [
     '请使用灵构 UI 的 MCP + Skill 完成本次开发。',
-    `1. 使用已配置的 HTTP MCP 服务 lingui，地址：${context.endpoint}。若尚未配置，请先指导我在 AI 客户端添加服务及在「MCP 管理」创建的灵构专用密钥；不要索取密钥或把它写入作品，不需要 Halo PAT。`,
-    `2. 连接后，通过 MCP resources/read 读取并遵循创作 Skill：${SKILL_URI}。Skill 引用的详细规则通过 get_guidance 按需读取。连接或资源读取失败时先说明问题，不要猜测组件协议。`,
+    `1. 使用 Halo 官方 MCP Server 1.3.0 或更高的 1.x 版本提供的 HTTP MCP 服务，地址：${context.endpoint}，示例服务别名为 halo。若尚未配置，请指导我安装并启用官方插件，在「工具 → MCP 服务」创建访问密钥、选择「灵构 UI」工具，并在 AI 客户端配置 Authorization: Bearer。不要索取密钥或把它写入作品。`,
+    `2. 先通过 tools/list 获取该访问密钥已选择的工具，再调用 ${SKILL_TOOL}(topic="skill") 读取并遵循创作 Skill，详细规则通过该工具的其他 topic 按需读取。下文工具的官方协议名称均为 plugin-lingui__ 加本地名称；客户端可能再加服务别名前缀，请使用客户端实际提供的可调用名称。若工具不可见，请让我在官方 MCP 服务中将它加入当前访问密钥。连接或工具调用失败时先说明问题，不要猜测组件协议。`,
   ]
   if (context.kind === 'theme') {
     steps.push(
@@ -40,7 +40,7 @@ export function externalAiInstructions(context: ExternalAiContext): string {
   } else {
     if (context.workName) {
       steps.push(
-        `3. 修改已保存作品前，先确认专用密钥已授权该项目，再调用 get_current_work(workName=${JSON.stringify(context.workName)}) 读取最近保存的版本。未授权时请让我创建有此项目授权的密钥，或提供导出的作品 JSON，不要尝试读取其他项目。`,
+        `3. 修改已保存作品前，调用 get_current_work(workName=${JSON.stringify(context.workName)}) 读取最近保存的版本。该工具需要在官方访问密钥中选中，创建密钥的账号也需要灵构创作工具与目标作品的读取权限。访问被拒绝时，请让我调整工具选择和账号权限，或提供导出的作品 JSON。`,
       )
       if (context.hasUnsavedChanges)
         steps.push(

@@ -244,10 +244,10 @@ describe('isolated interaction self-check', () => {
     report.cases[0]!.issues.push({
       nodeId: 'x',
       level: 'error',
-      message: 'https://example.com/?token=private lgu_mcp_secret',
+      message: 'https://example.com/?token=private hmcp_secret',
     })
     expect(repairInstruction(report)).not.toContain('private')
-    expect(repairInstruction(report)).not.toContain('lgu_mcp_secret')
+    expect(repairInstruction(report)).not.toContain('hmcp_secret')
   })
   it('leaves selection payloads to real component events instead of fabricating broken data', async () => {
     const instance = work(

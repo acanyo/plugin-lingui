@@ -8,7 +8,8 @@ function sanitize(value: unknown, depth = 0): unknown {
   if (depth > 10) return '[嵌套内容已省略]'
   if (typeof value === 'string') {
     let text = value
-      .replace(/lgu_mcp_[\w-]+/g, '[已隐藏密钥]')
+      .replace(/hmcp_[\w-]+/g, '[已隐藏密钥]')
+      .replace(/Bearer\s+[^\s"'<>]+/gi, 'Bearer [已隐藏密钥]')
       .replace(/([?&](?:access_token|token|api_key|key|password|secret)=)[^&\s]+/gi, '$1[已隐藏]')
     if (/^https?:\/\//.test(text)) {
       try {

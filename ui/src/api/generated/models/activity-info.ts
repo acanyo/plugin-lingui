@@ -43,18 +43,6 @@ export interface ActivityInfo {
      * @type {string}
      * @memberof ActivityInfo
      */
-    'keyId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityInfo
-     */
-    'keyName'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityInfo
-     */
     'operation'?: string;
     /**
      * 

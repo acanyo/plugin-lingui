@@ -21,5 +21,4 @@ export * from './api/lingui-ai-api';
 export * from './api/lingui-embeds-api';
 export * from './api/lingui-market-api';
 export * from './api/lingui-mcp-history-api';
-export * from './api/lingui-mcp-keys-api';
 

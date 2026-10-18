@@ -8,8 +8,7 @@
   align-items: center;
   gap: 6px;
 }
-.lingui-studio .lu-mcp-page-label,
-.lingui-studio .lu-mcp-readonly {
+.lingui-studio .lu-mcp-page-label {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -62,15 +61,6 @@
   font-size: 11px;
   white-space: nowrap;
 }
-.lingui-studio .lu-mcp-status i {
-  width: 5px;
-  height: 5px;
-  background: currentColor;
-  border-radius: 50%;
-}
-.lingui-studio .lu-mcp-status.is-ready {
-  color: var(--lu-accent);
-}
 .lingui-studio .lu-mcp-endpoint {
   margin: 22px 0 16px;
   padding: 12px 14px;
@@ -98,8 +88,7 @@
   font-size: 12px;
   margin-top: 8px;
 }
-.lingui-studio .lu-mcp-connect-actions,
-.lingui-studio .lu-mcp-run-actions {
+.lingui-studio .lu-mcp-connect-actions {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -110,9 +99,6 @@
   font-size: 12px;
   margin-top: 12px;
   line-height: 1.8;
-}
-.lingui-studio .lu-mcp-onboarding {
-  margin-top: 16px;
 }
 .lingui-studio .lu-mcp-facts {
   display: grid;
@@ -195,124 +181,11 @@
   padding-top: 16px;
   border-top: 1px solid var(--lu-border);
 }
-.lingui-studio .lu-mcp-error {
-  display: flex;
-  align-items: start;
-  gap: 8px;
-  color: var(--lu-danger);
-  padding: 16px;
-  border: 1px solid var(--lu-border);
-  border-radius: 10px;
-  margin-top: 20px;
-  font-size: 13px;
-  overflow-wrap: anywhere;
-}
-.lingui-studio .lu-mcp-error svg {
-  margin-top: 2px;
-}
-.lingui-studio .lu-mcp-tools,
 .lingui-studio .lu-mcp-skill {
   margin-top: 36px;
 }
 .lingui-studio .lu-mcp-section-heading p {
   margin-top: 5px;
-}
-.lingui-studio .lu-mcp-section-heading h2 > span {
-  margin-left: 6px;
-  color: var(--lu-muted);
-  font:
-    12px ui-monospace,
-    monospace;
-}
-.lingui-studio .lu-mcp-tool-layout {
-  display: grid;
-  grid-template-columns: minmax(230px, 0.85fr) minmax(0, 1.6fr);
-  border: 1px solid var(--lu-border);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-top: 18px;
-}
-.lingui-studio .lu-mcp-tool-list {
-  border-right: 1px solid var(--lu-border);
-  padding: 10px;
-  background: var(--lu-sidebar);
-}
-.lingui-studio .lu-mcp-tool-list button {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 16px;
-  gap: 7px 10px;
-  width: 100%;
-  text-align: left;
-  padding: 14px 12px;
-  border: 1px solid transparent;
-  border-radius: 9px;
-  background: transparent;
-  color: var(--lu-muted);
-}
-.lingui-studio .lu-mcp-tool-list button + button {
-  margin-top: 3px;
-}
-.lingui-studio .lu-mcp-tool-list strong {
-  font:
-    500 12px/1.5 ui-monospace,
-    monospace;
-  overflow-wrap: anywhere;
-  color: var(--lu-text);
-}
-.lingui-studio .lu-mcp-tool-list button span {
-  grid-row: 2;
-  font-size: 11px;
-  line-height: 1.8;
-}
-.lingui-studio .lu-mcp-tool-list button svg {
-  grid-column: 2;
-  grid-row: 1;
-  opacity: 0;
-}
-.lingui-studio .lu-mcp-tool-list button:hover {
-  background: var(--lu-hover);
-}
-.lingui-studio .lu-mcp-tool-list button.active {
-  background: var(--lu-bg);
-  border-color: var(--lu-border);
-}
-.lingui-studio .lu-mcp-tool-list button.active svg {
-  opacity: 1;
-}
-.lingui-studio .lu-mcp-tool-detail {
-  min-width: 0;
-  padding: 24px;
-}
-.lingui-studio .lu-mcp-tool-detail > h3 {
-  font-family: ui-monospace, monospace;
-  font-size: 14px;
-  overflow-wrap: anywhere;
-}
-.lingui-studio .lu-mcp-tool-detail > p {
-  margin-top: 8px;
-}
-.lingui-studio .lu-mcp-schema {
-  margin: 14px 0 18px;
-}
-.lingui-studio .lu-mcp-schema summary {
-  color: var(--lu-muted);
-}
-.lingui-studio .lu-mcp-tool-detail textarea {
-  font-size: 12px;
-  line-height: 1.8;
-  border-radius: 8px;
-}
-.lingui-studio .lu-mcp-run-actions > span {
-  font-size: 11px;
-}
-.lingui-studio .lu-mcp-hint {
-  margin: -4px 0 14px;
-  font-size: 12px;
-  line-height: 1.8;
-  color: var(--lu-muted);
-}
-.lingui-studio .lu-mcp-result {
-  margin-top: 20px;
 }
 .lingui-studio .lu-mcp-skill {
   padding: 24px;
@@ -326,31 +199,8 @@
   margin: 14px 0;
   overflow-wrap: anywhere;
 }
-.lingui-studio .lu-mcp-skill pre {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-.lingui-studio .lu-mcp-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  text-align: center;
-  padding: 42px 16px;
-  border-top: 1px solid var(--lu-border);
-  margin-top: 32px;
-  color: var(--lu-muted);
-}
-.lingui-studio .lu-mcp-empty > svg {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 4px;
-}
-.lingui-studio .lu-mcp-empty h2 {
-  font-size: 14px;
-  color: var(--lu-text);
-}
-.lingui-studio .lu-mcp-empty p {
+.lingui-studio .lu-mcp-skill > p {
+  margin-top: 10px;
   font-size: 12px;
   line-height: 1.8;
 }
@@ -380,17 +230,11 @@
     display: none;
   }
   .lingui-studio .lu-mcp-connection,
-  .lingui-studio .lu-mcp-skill,
-  .lingui-studio .lu-mcp-tool-detail {
+  .lingui-studio .lu-mcp-skill {
     padding: 18px;
   }
-  .lingui-studio .lu-mcp-tool-layout,
   .lingui-studio .lu-mcp-access {
     grid-template-columns: 1fr;
-  }
-  .lingui-studio .lu-mcp-tool-list {
-    border-right: 0;
-    border-bottom: 1px solid var(--lu-border);
   }
   .lingui-studio .lu-mcp-card-heading {
     align-items: start;
@@ -399,8 +243,5 @@
   .lingui-studio .lu-mcp-facts {
     gap: 8px;
     font-size: 11px;
-  }
-  .lingui-studio .lu-mcp-readonly {
-    display: none;
   }
 }

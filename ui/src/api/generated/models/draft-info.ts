@@ -43,12 +43,6 @@ export interface DraftInfo {
      * @type {string}
      * @memberof DraftInfo
      */
-    'keyName'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DraftInfo
-     */
     'kind'?: string;
     /**
      * 

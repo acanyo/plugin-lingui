@@ -6,7 +6,6 @@ import LinguiRenderer from '../../shared/LinguiRenderer.vue'
 import LinguiIcon from '../../shared/LinguiIcon.vue'
 import ThemePreview from '../../theme-studio/ThemePreview.vue'
 import { errorMessage } from '../../services/repository'
-import { keyDate } from '../keys/client'
 import type { DraftInfo, ActivityInfo, McpHistoryClient } from './client'
 import type { DraftReview } from './review'
 import DraftChangeReview from './DraftChangeReview.vue'
@@ -66,9 +65,7 @@ const visible = computed(() =>
   props.drafts.filter(
     (draft) =>
       (filter.value !== 'pending' || !draft.loadedAt) &&
-      `${draft.title} ${draft.keyName} ${draft.workName}`
-        .toLowerCase()
-        .includes(search.value.toLowerCase()),
+      `${draft.title} ${draft.workName}`.toLowerCase().includes(search.value.toLowerCase()),
   ),
 )
 const pending = computed(() => props.drafts.filter((draft) => !draft.loadedAt).length)
@@ -116,6 +113,8 @@ function remove() {
 }
 const activityStatus = (status?: string) =>
   ({ success: '完成', 'needs-fix': '需要修正', error: '失败' })[status ?? ''] ?? '未知'
+const historyDate = (value?: string) =>
+  value ? new Date(value).toLocaleString('zh-CN', { hour12: false }) : '—'
 </script>
 <template>
   <StudioModal
@@ -195,7 +194,7 @@ const activityStatus = (status?: string) =>
             {{
               drafts.length
                 ? '没有匹配的草稿。'
-                : '还没有外部 AI 草稿。创建密钥时勾选「允许提交创作草稿」，让 AI 调用 submit_design_draft 即可。'
+                : '还没有外部 AI 草稿。请在「工具 → MCP 服务」的访问密钥中选择 plugin-lingui__submit_design_draft，让 AI 调用它提交草稿。'
             }}
           </p>
           <nav v-else aria-label="外部 AI 草稿列表">
@@ -212,7 +211,7 @@ const activityStatus = (status?: string) =>
                 {{ draft.loadedAt ? '已载入' : '待处理' }}</span
               >
               <strong>{{ draft.title }}</strong>
-              <small>{{ draft.keyName }} · {{ keyDate(draft.createdAt) }}</small>
+              <small>Halo MCP 服务 · {{ historyDate(draft.createdAt) }}</small>
               <small v-if="draft.workName"
                 >{{ draft.workName }} · 基于 v{{ draft.baseRevision }}</small
               >
@@ -319,7 +318,7 @@ const activityStatus = (status?: string) =>
                 >
               </p>
               <small
-                >{{ activity.keyName }} · {{ keyDate(activity.createdAt) }} ·
+                >Halo MCP 服务 · {{ historyDate(activity.createdAt) }} ·
                 {{ activity.elapsedMs ?? 0 }} ms</small
               >
             </div>

@@ -4,19 +4,16 @@
     <dl>
       <div>
         <dt>Bearer 令牌环境变量</dt>
-        <dd>留空</dd>
+        <dd><code>HALO_MCP_TOKEN</code></dd>
       </div>
       <div>
         <dt>标头</dt>
-        <dd>
-          键：<code>X-Lingui-MCP-Key</code><br />
-          值：创建密钥时复制的完整 <code>lgu_mcp_…</code> 密钥
-        </dd>
+        <dd>使用 Bearer 令牌环境变量时留空</dd>
       </div>
     </dl>
     <p>
-      直接粘贴密钥请使用「标头」，不要添加 Bearer
-      前缀。「来自环境变量的标头」用于填写已设置的环境变量名，不能直接粘贴密钥。
+      先在启动 AI 客户端的环境中设置 HALO_MCP_TOKEN，值为官方 MCP 服务创建的完整访问密钥。
+      此处填写环境变量名，客户端会自动生成 Authorization: Bearer 标头。
     </p>
   </aside>
 </template>

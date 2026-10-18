@@ -12,7 +12,7 @@ import run.halo.app.core.extension.Role;
 import run.halo.app.core.user.service.RoleService;
 import run.halo.app.extension.ReactiveExtensionClient;
 
-/** Recheck the owner on every request; a key cannot outlive account or role revocation. */
+/** Check the real Halo account and role bindings, never the MCP transport authorities. */
 @Component
 public class McpOwnerPermissions {
     private final ReactiveExtensionClient client;
@@ -28,7 +28,7 @@ public class McpOwnerPermissions {
     }
     private Mono<Void> require(String owner, String group, String resource, String verb, String name) {
         return client.fetch(User.class, owner)
-            .filter(user -> user.getMetadata().getDeletionTimestamp() == null
+            .filter(user -> user.getMetadata().getDeletionTimestamp() == null && user.getSpec() != null
                 && !Boolean.TRUE.equals(user.getSpec().getDisabled()))
             .switchIfEmpty(Mono.error(denied()))
             .flatMap(user -> roles.getRolesByUsername(owner).collectList())
@@ -50,6 +50,6 @@ public class McpOwnerPermissions {
         return values != null && (Arrays.asList(values).contains(value) || Arrays.asList(values).contains("*"));
     }
     private static ResponseStatusException denied() {
-        return new ResponseStatusException(HttpStatus.FORBIDDEN, "接入密钥所属账号已停用、删除或没有所需权限");
+        return new ResponseStatusException(HttpStatus.FORBIDDEN, "MCP 所属账号已停用、删除或没有所需权限");
     }
 }

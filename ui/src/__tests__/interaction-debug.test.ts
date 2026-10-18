@@ -111,7 +111,11 @@ describe('interaction diagnostics', () => {
       nodeId: 'load',
       component: 'Button',
       event: 'click',
-      data: { password: 'private', value: 'safe' },
+      data: {
+        password: 'private',
+        value: 'safe',
+        message: 'credential hmcp_private-token; header Bearer private-bearer',
+      },
       phase: 'success',
       result: { access_token: 'private-token', count: 12 },
       http: { method: 'GET', url: 'https://example.com/?api_key=private-key&q=weather' },

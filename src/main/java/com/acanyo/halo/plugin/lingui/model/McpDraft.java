@@ -16,8 +16,6 @@ public class McpDraft extends AbstractExtension {
     @Data
     public static class DraftSpec {
         private String owner;
-        private String keyId;
-        private String keyName;
         private String title;
         private String summary;
         private String kind;

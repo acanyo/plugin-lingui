@@ -4,9 +4,14 @@ import { VButton } from '@halo-dev/components'
 import type { ComponentInstance, ThemeTokens } from '@lingui/renderer'
 import StudioModal from '../shared/StudioModal.vue'
 import LinguiIcon from '../shared/LinguiIcon.vue'
-import { clientConfiguration, EXTERNAL_MCP_PATH, SKILL_URI } from './client'
+import {
+  clientConfiguration,
+  codexConfiguration,
+  OFFICIAL_MCP_PATH,
+  OFFICIAL_MCP_CONSOLE_PATH,
+  SKILL_TOOL,
+} from './connection'
 import { endpointForHaloSite, externalAiInstructions } from './external-ai'
-import McpKeyIssueDialog from './keys/McpKeyIssueDialog.vue'
 import McpClientSetupGuide from './McpClientSetupGuide.vue'
 import './external-ai.css'
 
@@ -25,13 +30,12 @@ const props = withDefaults(
 )
 const emit = defineEmits<{ close: []; import: [] }>()
 const site = ref('')
-const issuingKey = ref(false)
 const fieldId = useId()
 const feedback = ref('')
 const copyFailed = ref(false)
 const connection = computed(() => {
   if (props.mode === 'halo')
-    return { endpoint: new URL(EXTERNAL_MCP_PATH, window.location.origin).href, error: '' }
+    return { endpoint: new URL(OFFICIAL_MCP_PATH, window.location.origin).href, error: '' }
   if (!site.value.trim()) return { endpoint: '', error: '' }
   try {
     return { endpoint: endpointForHaloSite(site.value), error: '' }
@@ -46,6 +50,12 @@ const connection = computed(() => {
   }
 })
 const config = computed(() => clientConfiguration(connection.value.endpoint))
+const codexConfig = computed(() => codexConfiguration(connection.value.endpoint))
+const officialConsole = computed(() =>
+  connection.value.endpoint
+    ? new URL(OFFICIAL_MCP_CONSOLE_PATH, connection.value.endpoint).href
+    : '',
+)
 const workName = computed(() => (props.mode === 'halo' ? props.instance?.templateId : undefined))
 const instructions = computed(() =>
   externalAiInstructions({
@@ -74,7 +84,7 @@ async function copy(value: string, label: string) {
 }
 </script>
 <template>
-  <StudioModal v-if="!issuingKey" title="连接外部 AI" :width="760" @close="emit('close')">
+  <StudioModal title="连接外部 AI" :width="760" @close="emit('close')">
     <div class="lingui-studio lu-dialog-body lu-external-ai">
       <div class="lu-external-ai-intro">
         <span class="lu-external-ai-mark"><LinguiIcon name="code" /></span>
@@ -89,8 +99,8 @@ async function copy(value: string, label: string) {
           <div>
             <strong>配置 MCP 服务</strong>
             <p>
-              在支持 HTTP MCP 的 AI 客户端添加连接，用在「MCP
-              管理」创建的灵构专用密钥替换配置占位符。
+              安装并启用 Halo 官方 MCP Server 1.3.0 或更高的 1.x 版本，在「工具 → MCP
+              服务」创建访问密钥并选择「灵构 UI」工具，然后配置 AI 客户端。
             </p>
           </div>
         </li>
@@ -98,7 +108,7 @@ async function copy(value: string, label: string) {
           <span>2</span>
           <div>
             <strong>让 AI 读取 Skill</strong>
-            <p>把接入说明交给 AI，由它读取创作规则、查询组件并校验设计。</p>
+            <p>把接入说明交给 AI，由它调用创作规则工具读取 Skill、查询组件并校验设计。</p>
           </div>
         </li>
         <li>
@@ -123,7 +133,7 @@ async function copy(value: string, label: string) {
             name="halo-site"
             type="url"
             label="Halo 站点地址"
-            help="当前是本机工作空间，没有 MCP 服务。请填写已安装灵构 UI 的 Halo 站点。"
+            help="当前是本机工作空间，没有 MCP 服务。请填写已安装官方 MCP Server 和灵构 UI 的 Halo 站点。"
             placeholder="https://halo.example.com"
             autocomplete="off"
             :spellcheck="false"
@@ -135,19 +145,31 @@ async function copy(value: string, label: string) {
           <span>Streamable HTTP</span><code>{{ connection.endpoint }}</code>
         </div>
         <p v-if="mode === 'halo' && !canUseMcp" class="lu-external-ai-notice">
-          当前账号没有 MCP 使用权限。请管理员授予「使用 MCP 创作工具」，创建密钥也需要此权限。
+          当前账号没有灵构 MCP 创作工具权限。请管理员授予「使用 MCP
+          创作工具」；读取已有作品还需要目标作品的读取权限。
         </p>
         <p class="lu-external-ai-help">
-          密钥在 AI 客户端配置，无需 Halo PAT。通用 JSON 配置需按客户端要求调整；客户端需支持 HTTP
-          MCP 与资源读取，仅粘贴说明不会自动完成配置。
+          将官方访问密钥设为 AI 客户端环境变量 HALO_MCP_TOKEN。客户端需支持 HTTP MCP
+          与工具调用；仅粘贴接入说明不会自动完成配置。
         </p>
         <p v-if="mode === 'local' && connection.endpoint" class="lu-external-ai-help">
-          请到该 Halo 站点的「灵构 UI → MCP 管理」创建密钥。
+          请到该 Halo 站点的「工具 → MCP 服务」创建访问密钥并选择需要的工具。
         </p>
         <McpClientSetupGuide v-if="connection.endpoint" />
         <div class="lu-external-ai-actions">
-          <VButton v-if="mode === 'halo' && canUseMcp" class="lu-button" @click="issuingKey = true"
-            >创建 MCP 密钥</VButton
+          <a
+            v-if="officialConsole"
+            :href="officialConsole"
+            class="lu-button"
+            target="_blank"
+            rel="noopener noreferrer"
+            >打开官方 MCP 服务</a
+          >
+          <VButton
+            class="lu-button"
+            :disabled="!connection.endpoint"
+            @click="copy(codexConfig, 'Codex 配置')"
+            >复制 Codex 配置</VButton
           >
           <VButton
             class="lu-button"
@@ -171,6 +193,7 @@ async function copy(value: string, label: string) {
         </p>
         <details v-if="connection.endpoint" :open="copyFailed">
           <summary>查看配置与接入说明</summary>
+          <pre tabindex="0" aria-label="Codex MCP 配置">{{ codexConfig }}</pre>
           <pre tabindex="0" aria-label="MCP 客户端配置">{{ config }}</pre>
           <pre tabindex="0" aria-label="AI 接入说明">{{ instructions }}</pre>
         </details>
@@ -178,7 +201,7 @@ async function copy(value: string, label: string) {
       <aside class="lu-external-ai-scope">
         <p>
           <LinguiIcon name="book" /><span
-            >创作 Skill <code>{{ SKILL_URI }}</code></span
+            >创作 Skill <code>{{ SKILL_TOOL }}(topic="skill")</code></span
           >
         </p>
         <p v-if="kind === 'theme'">
@@ -187,7 +210,8 @@ async function copy(value: string, label: string) {
         <template v-else>
           <p v-if="workName">
             作品资源名称：<code>{{ workName }}</code
-            >。密钥授权该项目后，MCP 读取最近保存的版本。<strong v-if="dirty"
+            >。选中读取工具且账号具有目标作品读取权限后，MCP 读取最近保存的版本。<strong
+              v-if="dirty"
               >当前还有未保存修改，需要这些内容时请先保存。</strong
             >
           </p>
@@ -196,7 +220,9 @@ async function copy(value: string, label: string) {
             JSON 交给外部 AI，或保存到所连接的 Halo 站点。
           </p>
           <p>
-            创建密钥时可单独勾选「允许提交创作草稿」。工具不会保存项目、发布作品或执行 API / JS
+            在官方访问密钥中选择
+            <code>plugin-lingui__submit_design_draft</code>
+            即可授权提交草稿。工具不会保存项目、发布作品或执行 API / JS
             回调；草稿由你预览、载入后再保存。
           </p>
         </template>
@@ -211,5 +237,4 @@ async function copy(value: string, label: string) {
       }}</VButton></template
     >
   </StudioModal>
-  <McpKeyIssueDialog v-else :endpoint="connection.endpoint" @close="issuingKey = false" />
 </template>

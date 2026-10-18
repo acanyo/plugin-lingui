@@ -45,7 +45,7 @@ export function validateSharedDemos(value: unknown, instance: ComponentInstance)
         throw new Error('公开演示只能包含输入值、文本与按键')
       if (
         JSON.stringify(sanitizeDiagnostic(input)) !== JSON.stringify(input) ||
-        /lgu_mcp_|Bearer\s|-----BEGIN|\[已隐藏/i.test(JSON.stringify(input))
+        /hmcp_|Bearer\s|-----BEGIN|\[已隐藏/i.test(JSON.stringify(input))
       )
         throw new Error('演示包含敏感或已脱敏输入，请使用演示数据重新整理')
       return {

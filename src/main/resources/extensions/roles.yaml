@@ -92,11 +92,12 @@ metadata:
       ["plugin-lingui-role-view"]
 rules:
   - apiGroups: ["console.api.lingui.acanyo.com"]
+    # Domain permission checked by the official MCP tool Provider.
     resources: ["mcp"]
     verbs: ["create"]
   - apiGroups: ["console.api.lingui.acanyo.com"]
-    resources: ["mcpkeys", "mcpkeys/revoke", "mcpdrafts", "mcpdrafts/loaded", "mcpactivities"]
-    verbs: ["get", "list", "create", "update", "delete"]
+    resources: ["mcpdrafts", "mcpdrafts/loaded", "mcpactivities"]
+    verbs: ["get", "list", "update", "delete"]
 ---
 apiVersion: v1alpha1
 kind: Role
@@ -129,18 +130,3 @@ rules:
   - apiGroups: ["console.api.lingui.acanyo.com"]
     resources: ["marketconnection", "marketsubmissions", "marketsubmissions/*"]
     verbs: ["get", "list", "create", "update", "delete"]
-
----
-apiVersion: v1alpha1
-kind: Role
-metadata:
-  name: plugin-lingui-mcp-transport
-  labels:
-    halo.run/role-template: "true"
-    halo.run/hidden: "true"
-    rbac.authorization.halo.run/aggregate-to-anonymous: "true"
-rules:
-  # Only the transport is public; PublicMcpEndpoint always verifies its own X-Lingui-MCP-Key.
-  - apiGroups: ["api.lingui.acanyo.com"]
-    resources: ["mcp"]
-    verbs: ["create"]

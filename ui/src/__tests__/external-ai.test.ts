@@ -7,7 +7,7 @@ import AiComposer from '../ai-adapter/AiComposer.vue'
 import ThemeAiComposer from '../theme-studio/ai/ThemeAiComposer.vue'
 import ExternalAiDialog from '../mcp/ExternalAiDialog.vue'
 import { endpointForHaloSite, externalAiInstructions } from '../mcp/external-ai'
-import { EXTERNAL_MCP_PATH, SKILL_URI } from '../mcp/client'
+import { OFFICIAL_MCP_PATH, SKILL_TOOL } from '../mcp/connection'
 import { createLocalRepository } from '../dev/local-repository'
 import { repositoryKey } from '../services/repository'
 
@@ -55,15 +55,17 @@ describe('external AI handoff', () => {
     setup({ instance, dirty: true, instruction: '按我的直角紫色风格调整' })
     await press('复制 MCP 配置')
     const configuration = JSON.parse(writeText.mock.calls[0]![0])
-    expect(configuration.mcpServers.lingui.url).toBe(
-      new URL(EXTERNAL_MCP_PATH, location.origin).href,
-    )
-    expect(configuration.mcpServers.lingui.headers['X-Lingui-MCP-Key']).toBe('<LINGUI_MCP_KEY>')
+    expect(configuration.mcpServers.halo.url).toBe(new URL(OFFICIAL_MCP_PATH, location.origin).href)
+    expect(configuration.mcpServers.halo.headers).toEqual({
+      Authorization: 'Bearer ${env:HALO_MCP_TOKEN}',
+    })
     await press('复制 AI 接入说明')
     const instructions = writeText.mock.calls[1]![0] as string
     for (const required of [
-      SKILL_URI,
-      'resources/read',
+      `${SKILL_TOOL}(topic="skill")`,
+      'tools/list',
+      'plugin-lingui__',
+      '工具 → MCP 服务',
       'get_current_work(workName="saved-work-42")',
       'get_component_schemas',
       'validate_design',
@@ -95,8 +97,8 @@ describe('external AI handoff', () => {
     await input.setValue('https://halo.example.com')
     await vi.waitFor(() => expect(button('复制 MCP 配置').attributes('disabled')).toBeUndefined())
     await press('复制 MCP 配置')
-    expect(JSON.parse(writeText.mock.calls[0]![0]).mcpServers.lingui.url).toBe(
-      `https://halo.example.com${EXTERNAL_MCP_PATH}`,
+    expect(JSON.parse(writeText.mock.calls[0]![0]).mcpServers.halo.url).toBe(
+      `https://halo.example.com${OFFICIAL_MCP_PATH}`,
     )
     await press('复制 AI 接入说明')
     expect(writeText.mock.calls[1]![0]).not.toContain('local-only-project')
@@ -106,11 +108,11 @@ describe('external AI handoff', () => {
   it('explains permissions and exposes manual copying after clipboard failure', async () => {
     clipboard().mockRejectedValue(new Error('denied'))
     setup({ canUseMcp: false })
-    expect(wrapper!.text()).toContain('当前账号没有 MCP 使用权限')
+    expect(wrapper!.text()).toContain('当前账号没有灵构 MCP 创作工具权限')
     await press('复制 AI 接入说明')
     expect(wrapper!.get('[role="alert"]').text()).toContain('手动复制')
     expect(wrapper!.get('details').element).toHaveProperty('open', true)
-    expect(wrapper!.get('pre[aria-label="AI 接入说明"]').text()).toContain(SKILL_URI)
+    expect(wrapper!.get('pre[aria-label="AI 接入说明"]').text()).toContain(SKILL_TOOL)
   })
 
   it('preserves the unsent demand when opening/closing onboarding and moves to the existing import flow without generating or saving', async () => {

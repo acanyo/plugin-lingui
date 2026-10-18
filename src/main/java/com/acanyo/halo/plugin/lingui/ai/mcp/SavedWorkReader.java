@@ -22,7 +22,8 @@ public class SavedWorkReader {
     public Mono<Object> read(String name) {
         return client.fetch(ComponentTemplate.class, name)
             .filter(work -> work.getMetadata().getDeletionTimestamp() == null)
-            .switchIfEmpty(Mono.error(new IllegalArgumentException("作品不存在或已删除：" + name)))
+            .switchIfEmpty(Mono.error(new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.NOT_FOUND, "作品不存在或已删除：" + name)))
             .publishOn(Schedulers.boundedElastic()).map(work -> {
                 // History can be 2 MiB, but only the explicitly selected latest revision is exposed.
                 try {
