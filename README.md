@@ -4,7 +4,7 @@
 
 灵构 UI 面向 Halo 2.26+，当前提供 **105 种可组合组件**、AI 创作与修改、实时预览、主题与字体管理、API/回调编排、项目版本、组件市场、投稿草稿以及 Skill + MCP 外部 AI 接入。作品采用项目 ID 引用，读者访问页面时按需加载最新保存版本；安装插件不会自动创建项目。
 
-当前插件版本：`1.0.0`。
+当前插件版本：`1.0.1`。
 
 ## 演示、文档与交流
 
@@ -14,7 +14,7 @@
 - **QQ 交流群**：[Halo 插件主题交流群](https://qm.qq.com/q/YqlBX8d2Ei)
 - **源码**：[github.com/acanyo/plugin-lingui](https://github.com/acanyo/plugin-lingui)
 - **问题反馈**：[GitHub Issues](https://github.com/acanyo/plugin-lingui/issues)
-- **作者主页**：[xhhao.com](https://xhhao.com)
+- **作者主页**：[Handsome](https://xhhao.com)
 
 ## 先看界面
 

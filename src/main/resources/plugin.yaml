@@ -8,10 +8,10 @@ spec:
   pluginDependencies:
     ai-foundation: ">=1.0.0 & <2.0.0"
   author:
-    name: acanyo
+    name: Handsome
     website: https://xhhao.com
   logo: logo.png
-  homepage: https://github.com/acanyo/plugin-lingui#readme
+  homepage: https://xhhao.com
   repo: https://github.com/acanyo/plugin-lingui
   issues: https://github.com/acanyo/plugin-lingui/issues
   displayName: "灵构 UI"

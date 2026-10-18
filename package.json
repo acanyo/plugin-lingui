@@ -3,10 +3,10 @@
   "description": "灵构 UI · 面向 Halo 的 AI 交互创作工作台，支持 AI 对话生成、可视化组件搭建、主题定制、MCP / Skill 接入与组件市场。",
   "private": true,
   "author": {
-    "name": "acanyo",
+    "name": "Handsome",
     "url": "https://xhhao.com"
   },
-  "homepage": "https://github.com/acanyo/plugin-lingui#readme",
+  "homepage": "https://xhhao.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/acanyo/plugin-lingui.git"
