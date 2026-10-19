@@ -19,6 +19,9 @@ rules:
   - apiGroups: ["console.api.lingui.acanyo.com"]
     resources: ["componentembeds"]
     verbs: ["get"]
+  - apiGroups: ["console.api.lingui.acanyo.com"]
+    resources: ["projectoptions"]
+    verbs: ["get", "list"]
 ---
 apiVersion: v1alpha1
 kind: Role

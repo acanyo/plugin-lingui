@@ -6,7 +6,7 @@ import { NodeViewWrapper, nodeViewProps } from '@halo-dev/richtext-editor'
 import { type ComponentInstance } from '@lingui/renderer'
 import LinguiRenderer from '../shared/LinguiRenderer.vue'
 import { openStudio } from './open-studio'
-import { useComponentReference } from './useComponentReference'
+import { useComponentReference } from '../component-embed/useComponentReference'
 import { nodeAttributes } from './serialization'
 import { projectEditorUrl } from '../component-library/project-links'
 const props = defineProps(nodeViewProps)

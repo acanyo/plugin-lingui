@@ -18,8 +18,12 @@ export function useComponentReference(name: Readonly<Ref<string>>) {
         controller.abort()
       })
       instance.value = undefined
-      loading.value = true
+      loading.value = !!id
       error.value = ''
+      if (!id) {
+        clearTimeout(timeout)
+        return
+      }
       void loadComponentReference(id, controller.signal)
         .then(
           (value) => {

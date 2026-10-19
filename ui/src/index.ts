@@ -1,8 +1,16 @@
 import { definePlugin } from '@halo-dev/ui-shared'
 import LinguiBrandIcon from './shared/LinguiBrandIcon.vue'
-import { markRaw } from 'vue'
+import { defineAsyncComponent, markRaw } from 'vue'
 import { LinguiNode } from './editor-extension/LinguiNode'
+import { LinguiProjectSelect, linguiProjectSelect } from './project-selection'
 export default definePlugin({
+  formkit: { inputs: { linguiProjectSelect } },
+  components: {
+    LinguiProjectSelect,
+    LinguiProjectRender: defineAsyncComponent(
+      () => import('./project-rendering/LinguiProjectRender.vue'),
+    ),
+  },
   routes: [
     {
       parentName: 'Root',

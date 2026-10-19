@@ -4,6 +4,8 @@ import com.acanyo.halo.plugin.lingui.ai.AiEndpoint;
 import com.acanyo.halo.plugin.lingui.model.ComponentTemplate;
 import com.acanyo.halo.plugin.lingui.model.DesignTheme;
 import com.acanyo.halo.plugin.lingui.model.FontFamily;
+import com.acanyo.halo.plugin.lingui.projectselection.ProjectOption;
+import com.acanyo.halo.plugin.lingui.projectselection.ProjectOptionList;
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.models.Components;
@@ -16,6 +18,7 @@ import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.IntegerSchema;
+import io.swagger.v3.oas.models.media.BooleanSchema;
 import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.parameters.RequestBody;
@@ -43,6 +46,10 @@ public final class ExportApiContract {
             .addApiResponse("200", new ApiResponse().description("成功").content(content(response))));
     }
     public static void main(String[] args) throws Exception {
+        if (args.length > 1 && args[1].equals("project-selection")) {
+            exportProjectSelection(Path.of(args[0]));
+            return;
+        }
         var paths = new Paths();
         for (var type : List.of(ComponentTemplate.class, DesignTheme.class, FontFamily.class)) {
             var gvk = type.getAnnotation(GVK.class);
@@ -74,5 +81,33 @@ public final class ExportApiContract {
         var api = new OpenAPI().openapi("3.0.3").info(new Info().title("LingUI management API").version("0.1.0"))
             .components(COMPONENTS).paths(paths);
         var output = Path.of(args[0]); Files.createDirectories(output.getParent()); Files.writeString(output, Json.pretty(api));
+    }
+
+    private static void exportProjectSelection(Path output) throws Exception {
+        String base = "/apis/console.api.lingui.acanyo.com/v1alpha1/projectoptions";
+        var publicOnly = new Parameter().name("publicOnly").in("query")
+            .schema(new BooleanSchema()._default(true));
+        var list = operation("ListLinguiProjectOptions", "LinguiProjects", model(ProjectOptionList.class))
+            .addParametersItem(new Parameter().name("page").in("query")
+                .schema(new IntegerSchema()._default(1).minimum(java.math.BigDecimal.ONE)))
+            .addParametersItem(new Parameter().name("size").in("query")
+                .schema(new IntegerSchema()._default(20).minimum(java.math.BigDecimal.ONE)
+                    .maximum(java.math.BigDecimal.valueOf(100))))
+            .addParametersItem(new Parameter().name("keyword").in("query")
+                .schema(new StringSchema().maxLength(120)))
+            .addParametersItem(new Parameter().name("category").in("query")
+                .schema(new StringSchema().maxLength(80)))
+            .addParametersItem(publicOnly);
+        var detail = operation("GetLinguiProjectOption", "LinguiProjects", model(ProjectOption.class))
+            .addParametersItem(new Parameter().name("name").in("path").required(true)
+                .schema(new StringSchema()))
+            .addParametersItem(publicOnly);
+        var paths = new Paths().addPathItem(base, new PathItem().get(list))
+            .addPathItem(base + "/{name}", new PathItem().get(detail));
+        var api = new OpenAPI().openapi("3.0.3")
+            .info(new Info().title("LingUI project selection API").version("v1alpha1"))
+            .components(COMPONENTS).paths(paths);
+        Files.createDirectories(output.getParent());
+        Files.writeString(output, Json.pretty(api));
     }
 }

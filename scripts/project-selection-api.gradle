@@ -1,0 +1,18 @@
+// ./gradlew generateApiClient -I scripts/project-selection-api.gradle -x generateOpenApiDocs
+// Reuse the plugin's generator with a focused contract; leave existing API clients untouched.
+gradle.projectsEvaluated {
+    def pluginProject = gradle.rootProject
+    def contractDir = pluginProject.layout.buildDirectory.dir('api-docs/project-selection')
+    def exportContract = pluginProject.tasks.register('exportProjectSelectionContract', JavaExec) {
+        dependsOn pluginProject.tasks.named('compileTestJava'), pluginProject.tasks.named('processResources')
+        classpath = pluginProject.sourceSets.test.runtimeClasspath
+        mainClass = 'com.acanyo.halo.plugin.lingui.contracts.ExportApiContract'
+        args contractDir.get().file('projectSelection.json').asFile.absolutePath, 'project-selection'
+    }
+    pluginProject.tasks.named('generateApiClient') {
+        dependsOn exportContract
+        specDir.set(contractDir)
+        groupedApiMappings.set(['/v3/api-docs/projectSelection': 'projectSelection.json'])
+        outputDir.set(pluginProject.layout.projectDirectory.dir('ui/src/api/project-selection'))
+    }
+}
