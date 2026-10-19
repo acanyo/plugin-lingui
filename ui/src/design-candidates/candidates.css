@@ -5,19 +5,18 @@
   margin: 12px;
   min-width: 0;
 }
+.lu-conversation .lu-candidate-panel {
+  margin: 18px 0 0;
+}
 .lu-candidate-panel > summary {
   cursor: pointer;
   font-weight: 600;
 }
-.lu-candidate-panel textarea {
-  width: 100%;
-  resize: vertical;
-  padding: 10px;
-  border: 1px solid var(--lu-border);
-  border-radius: 8px;
-  background: var(--lu-bg);
-  color: inherit;
-  margin: 8px 0;
+.lu-candidate-prompt {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 .lu-candidate-grid {
   display: grid;

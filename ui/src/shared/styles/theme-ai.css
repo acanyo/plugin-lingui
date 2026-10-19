@@ -9,7 +9,7 @@
 .lingui-studio .lu-theme-ai-heading,
 .lingui-studio .lu-theme-ai-heading > div,
 .lingui-studio .lu-theme-ai-actions,
-.lingui-studio .lu-theme-ai-actions > div {
+.lingui-studio .lu-theme-ai-utilities {
   display: flex;
   align-items: center;
   flex-wrap: wrap;

@@ -51,6 +51,7 @@ const settle = async () => {
 }
 async function setup(instance = initial()) {
   const repository = createHaloRepository()
+  repository.getGenerationSettings = undefined
   vi.spyOn(repository, 'listTemplates').mockResolvedValue([])
   vi.spyOn(repository, 'listThemes').mockResolvedValue([])
   const generate = vi.spyOn(repository, 'generate'),

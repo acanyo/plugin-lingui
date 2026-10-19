@@ -5,7 +5,7 @@ import { validateRecording, type InteractionRecording } from '../interaction-rec
 import { validateRevisionHistory, type RevisionHistory } from '../revisions/types'
 import { validateInstance, type ComponentInstance } from '@lingui/renderer'
 import { validateGeneratedDesign, type GeneratedDesign } from '../ai-adapter/design-result'
-import type { ConversationMessage } from '../ai-adapter/conversation'
+import type { ConversationMessage, GenerationMode } from '../ai-adapter/conversation'
 import { cloneJson } from '../shared/clone'
 import { finishTrace, validTrace } from '../ai-adapter/progress/types'
 import { validInteractionCheck } from '../interaction-check/validation'
@@ -28,6 +28,7 @@ export interface CreationSnapshot {
   instance?: ComponentInstance
   messages: ConversationMessage[]
   instruction: string
+  generationMode?: GenerationMode
   dirty: boolean
   editing: boolean
   project?: { id: string; versionToken?: number }
@@ -46,19 +47,26 @@ export function creationTitle(record: CreationSnapshot): string {
   return (
     record.instance?.document.title ||
     record.messages.find((message) => message.role === 'user')?.text.slice(0, 80) ||
+    record.candidates?.prompt.slice(0, 80) ||
     record.instruction.slice(0, 80) ||
     '未命名创作'
   )
 }
 export function hasCreation(snapshot: CreationSnapshot): boolean {
-  return !!(snapshot.instance || snapshot.messages.length || snapshot.instruction.trim())
+  return !!(
+    snapshot.instance ||
+    snapshot.messages.length ||
+    snapshot.instruction.trim() ||
+    snapshot.candidates?.candidates.length
+  )
 }
 export function validateSnapshot(snapshot: CreationSnapshot): CreationSnapshot {
   const safe = cloneJson(snapshot)
   if (
     !Array.isArray(safe.messages) ||
     typeof safe.instruction !== 'string' ||
-    safe.instruction.length > 4000
+    safe.instruction.length > 4000 ||
+    (safe.generationMode !== undefined && !['single', 'multiple'].includes(safe.generationMode))
   )
     throw new Error('创作历史中的对话数据无效')
   const ids = new Set<number>()
@@ -101,6 +109,7 @@ export function validateSnapshot(snapshot: CreationSnapshot): CreationSnapshot {
     ...(safe.recordings ? { recordings: safe.recordings } : {}),
     messages: safe.messages,
     instruction: safe.instruction,
+    ...(safe.generationMode ? { generationMode: safe.generationMode } : {}),
     dirty: safe.dirty,
     editing: safe.editing,
     ...(safe.instance ? { instance: safe.instance } : {}),

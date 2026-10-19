@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import DesignCandidates from '../design-candidates/DesignCandidates.vue'
 import type { CandidateSet } from '../design-candidates/model'
+import { combineCandidateTheme } from '../design-candidates/model'
+import { useDesignCandidates } from '../design-candidates/useDesignCandidates'
+import { useRepository } from '../services/repository'
+import { useModelSelectionActivity, useWorkbenchModelSelection } from '../model-selection/context'
 import InteractionRecordingPanel from '../interaction-recordings/InteractionRecordingPanel.vue'
 import { useInteractionRecordings } from '../interaction-recordings/useInteractionRecordings'
 import type { InteractionRecording } from '../interaction-recordings/model'
@@ -80,15 +84,53 @@ const emit = defineEmits<{
   externalDrafts: []
 }>()
 const access = useStudioAccess()
+const repository = useRepository()
+const modelSelection = useWorkbenchModelSelection()
 const showEmbed = ref(false)
-const composerBusy = ref(false),
-  candidateBusy = ref(false)
+const composerBusy = ref(false)
+const candidates = useDesignCandidates({
+  generate: repository.generate.bind(repository),
+  current: () => props.instance,
+  initial: props.initialCandidates,
+  changed: (value) => emit('candidates', value),
+  busy: () => publishBusy(),
+})
+const { set: candidateSet, busy: candidateBusy } = candidates
+useModelSelectionActivity(candidateBusy)
+const candidateError = ref('')
+const candidatesAllowed = computed(
+  () =>
+    repository.mode === 'halo' &&
+    access.allows('ai:generate') &&
+    (modelSelection?.ready.value ?? true) &&
+    !props.conflicted &&
+    !composerBusy.value,
+)
+function generateCandidates(instruction: string) {
+  if (!candidatesAllowed.value || candidateBusy.value || editTarget.value) return
+  candidateError.value = ''
+  return candidates.start(instruction)
+}
+function retryCandidate(id: string) {
+  if (candidatesAllowed.value) return candidates.retry(id)
+}
+function thirdCandidate() {
+  if (candidatesAllowed.value) return candidates.third()
+}
+function combineCandidates() {
+  if (!candidatesAllowed.value || candidateBusy.value) return
+  const first = candidateSet.value?.candidates[0]?.instance
+  const second = candidateSet.value?.candidates[1]?.instance
+  if (!first || !second) return
+  try {
+    candidates.addCombined(combineCandidateTheme(first, second))
+    candidateError.value = ''
+  } catch (cause) {
+    candidateError.value = cause instanceof Error ? cause.message : '无法组合这两个方案'
+  }
+}
 function setComposerBusy(value: boolean) {
   composerBusy.value = value
-  publishBusy()
-}
-function setCandidateBusy(value: boolean) {
-  candidateBusy.value = value
   publishBusy()
 }
 function publishBusy() {
@@ -299,7 +341,10 @@ function changeTheme(event: Event) {
           ref="composer"
           :instance="instance"
           :dirty="dirty"
-          :blocked="conflicted || candidateBusy"
+          :blocked="conflicted"
+          :candidate-busy="candidateBusy"
+          :can-generate-multiple="true"
+          :has-candidates="!!candidateSet"
           :initial-conversation="initialConversation"
           :edit-target="editTarget"
           @edit-target="editTarget = $event"
@@ -309,15 +354,24 @@ function changeTheme(event: Event) {
           @import="emit('import')"
           @conversation="emit('conversation', $event)"
           @checked="automaticCheck = $event"
-        />
-        <DesignCandidates
-          :instance="instance"
-          :initial="initialCandidates"
-          :blocked="conflicted || composerBusy"
-          @changed="emit('candidates', $event)"
-          @busy="setCandidateBusy"
-          @adopt="(document, source, theme) => emit('generated', document, source, theme)"
-        />
+          @multiple="generateCandidates"
+          @stop-candidates="candidates.stop"
+        >
+          <template #candidates>
+            <DesignCandidates
+              v-if="candidateSet"
+              :set="candidateSet"
+              :busy="candidateBusy"
+              :blocked="conflicted || composerBusy || !candidatesAllowed"
+              @retry="retryCandidate"
+              @cancel="candidates.cancel"
+              @third="thirdCandidate"
+              @combine="combineCandidates"
+              @adopt="(document, source, theme) => emit('generated', document, source, theme)"
+            />
+            <p v-if="candidateError" class="lu-error" role="alert">{{ candidateError }}</p>
+          </template>
+        </AiComposer>
         <nav class="lu-creation-resources" aria-label="创作资源">
           <button
             type="button"

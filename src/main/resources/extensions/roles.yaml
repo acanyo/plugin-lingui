@@ -76,6 +76,12 @@ rules:
   - apiGroups: ["console.api.lingui.acanyo.com"]
     resources: ["generate", "generate-theme"]
     verbs: ["create"]
+  - apiGroups: ["console.api.lingui.acanyo.com"]
+    resources: ["generation-settings"]
+    verbs: ["list"]
+  - apiGroups: ["console.api.aifoundation.halo.run"]
+    resources: ["model-options"]
+    verbs: ["list"]
 ---
 apiVersion: v1alpha1
 kind: Role

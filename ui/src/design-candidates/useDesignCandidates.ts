@@ -1,7 +1,8 @@
 import { onBeforeUnmount, ref, shallowRef } from 'vue'
 import type { ComponentInstance } from '@lingui/renderer'
 import type { StudioRepository } from '../component-library/types'
-import { generateCheckedDesign } from '../ai-adapter/checked-generation'
+import { CheckedGenerationError, generateCheckedDesign } from '../ai-adapter/checked-generation'
+import { generationError } from '../ai-adapter/generation-error'
 import { updateTrace, finishTrace, type GenerationTrace } from '../ai-adapter/progress/types'
 import { sanitizeDiagnostic } from '../component-studio/debug-records'
 import { candidateInstance, type CandidateSet, type DesignCandidate } from './model'
@@ -17,8 +18,8 @@ export function useDesignCandidates(options: {
       options.initial ? cloneJson(options.initial) : undefined,
     ),
     busy = ref(false)
-  let controllers = new Map<string, AbortController>(),
-    disposed = false
+  const controllers = new Map<string, AbortController>()
+  let disposed = false
   const publish = () => {
     if (!disposed && set.value) options.changed(cloneJson(set.value))
   }
@@ -75,11 +76,14 @@ export function useDesignCandidates(options: {
         trace: finishTrace(trace, 'done'),
       })
     } catch (cause) {
+      const problem = generationError(
+        cause instanceof CheckedGenerationError ? cause.problem : cause,
+      )
       update(candidate.id, {
         status: controller.signal.aborted ? 'stopped' : 'error',
         error: controller.signal.aborted
           ? '已取消；其他方案保留'
-          : String(sanitizeDiagnostic(cause instanceof Error ? cause.message : '方案生成失败')),
+          : String(sanitizeDiagnostic(problem.text)),
         trace: finishTrace(trace, controller.signal.aborted ? 'stopped' : 'error'),
       })
     } finally {
@@ -122,6 +126,11 @@ export function useDesignCandidates(options: {
     controllers.get(id)?.abort()
     update(id, { status: 'stopped', error: '已取消，可单独重试' })
   }
+  function stop() {
+    const pending =
+      set.value?.candidates.filter((row) => ['queued', 'running'].includes(row.status)) ?? []
+    for (const row of pending) cancel(row.id)
+  }
   function retry(id: string) {
     const row = set.value?.candidates.find((row) => row.id === id)
     if (row && !busy.value && ['error', 'stopped'].includes(row.status)) {
@@ -153,5 +162,5 @@ export function useDesignCandidates(options: {
     controllers.forEach((controller) => controller.abort())
     controllers.clear()
   })
-  return { set, busy, start, cancel, retry, third, addCombined }
+  return { set, busy, start, stop, cancel, retry, third, addCombined }
 }

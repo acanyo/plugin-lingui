@@ -14,6 +14,60 @@ import run.halo.aifoundation.exception.ProviderApiException;
 
 class AiEndpointTest {
     @Test
+    void returnsOnlyTheInitialModelForWorkbenchGenerationSettings() {
+        var service = mock(AiService.class);
+        when(service.generationSettings()).thenReturn(Mono.just(new AiEndpoint.GenerationSettings("legacy-model")));
+
+        WebTestClient.bindToRouterFunction(new AiEndpoint(service).endpoint()).build()
+            .get().uri("/generation-settings").exchange().expectStatus().isOk()
+            .expectBody().json("{\"modelName\":\"legacy-model\"}", true);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"generate", "generate-theme"})
+    void forwardsAnExplicitModelFromTheWorkbench(String path) {
+        var service = mock(AiService.class);
+        when(service.generate(any())).thenReturn(Mono.just("result"));
+        when(service.generateTheme(any())).thenReturn(Mono.just("result"));
+
+        WebTestClient.bindToRouterFunction(new AiEndpoint(service).endpoint()).build()
+            .post().uri("/" + path).contentType(MediaType.APPLICATION_JSON)
+            .bodyValue("{\"instruction\":\"test\",\"modelName\":\"workbench-model\"}")
+            .exchange().expectStatus().isOk();
+
+        if (path.equals("generate")) {
+            org.mockito.Mockito.verify(service).generate(new AiEndpoint.GenerateRequest("test", null, "workbench-model"));
+        } else {
+            org.mockito.Mockito.verify(service).generateTheme(new AiEndpoint.GenerateThemeRequest("test", null, "workbench-model"));
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"generate", "generate-theme"})
+    void preservesNullForAnOmittedOrNullModelAndEmptyForAnExplicitDefault(String path) {
+        var service = mock(AiService.class);
+        when(service.generate(any())).thenReturn(Mono.just("result"));
+        when(service.generateTheme(any())).thenReturn(Mono.just("result"));
+        var client = WebTestClient.bindToRouterFunction(new AiEndpoint(service).endpoint()).build();
+
+        for (var json : java.util.List.of("{\"instruction\":\"test\"}",
+            "{\"instruction\":\"test\",\"modelName\":null}", "{\"instruction\":\"test\",\"modelName\":\"\"}")) {
+            client.post().uri("/" + path).contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(json).exchange().expectStatus().isOk();
+        }
+
+        if (path.equals("generate")) {
+            org.mockito.Mockito.verify(service, org.mockito.Mockito.times(2))
+                .generate(new AiEndpoint.GenerateRequest("test", null, null));
+            org.mockito.Mockito.verify(service).generate(new AiEndpoint.GenerateRequest("test", null, ""));
+        } else {
+            org.mockito.Mockito.verify(service, org.mockito.Mockito.times(2))
+                .generateTheme(new AiEndpoint.GenerateThemeRequest("test", null, null));
+            org.mockito.Mockito.verify(service).generateTheme(new AiEndpoint.GenerateThemeRequest("test", null, ""));
+        }
+    }
+
+    @Test
     void negotiatesPostProgressStreamAndPreservesTheJsonResponse() {
         var service = mock(AiService.class);
         var request = new AiEndpoint.GenerateRequest("test", null);

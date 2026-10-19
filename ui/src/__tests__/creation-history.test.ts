@@ -163,6 +163,44 @@ describe('persistent creation history', () => {
     expect(history.entries.value[0]!.instruction).toBe('第二段')
     expect(history.entries.value[0]!.revision).toBe(2)
   })
+  it('retains a multiple-design request and its mode even before a candidate is adopted', async () => {
+    const { repository } = memoryRepository()
+    const { snapshot, history } = await setup(repository)
+    snapshot.value = {
+      ...empty(),
+      generationMode: 'multiple',
+      candidates: {
+        id: 'candidate-only-history',
+        prompt: '为一个知识测验比较两种布局',
+        candidates: [
+          {
+            id: 'first',
+            direction: '紧凑布局',
+            status: 'done',
+            instance: createInstance(examples[0]!.create()),
+          },
+          { id: 'second', direction: '舒展布局', status: 'error', error: '生成失败' },
+        ],
+      },
+    }
+    await history.flush()
+    await flushPromises()
+    const saved = history.entries.value[0]!
+    expect(saved.instance).toBeUndefined()
+    expect(creationTitle(saved)).toBe('为一个知识测验比较两种布局')
+    expect(saved.generationMode).toBe('multiple')
+    view!.unmount()
+    const restored = await setup(repository)
+    expect(restored.snapshot.value.generationMode).toBe('multiple')
+    expect(restored.snapshot.value.candidates).toEqual(saved.candidates)
+    expect(restored.snapshot.value.instruction).toBe('')
+  })
+  it('keeps old history compatible and rejects invalid generation modes', () => {
+    expect(validateSnapshot(empty()).generationMode).toBeUndefined()
+    expect(() =>
+      validateSnapshot({ ...empty(), generationMode: 'unknown' } as unknown as CreationSnapshot),
+    ).toThrow('对话数据无效')
+  })
   it('persists removal of the last unsent input instead of restoring erased text', async () => {
     const { repository } = memoryRepository()
     const { snapshot, history } = await setup(repository, {

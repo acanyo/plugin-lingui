@@ -29,7 +29,7 @@ import SubmissionWorkspace from '../marketplace/SubmissionWorkspace.vue'
 import { projectSubmission } from '../marketplace/project-submission'
 import { copyMarketTheme, themeSubmission } from '../marketplace/theme-submission'
 import type { SubmissionDraft } from '../marketplace/submission'
-import { computed, onMounted, ref, shallowRef, watch } from 'vue'
+import { computed, onMounted, provide, ref, shallowRef, watch } from 'vue'
 import { Dialog, Toast } from '@halo-dev/components'
 import {
   builtInThemes,
@@ -52,7 +52,10 @@ import McpManagementView from '../mcp/McpManagementView.vue'
 import ImportDialog from '../shared/ImportDialog.vue'
 import SaveTemplateDialog from '../component-library/SaveTemplateDialog.vue'
 import { templateInstance, type TemplateRecord } from '../component-library/types'
-import { useRepository, errorMessage } from '../services/repository'
+import { useRepository, errorMessage, repositoryKey } from '../services/repository'
+import { useModelSelection } from '../model-selection/useModelSelection'
+import { modelSelectionKey } from '../model-selection/context'
+import { withModelSelection } from '../model-selection/repository'
 import { downloadJson } from '../shared/download'
 import '../shared/studio.css'
 import { useStudioAccess } from '../services/studio-access'
@@ -70,8 +73,22 @@ const emit = defineEmits<{
   insert: [instance: ComponentInstance, source?: ArticleSource, provenance?: WorkSource[]]
   close: []
 }>()
-const repository = useRepository(),
-  tab = ref<StudioSection>('components'),
+const sourceRepository = useRepository()
+const access = useStudioAccess()
+const historyScope = useHistoryScope(sourceRepository.mode)
+const modelSelection = sourceRepository.getGenerationSettings
+  ? useModelSelection({
+      scope: historyScope,
+      enabled: computed(() => sourceRepository.mode === 'halo' && access.allows('ai:generate')),
+      loadDefault: () => sourceRepository.getGenerationSettings!(),
+    })
+  : undefined
+const repository = modelSelection
+  ? withModelSelection(sourceRepository, modelSelection)
+  : sourceRepository
+provide(repositoryKey, repository)
+if (modelSelection) provide(modelSelectionKey, modelSelection)
+const tab = ref<StudioSection>('components'),
   draftSource = ref<ComponentInstance>(),
   projectDraft = ref<SubmissionDraft>(),
   session = ref(0),
@@ -106,7 +123,6 @@ const conversation = shallowRef<ConversationState>({
   messages: [],
   instruction: props.article?.prompt ?? '',
 })
-const access = useStudioAccess()
 const canUseExternalDrafts = () => repository.mode === 'halo' && access.allows('mcp:use')
 const mcpInbox = useMcpInbox(canUseExternalDrafts)
 const loadingExternalDraft = ref(false)
@@ -215,7 +231,7 @@ const revisions = useWorkRevisions(
   },
 )
 const history = useCreationHistory(
-  useHistoryScope(repository.mode),
+  historyScope,
   () => ({
     ...(active.value ? { instance: active.value } : {}),
     ...conversation.value,
@@ -251,7 +267,11 @@ function restoreCreation(value: CreationSnapshot) {
   recordings.value = value.recordings ?? []
   active.value = value.instance
   revisions.reset(value.workRevisions)
-  conversation.value = { messages: value.messages, instruction: value.instruction }
+  conversation.value = {
+    messages: value.messages,
+    instruction: value.instruction,
+    ...(value.generationMode ? { generationMode: value.generationMode } : {}),
+  }
   dirty.value = value.dirty
   startEditing.value = value.editing
   pendingAi.value = value.pendingAi
@@ -709,7 +729,12 @@ async function insert() {
 }
 </script>
 <template>
-  <div :class="['lingui-studio', { 'lu-embedded': embedding }]">
+  <div
+    :class="[
+      'lingui-studio',
+      { 'lu-embedded': embedding, 'lu-workspace-active': tab === 'components' },
+    ]"
+  >
     <DependencyMappingDialog
       v-if="dependencyImport"
       :instance="dependencyImport"

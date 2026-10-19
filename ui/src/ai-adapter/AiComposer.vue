@@ -6,7 +6,7 @@ import { useRepository } from '../services/repository'
 import { useStudioAccess } from '../services/studio-access'
 import ExternalAiDialog from '../mcp/ExternalAiDialog.vue'
 import { useAiConversation } from './useAiConversation'
-import type { ConversationState } from './conversation'
+import type { ConversationState, GenerationMode } from './conversation'
 import { cloneJson } from '../shared/clone'
 import GenerationProgress from './progress/GenerationProgress.vue'
 import './progress/progress.css'
@@ -16,6 +16,8 @@ import type { ConversationMessage } from './conversation'
 import EditTargetCard from '../scoped-edit/EditTargetCard.vue'
 import EditProposalReview from '../scoped-edit/EditProposalReview.vue'
 import type { EditTarget } from '../scoped-edit/model'
+import GenerationModelSelector from '../model-selection/GenerationModelSelector.vue'
+import { useModelSelectionActivity, useWorkbenchModelSelection } from '../model-selection/context'
 
 const props = defineProps<{
   instance?: ComponentInstance
@@ -23,6 +25,9 @@ const props = defineProps<{
   dirty?: boolean
   initialConversation?: ConversationState
   editTarget?: EditTarget
+  candidateBusy?: boolean
+  canGenerateMultiple?: boolean
+  hasCandidates?: boolean
 }>()
 const emit = defineEmits<{
   generated: [document: LinguiDocument, source?: ComponentInstance, theme?: ThemeTokens]
@@ -32,15 +37,20 @@ const emit = defineEmits<{
   checked: [value: CheckedDesign]
   editTarget: [value: EditTarget | undefined]
   reselect: []
+  multiple: [instruction: string]
+  stopCandidates: []
 }>()
 const repository = useRepository()
 const access = useStudioAccess()
+const modelSelection = useWorkbenchModelSelection()
+const modelReady = computed(() => modelSelection?.ready.value ?? true)
 const instruction = ref(props.initialConversation?.instruction ?? '')
+const generationMode = ref<GenerationMode>(props.initialConversation?.generationMode ?? 'single')
 const connectingExternalAi = ref(false)
 const failedDraft = shallowRef<ConversationMessage>()
 function adoptFailedDraft() {
   const draft = failedDraft.value?.draft
-  if (!draft || failedDraft.value?.editTarget || busy.value || props.blocked) return
+  if (!draft || failedDraft.value?.editTarget || working.value || props.blocked) return
   emit('generated', draft.document, props.instance, draft.theme)
   failedDraft.value = undefined
 }
@@ -59,6 +69,15 @@ const { messages, busy, send, stop } = useAiConversation(
   props.initialConversation?.messages,
   (value) => emit('checked', value),
 )
+useModelSelectionActivity(busy)
+const working = computed(() => busy.value || !!props.candidateBusy)
+watch(
+  () => props.editTarget,
+  (target) => {
+    if (target) generationMode.value = 'single'
+  },
+  { immediate: true },
+)
 const reviewing = ref<number>()
 const reviewMessage = computed(() =>
   messages.value.find((message) => message.id === reviewing.value),
@@ -72,20 +91,25 @@ function finishProposal(state: 'adopted' | 'discarded') {
   reviewing.value = undefined
 }
 function adoptProposal(result: ComponentInstance, source: ComponentInstance, check: CheckedDesign) {
-  if (busy.value || props.blocked || reviewMessage.value?.editProposal?.state !== 'pending') return
+  if (working.value || props.blocked || reviewMessage.value?.editProposal?.state !== 'pending')
+    return
   emit('generated', result.document, source)
   emit('checked', check)
   finishProposal('adopted')
 }
 const canGenerate = computed(() => repository.mode === 'halo' && access.allows('ai:generate'))
 const sendDisabledReason = computed(() =>
-  busy.value
+  working.value
     ? 'AI 正在生成，请完成后再发送'
-    : props.blocked
-      ? '请先选择保留当前修改，或采用 AI 结果'
-      : !instruction.value.trim()
-        ? '请先输入组件创作需求'
-        : '',
+    : !modelReady.value
+      ? '正在载入生成模型，请稍后'
+      : props.blocked
+        ? '请先选择保留当前修改，或采用 AI 结果'
+        : generationMode.value === 'multiple' && instruction.value.length > 3400
+          ? '多方案需求最多 3400 字，请缩短后发送，或切回单方案。'
+          : !instruction.value.trim()
+            ? '请先输入组件创作需求'
+            : '',
 )
 const suggestions = [
   {
@@ -107,9 +131,16 @@ const suggestions = [
 
 watch(busy, (value) => emit('busy', value))
 watch(
-  [messages, instruction],
+  [messages, instruction, generationMode],
   () =>
-    emit('conversation', cloneJson({ messages: messages.value, instruction: instruction.value })),
+    emit(
+      'conversation',
+      cloneJson({
+        messages: messages.value,
+        instruction: instruction.value,
+        generationMode: generationMode.value,
+      }),
+    ),
   { deep: true },
 )
 watch(
@@ -121,20 +152,50 @@ watch(
   { immediate: true, deep: true },
 )
 
-async function submit(
+async function submitSingle(
   text = instruction.value,
   options: { target?: EditTarget } = { target: props.editTarget },
 ) {
-  if (!canGenerate.value || busy.value || props.blocked || !text.trim()) return
+  if (
+    !canGenerate.value ||
+    !modelReady.value ||
+    working.value ||
+    props.blocked ||
+    !text.trim() ||
+    text.length > 4000
+  )
+    return
   followProgress.value = true
   if (text === instruction.value) instruction.value = ''
   await send(text, options.target)
   await nextTick()
   input.value?.focus()
 }
+function setGenerationMode(mode: GenerationMode) {
+  if (working.value || props.blocked || (mode === 'multiple' && props.editTarget)) return
+  generationMode.value = mode
+}
+function submit() {
+  if (generationMode.value === 'single' || props.editTarget) return submitSingle()
+  if (
+    !props.canGenerateMultiple ||
+    !canGenerate.value ||
+    !modelReady.value ||
+    working.value ||
+    props.blocked ||
+    !instruction.value.trim() ||
+    instruction.value.length > 3400
+  )
+    return
+  emit('multiple', instruction.value.trim())
+}
+function stopAll() {
+  stop()
+  emit('stopCandidates')
+}
 function keydown(event: KeyboardEvent) {
   if (event.key !== 'Enter' || event.shiftKey || event.isComposing || event.keyCode === 229) return
-  if (!canGenerate.value || busy.value || props.blocked) return
+  if (!canGenerate.value || working.value || props.blocked) return
   event.preventDefault()
   void submit()
 }
@@ -147,7 +208,7 @@ function importExternalResult() {
   emit('import')
 }
 defineExpose({
-  repair: (instruction: string) => submit(instruction, {}),
+  repair: (instruction: string) => submitSingle(instruction, {}),
   focus: () => input.value?.focus(),
 })
 </script>
@@ -160,13 +221,13 @@ defineExpose({
     <div
       ref="log"
       class="lu-conversation"
-      :class="{ 'is-empty': !messages.length }"
+      :class="{ 'is-empty': !messages.length && !hasCandidates }"
       role="log"
       @scroll="trackScroll"
       aria-label="创作对话记录"
       aria-live="polite"
     >
-      <div v-if="!messages.length" class="lu-chat-welcome">
+      <div v-if="!messages.length && !hasCandidates" class="lu-chat-welcome">
         <span class="lu-chat-mark"><LinguiIcon name="sparkles" /></span>
         <h1>{{ instance ? '一起把它做得更好。' : '你想做一个怎样的组件？' }}</h1>
         <p>
@@ -221,7 +282,7 @@ defineExpose({
           v-if="message.draft && !message.editTarget"
           type="button"
           class="lu-text-button"
-          :disabled="busy || blocked"
+          :disabled="working || blocked"
           @click="failedDraft = message"
         >
           查看待修复草稿
@@ -230,8 +291,8 @@ defineExpose({
           v-if="message.role === 'assistant' && message.status === 'error'"
           type="button"
           class="lu-text-button"
-          :disabled="busy || blocked"
-          @click="submit(message.instruction, { target: message.editTarget })"
+          :disabled="working || blocked"
+          @click="submitSingle(message.instruction, { target: message.editTarget })"
         >
           重试生成
         </button>
@@ -244,7 +305,7 @@ defineExpose({
             v-if="message.editProposal.state === 'pending'"
             type="button"
             class="lu-button"
-            :disabled="busy || blocked"
+            :disabled="working || blocked"
             @click="reviewing = message.id"
           >
             比较并采用修改
@@ -256,13 +317,14 @@ defineExpose({
           }}</small>
         </div>
       </article>
+      <slot name="candidates" />
     </div>
     <div class="lu-chat-compose">
       <EditTargetCard
         v-if="editTarget && instance"
         :instance="instance"
         :target="editTarget"
-        :disabled="busy"
+        :disabled="working"
         @update="emit('editTarget', $event)"
         @clear="emit('editTarget', undefined)"
         @reselect="emit('reselect')"
@@ -271,35 +333,89 @@ defineExpose({
         先选择采用 AI 结果，或保留当前修改，再继续对话。
       </p>
       <form class="lu-prompt-box" @submit.prevent="submit()">
+        <div
+          v-if="canGenerate && canGenerateMultiple"
+          class="lu-generation-modes"
+          role="group"
+          aria-label="生成方式"
+        >
+          <button
+            type="button"
+            :aria-pressed="generationMode === 'single'"
+            :disabled="working || blocked"
+            @click="setGenerationMode('single')"
+          >
+            单方案
+          </button>
+          <button
+            type="button"
+            :aria-pressed="generationMode === 'multiple'"
+            :disabled="working || blocked || !!editTarget"
+            :title="editTarget ? '局部修改使用单方案' : '用同一需求生成两种布局'"
+            @click="setGenerationMode('multiple')"
+          >
+            多方案
+          </button>
+          <span v-if="editTarget" class="lu-muted">局部修改</span>
+          <span v-else-if="generationMode === 'multiple'" class="lu-muted"
+            >生成两种布局供你比较</span
+          >
+        </div>
         <textarea
           ref="input"
           v-model="instruction"
-          rows="3"
+          rows="2"
           maxlength="4000"
           :placeholder="
             editTarget
               ? `只调整 ${editTarget.nodeId}，例如：文字简短一点…`
-              : instance
-                ? '继续描述你想调整的地方…'
-                : '描述你的组件，例如：一个可以切换方案的对比表…'
+              : generationMode === 'multiple'
+                ? '描述同一个需求，生成两种布局进行比较…'
+                : instance
+                  ? '继续描述你想调整的地方…'
+                  : '描述你的组件，例如：一个可以切换方案的对比表…'
           "
           aria-label="组件创作需求"
           name="instruction"
           autocomplete="off"
           @keydown="keydown"
         />
+        <p
+          v-if="generationMode === 'multiple' && instruction.length > 3400"
+          class="lu-prompt-validation"
+          role="status"
+        >
+          {{ sendDisabledReason }}
+        </p>
         <div class="lu-ai-actions">
-          <button type="button" class="lu-text-button" @click="connectingExternalAi = true">
-            连接外部 AI
-          </button>
-          <button type="button" class="lu-text-button" @click="emit('import')">导入 JSON</button>
+          <GenerationModelSelector v-if="canGenerate" :disabled="working || blocked" />
           <button
-            v-if="busy"
+            type="button"
+            class="lu-text-button lu-composer-utility"
+            aria-label="连接外部 AI"
+            title="连接外部 AI"
+            :disabled="working || blocked"
+            @click="connectingExternalAi = true"
+          >
+            <LinguiIcon name="code" /><span class="lu-composer-action-label">连接外部 AI</span>
+          </button>
+          <button
+            type="button"
+            class="lu-text-button lu-composer-utility"
+            aria-label="导入 JSON"
+            title="导入 JSON"
+            :disabled="working || blocked"
+            @click="emit('import')"
+          >
+            <LinguiIcon name="plus" /><span class="lu-composer-action-label">导入 JSON</span>
+          </button>
+          <button
+            v-if="working"
             type="button"
             class="lu-prompt-send is-stop"
             aria-label="停止生成"
             title="停止生成"
-            @click="stop"
+            @click="stopAll"
           >
             <span class="lu-generation-stop-icon" aria-hidden="true" />
           </button>
@@ -307,10 +423,16 @@ defineExpose({
             v-else-if="canGenerate"
             type="submit"
             class="lu-prompt-send"
-            :disabled="busy || blocked || !instruction.trim()"
+            :disabled="!!sendDisabledReason"
             :title="sendDisabledReason || undefined"
             :aria-description="sendDisabledReason || undefined"
-            :aria-label="busy ? '正在生成' : instance ? '发送修改要求' : '生成组件'"
+            :aria-label="
+              generationMode === 'multiple'
+                ? '生成两种方案'
+                : instance
+                  ? '发送修改要求'
+                  : '生成组件'
+            "
           >
             <span v-if="busy" class="lu-generation-status">生成中</span
             ><LinguiIcon v-else name="arrowUp" />
@@ -332,7 +454,7 @@ defineExpose({
     v-if="reviewMessage?.editProposal?.state === 'pending'"
     :proposal="reviewMessage.editProposal"
     :current="instance"
-    :blocked="busy || blocked"
+    :blocked="working || blocked"
     @close="reviewing = undefined"
     @discard="finishProposal('discarded')"
     @adopt="adoptProposal"

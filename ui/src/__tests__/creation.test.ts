@@ -35,6 +35,7 @@ afterEach(() => {
 })
 async function setup(instance?: ComponentInstance, templates: TemplateRecord[] = []) {
   const repository = createHaloRepository()
+  repository.getGenerationSettings = undefined
   vi.spyOn(repository, 'listTemplates').mockResolvedValue(templates)
   vi.spyOn(repository, 'listThemes').mockResolvedValue([])
   const save = vi.spyOn(repository, 'saveTemplate')

@@ -11,6 +11,22 @@ import run.halo.aifoundation.tool.ToolResult;
 
 class GenerationProgressTest {
     @Test
+    void retainsTheOriginalFailureWithoutEmittingPrivateErrorText() {
+        var events = new ArrayList<GenerationEvent>();
+        var progress = new GenerationProgress(events::add);
+        var flattened = new IllegalStateException("private-provider-message");
+        var original = new java.net.ConnectException("private-provider-address");
+        assertSame(flattened, progress.failureOr(flattened));
+
+        progress.onError(GenerationErrorEvent.builder().error(original).build()).block();
+        progress.onError(GenerationErrorEvent.builder().error(flattened).build()).block();
+
+        assertSame(original, progress.failureOr(flattened));
+        assertTrue(events.isEmpty());
+        assertSame(flattened, new GenerationProgress().failureOr(flattened));
+    }
+
+    @Test
     void mapsRealLifecycleToSafeCorrelatedStepsAndFlagsValidationFailures() {
         var events = new ArrayList<GenerationEvent>();
         var progress = new GenerationProgress(events::add);

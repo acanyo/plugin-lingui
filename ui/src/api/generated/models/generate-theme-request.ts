@@ -32,5 +32,11 @@ export interface GenerateThemeRequest {
      * @memberof GenerateThemeRequest
      */
     'theme'?: string;
+    /**
+     * 工作台选择的模型资源名称；省略或 null 兼容旧插件设置，空字符串使用 AI 基座默认语言模型
+     * @type {string}
+     * @memberof GenerateThemeRequest
+     */
+    'modelName'?: string | null;
 }
 

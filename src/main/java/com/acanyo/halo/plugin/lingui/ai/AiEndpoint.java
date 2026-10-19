@@ -20,7 +20,13 @@ public class AiEndpoint implements CustomEndpoint {
     public AiEndpoint(AiService service) { this.service = service; }
     @Override
     public RouterFunction<ServerResponse> endpoint() {
-        return SpringdocRouteBuilder.route().POST("generate", request -> request.bodyToMono(GenerateRequest.class)
+        return SpringdocRouteBuilder.route()
+            .GET("generation-settings", request -> service.generationSettings()
+                .flatMap(config -> ServerResponse.ok().bodyValue(config)),
+                builder -> builder.operationId("GetLinguiGenerationSettings").tag("LinguiAi")
+                    .description("读取兼容旧插件配置的工作台初始模型，仅返回模型资源名称")
+                    .response(responseBuilder().implementation(GenerationSettings.class)))
+            .POST("generate", request -> request.bodyToMono(GenerateRequest.class)
             .flatMap(input -> request.headers().accept().stream().anyMatch(type -> type.getQualityValue() > 0
                 && !type.isWildcardType() && !type.isWildcardSubtype() && type.isCompatibleWith(MediaType.TEXT_EVENT_STREAM))
                 ? ServerResponse.ok().contentType(MediaType.TEXT_EVENT_STREAM)
@@ -51,9 +57,21 @@ public class AiEndpoint implements CustomEndpoint {
     public GroupVersion groupVersion() { return GroupVersion.parseAPIVersion("console.api.lingui.acanyo.com/v1alpha1"); }
     public record GenerateRequest(
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, minLength = 1, maxLength = 4000) String instruction,
-        @Schema(maxLength = 262144) String document) {}
+        @Schema(maxLength = 262144) String document,
+        @Schema(maxLength = 160, nullable = true, description = "工作台选择的模型资源名称；省略或 null 兼容旧插件设置，空字符串使用 AI 基座默认语言模型") String modelName) {
+        public GenerateRequest(String instruction, String document) {
+            this(instruction, document, null);
+        }
+    }
     public record GenerateResponse(String content) {}
+    public record GenerationSettings(
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "旧插件配置中的模型资源名称，空字符串表示 AI 基座默认语言模型") String modelName) {}
     public record GenerateThemeRequest(
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, minLength = 1, maxLength = 4000) String instruction,
-        @Schema(maxLength = 8192) String theme) {}
+        @Schema(maxLength = 8192) String theme,
+        @Schema(maxLength = 160, nullable = true, description = "工作台选择的模型资源名称；省略或 null 兼容旧插件设置，空字符串使用 AI 基座默认语言模型") String modelName) {
+        public GenerateThemeRequest(String instruction, String theme) {
+            this(instruction, theme, null);
+        }
+    }
 }

@@ -16,9 +16,11 @@ export interface ConversationMessage {
   editTarget?: EditTarget
   editProposal?: EditProposal
 }
+export type GenerationMode = 'single' | 'multiple'
 export interface ConversationState {
   messages: ConversationMessage[]
   instruction: string
+  generationMode?: GenerationMode
 }
 
 /** Keep completed requests in context without exceeding the existing API limit. */

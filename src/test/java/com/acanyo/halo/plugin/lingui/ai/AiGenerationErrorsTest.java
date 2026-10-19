@@ -11,6 +11,7 @@ import java.util.concurrent.TimeoutException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import run.halo.aifoundation.exception.AiGenerationTimeoutException;
@@ -63,6 +64,63 @@ class AiGenerationErrorsTest {
         assertEquals(429, failure.providerStatus());
         assertEquals("provider-http", failure.category());
         assertFalse(failure.reason().contains(PRIVATE_BODY));
+    }
+
+    @Test
+    void recognizesTheInstalledFoundationTransportExceptionWithoutLeakingItsBody() {
+        var cause = new run.halo.aifoundation.provider.transport.ProviderHttpException(
+            "openai-compatible chat request failed: status=503, body="
+                + "{\"error\":{\"code\":\"model_not_found\",\"message\":\"private-channel-details\"}}; " + PRIVATE_BODY);
+
+        var error = AiGenerationErrors.translate(new RuntimeException("wrapped", cause));
+
+        assertEquals(502, error.getStatusCode().value());
+        assertEquals("provider-http", error.getBody().getProperties().get("category"));
+        assertEquals(503, error.getBody().getProperties().get("providerStatus"));
+        assertTrue(error.getReason().contains("HTTP 503"));
+        assertTrue(error.getReason().contains("工作台切换模型"));
+        assertFalse(error.getReason().contains("model_not_found"));
+        assertFalse(error.getReason().contains("private-channel-details"));
+        assertFalse(error.getReason().contains(PRIVATE_BODY));
+        assertNull(error.getCause());
+    }
+
+    @Test
+    void recognizesLowercaseTransportStatusAfterAnOlderStreamFlattensTheException() {
+        var failure = AiGenerationErrors.classify(new IllegalStateException(
+            "openai-compatible chat request failed: status=503, body=" + PRIVATE_BODY));
+
+        assertEquals("provider-http", failure.category());
+        assertEquals(503, failure.providerStatus());
+        assertFalse(failure.reason().contains(PRIVATE_BODY));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "private-prefix openai-compatible chat request failed: status=503, body=private",
+        "openai-compatible chat request failed: status=5030, body=private",
+        "openai-compatible chat request failed: status=503private",
+        "openai-compatible chat request failed: status=099, body=private",
+        "openai-compatible chat request failed: status=600, body=private",
+        "openai-compatible chat request failed: status=503\nprivate",
+        "openai-compatible chat request failed: status=503\n"
+    })
+    void doesNotInferTransportStatusFromMalformedMessages(String message) {
+        var failure = AiGenerationErrors.classify(
+            new run.halo.aifoundation.provider.transport.ProviderHttpException(message));
+
+        assertEquals("unknown", failure.category());
+        assertEquals(0, failure.providerStatus());
+        assertFalse(failure.reason().contains("private"));
+    }
+
+    @Test
+    void doesNotTrustTheTransportMessageFormatOnUnrelatedExceptionTypes() {
+        var failure = AiGenerationErrors.classify(new RuntimeException(
+            "openai-compatible chat request failed: status=503, body=" + PRIVATE_BODY));
+
+        assertEquals("unknown", failure.category());
+        assertEquals(0, failure.providerStatus());
     }
 
     @Test

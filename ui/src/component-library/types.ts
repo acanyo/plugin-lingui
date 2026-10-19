@@ -4,6 +4,7 @@ import type { ComponentInstance, LinguiDocument, ThemeTokens } from '@lingui/ren
 import type { GeneratedDesign } from '../ai-adapter/design-result'
 import type { ManagedFont } from '../font-library/types'
 import type { GenerationOptions } from '../ai-adapter/progress/types'
+import type { GenerationSettings } from '../api/generated'
 export interface Revision {
   provenance?: WorkSource[]
   version: number
@@ -21,6 +22,7 @@ export interface TemplateRecord {
 }
 export interface StudioRepository {
   readonly mode: 'halo' | 'local'
+  getGenerationSettings?(): Promise<GenerationSettings>
   listTemplates(): Promise<TemplateRecord[]>
   saveTemplate(record: TemplateRecord): Promise<TemplateRecord>
   deleteTemplate(id: string): Promise<void>
@@ -35,7 +37,11 @@ export interface StudioRepository {
     document?: LinguiDocument,
     options?: GenerationOptions,
   ): Promise<LinguiDocument | GeneratedDesign>
-  generateTheme(instruction: string, theme?: ThemeTokens): Promise<ThemeTokens>
+  generateTheme(
+    instruction: string,
+    theme?: ThemeTokens,
+    options?: GenerationOptions,
+  ): Promise<ThemeTokens>
 }
 export function templateInstance(template: TemplateRecord, theme: ThemeTokens): ComponentInstance {
   const revision = template.revisions.at(-1)!

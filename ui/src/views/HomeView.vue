@@ -6,4 +6,4 @@ import StudioView from './StudioView.vue'
 defineProps<{ projectId?: string }>()
 provide(repositoryKey, createHaloRepository())
 </script>
-<template><StudioView :project-id="projectId" /></template>
+<template><StudioView class="lu-console" :project-id="projectId" /></template>

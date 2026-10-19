@@ -20,6 +20,7 @@ export * from './generate-response';
 export * from './generate-theme-request';
 export * from './generation-event';
 export * from './generation-problem';
+export * from './generation-settings';
 export * from './json-patch-inner';
 export * from './lingui-font-spec';
 export * from './lingui-template-spec';

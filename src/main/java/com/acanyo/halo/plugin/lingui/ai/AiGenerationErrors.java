@@ -26,9 +26,12 @@ import run.halo.aifoundation.exception.ProviderDisabledException;
 /** Turns provider failures into actionable diagnostics without exposing response bodies or secrets. */
 final class AiGenerationErrors {
     private static final Logger LOG = LoggerFactory.getLogger(AiGenerationErrors.class);
-    // AI Foundation 1.0.0's OpenAI-compatible adapter uses this exact format instead of ProviderApiException.
-    private static final Pattern LEGACY_STATUS = Pattern.compile(
-        "^OpenAI-compatible chat request failed: status=([1-5][0-9]{2})(?:,|$)");
+    // Foundation's transport exception is internal to its app, so match its exact name without
+    // linking against that implementation class. Older streams flatten it to IllegalStateException.
+    private static final String PROVIDER_HTTP_EXCEPTION =
+        "run.halo.aifoundation.provider.transport.ProviderHttpException";
+    private static final Pattern COMPATIBLE_STATUS = Pattern.compile(
+        "^(?:OpenAI|openai)-compatible chat request failed: status=([1-5][0-9]{2})(?:,|\\z)");
 
     private AiGenerationErrors() {}
 
@@ -82,7 +85,7 @@ final class AiGenerationErrors {
             cause = cause.getCause()) {
             if (cause instanceof DefaultModelNotConfiguredException) {
                 return failure(HttpStatus.BAD_REQUEST, "default-model", 0, cause,
-                    "AI 基座尚未配置默认语言模型，请在基座中设置默认模型，或在灵构 UI 设置中选择模型");
+                    "AI 基座尚未配置默认语言模型，请在基座中设置默认模型，或在灵构 UI 工作台中选择模型");
             }
             if (cause instanceof IllegalArgumentException && cause.getMessage() != null
                 && (cause.getMessage().startsWith("Tool calling is not supported by provider type:")
@@ -93,7 +96,7 @@ final class AiGenerationErrors {
             if (cause instanceof ModelNotFoundException || cause instanceof ModelDisabledException
                 || cause instanceof ProviderDisabledException || cause instanceof IncompatibleModelTypeException) {
                 return failure(HttpStatus.BAD_REQUEST, "model-unavailable", 0, cause,
-                    "所选 AI 基座语言模型不存在、不可用或类型不匹配，请重新选择可用模型");
+                    "所选 AI 基座语言模型不存在、不可用或类型不匹配，请在工作台重新选择可用模型");
             }
             if (cause instanceof ProviderApiException provider) {
                 return providerFailure(provider.getStatusCode(), cause);
@@ -101,8 +104,10 @@ final class AiGenerationErrors {
             if (cause instanceof WebClientResponseException response) {
                 return providerFailure(response.getStatusCode().value(), cause);
             }
-            if (cause instanceof IllegalStateException && cause.getMessage() != null) {
-                var match = LEGACY_STATUS.matcher(cause.getMessage());
+            if ((cause instanceof IllegalStateException
+                || PROVIDER_HTTP_EXCEPTION.equals(cause.getClass().getName()))
+                && cause.getMessage() != null) {
+                var match = COMPATIBLE_STATUS.matcher(cause.getMessage());
                 if (match.find()) return providerFailure(Integer.parseInt(match.group(1)), cause);
             }
             if (cause instanceof TimeoutException || cause instanceof AiGenerationTimeoutException
@@ -132,6 +137,7 @@ final class AiGenerationErrors {
             case 408, 504 -> "AI 服务商响应超时（HTTP " + status + "），请稍后重试或切换模型";
             case 413 -> "AI 服务商拒绝过大的请求（HTTP 413），请缩小组件或分步修改";
             case 429 -> "AI 服务商限流或额度不足（HTTP 429），请稍后重试并检查账号额度";
+            case 503 -> "AI 服务商暂时异常（HTTP 503），当前模型或服务渠道不可用，请在工作台切换模型，或在 AI 基座中检查服务商与模型配置后重试";
             case 400, 422 -> "AI 服务商拒绝生成参数或内容（HTTP " + status
                 + "），请检查模型接口兼容性、上下文和输出长度限制，或切换模型后重试";
             default -> status >= 500

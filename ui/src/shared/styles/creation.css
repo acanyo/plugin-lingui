@@ -290,6 +290,16 @@
     min-height: min-content;
   }
 }
+@media (min-width: 768px) {
+  @container studio (min-width: 701px) {
+    .lingui-studio.lu-console .lu-creation-workspace,
+    .lingui-studio.lu-console .lu-creation-workspace:has(.lu-artifact-empty):has(.lu-chat-welcome) {
+      flex: 1;
+      height: auto;
+      min-height: 560px;
+    }
+  }
+}
 @container studio (max-width: 1000px) {
   .lingui-studio .lu-creation-grid {
     grid-template-columns: minmax(300px, 1fr) minmax(320px, 1.1fr);

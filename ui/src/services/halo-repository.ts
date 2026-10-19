@@ -54,6 +54,10 @@ export function createHaloRepository(): StudioRepository {
   const themeResources = new Map<string, DesignTheme>()
   return {
     mode: 'halo',
+    async getGenerationSettings() {
+      const { data } = await ai.getLinguiGenerationSettings()
+      return data
+    },
     ...createHaloFontRepository(),
     async listTemplates() {
       const result: TemplateRecord[] = []
@@ -134,6 +138,7 @@ export function createHaloRepository(): StudioRepository {
       const request = {
         generateRequest: {
           instruction,
+          ...(options?.modelName !== undefined ? { modelName: options.modelName } : {}),
           ...(document ? { document: JSON.stringify(validateDocument(document)) } : {}),
         },
       }
@@ -170,14 +175,18 @@ export function createHaloRepository(): StudioRepository {
         throw new GenerationOutputError(cause)
       }
     },
-    async generateTheme(instruction, theme) {
+    async generateTheme(instruction, theme, options) {
       const { customFont, ...base } = theme ? validateTheme(theme) : { customFont: undefined }
-      const { data } = await ai.generateLinguiTheme({
-        generateThemeRequest: {
-          instruction,
-          ...(theme ? { theme: JSON.stringify(base) } : {}),
+      const { data } = await ai.generateLinguiTheme(
+        {
+          generateThemeRequest: {
+            instruction,
+            ...(options?.modelName !== undefined ? { modelName: options.modelName } : {}),
+            ...(theme ? { theme: JSON.stringify(base) } : {}),
+          },
         },
-      })
+        { signal: options?.signal, timeout: 375000 },
+      )
       const result = parseGeneratedTheme(data.content ?? '')
       delete result.customFont
       if (customFont) result.customFont = customFont

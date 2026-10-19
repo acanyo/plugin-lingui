@@ -13,6 +13,8 @@ export interface GenerationTrace {
   outcome: 'running' | 'done' | 'error' | 'stopped'
 }
 export interface GenerationOptions {
+  /** Omit to inherit legacy settings; an empty string selects AI Foundation's default. */
+  modelName?: string
   signal?: AbortSignal
   onProgress?: (event: GenerationEvent) => void
 }

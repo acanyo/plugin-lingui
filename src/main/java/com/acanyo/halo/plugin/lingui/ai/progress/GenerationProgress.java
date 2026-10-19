@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
+import run.halo.aifoundation.lifecycle.GenerationErrorEvent;
 import run.halo.aifoundation.lifecycle.GenerationLifecycle;
 import run.halo.aifoundation.lifecycle.GenerationStepFinishEvent;
 import run.halo.aifoundation.lifecycle.GenerationStepStartEvent;
@@ -21,10 +22,21 @@ public final class GenerationProgress implements GenerationLifecycle {
     private final Map<String, String> labels = new HashMap<>();
     private final Set<Integer> awaitingModel = new HashSet<>();
     private boolean connected;
+    private Throwable failure;
 
     public GenerationProgress(Consumer<GenerationEvent> consumer) { this.consumer = consumer; }
     public GenerationProgress() { this(event -> {}); }
     public long elapsedMs() { return (System.nanoTime() - started) / 1_000_000; }
+
+    /** Foundation 1.0.0's stream result loses the original exception type and cause. */
+    public synchronized Throwable failureOr(Throwable streamFailure) {
+        return failure == null ? streamFailure : failure;
+    }
+
+    @Override public synchronized Mono<Void> onError(GenerationErrorEvent event) {
+        if (failure == null) failure = event.getError();
+        return Mono.empty();
+    }
 
     public synchronized void activity(String id, String label, String state) {
         consumer.accept(new GenerationEvent("activity", id, label, state, elapsedMs(), null, null));

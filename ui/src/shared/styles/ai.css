@@ -158,6 +158,7 @@
   }
 }
 .lingui-studio .lu-chat-compose {
+  flex-shrink: 0;
   padding: 12px 24px 8px;
 }
 .lingui-studio .lu-chat-compose > .lu-muted {
@@ -177,7 +178,7 @@
 }
 .lingui-studio .lu-prompt-box textarea {
   display: block;
-  min-height: 80px;
+  min-height: 56px;
   max-height: 220px;
   border: 0;
   background: transparent;
@@ -189,15 +190,72 @@
 .lingui-studio .lu-prompt-box textarea:focus-visible {
   outline: none;
 }
+.lingui-studio .lu-generation-modes {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+  margin-bottom: 8px;
+}
+.lingui-studio .lu-generation-modes button {
+  padding: 3px 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--lu-muted);
+  font-size: 11px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+.lingui-studio .lu-generation-modes button[aria-pressed='true'] {
+  background: var(--lu-hover);
+  color: var(--lu-text);
+  font-weight: 600;
+}
+.lingui-studio .lu-generation-modes > span {
+  min-width: 0;
+  margin-left: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+}
+.lingui-studio .lu-prompt-validation {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--lu-danger);
+}
 .lingui-studio .lu-ai-actions {
+  container: composer-actions / inline-size;
   display: flex;
   align-items: center;
   gap: 8px;
   margin-top: 8px;
+  min-width: 0;
 }
 .lingui-studio .lu-ai-actions .lu-text-button {
   padding: 6px 4px;
   font-size: 12px;
+}
+.lingui-studio .lu-ai-actions .lu-composer-utility {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 5px;
+  min-width: 30px;
+  min-height: 30px;
+  white-space: nowrap;
+}
+@container composer-actions (max-width: 460px) {
+  .lingui-studio .lu-composer-action-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 .lingui-studio .lu-prompt-send {
   display: flex;

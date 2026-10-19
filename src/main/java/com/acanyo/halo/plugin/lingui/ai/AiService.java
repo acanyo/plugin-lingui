@@ -48,6 +48,12 @@ public class AiService {
         return GenerationStream.create(progress -> generate(request, progress));
     }
 
+    public Mono<AiEndpoint.GenerationSettings> generationSettings() {
+        return settings.fetch("ai", AiSettings.class)
+            .map(config -> new AiEndpoint.GenerationSettings(normalizeModelName(config.modelName())))
+            .defaultIfEmpty(new AiEndpoint.GenerationSettings(""));
+    }
+
     private Mono<String> generate(AiEndpoint.GenerateRequest request, GenerationProgress progress) {
         if (request.instruction() == null || request.instruction().isBlank()
             || request.instruction().length() > 4000
@@ -55,8 +61,11 @@ public class AiService {
             return Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST,
                 "请输入 1–4000 字符的需求，已有组件不能超过 256 KiB"));
         }
+        if (normalizeModelName(request.modelName()).length() > 160) {
+            return Mono.error(invalidModelName());
+        }
         return Mono.defer(() -> generate(prompt.system(request), prompt.user(request),
-            tools.session(request.document(), request.instruction()), progress));
+            tools.session(request.document(), request.instruction()), progress, request.modelName()));
     }
 
     public Mono<String> generateTheme(AiEndpoint.GenerateThemeRequest request) {
@@ -66,10 +75,14 @@ public class AiService {
             return Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST,
                 "请输入 1–4000 字符的主题需求，当前主题不能超过 8 KiB"));
         }
-        return generate(themePrompt.system(), themePrompt.user(request), null, new GenerationProgress());
+        if (normalizeModelName(request.modelName()).length() > 160) {
+            return Mono.error(invalidModelName());
+        }
+        return generate(themePrompt.system(), themePrompt.user(request), null, new GenerationProgress(), request.modelName());
     }
 
-    private Mono<String> generate(String system, String user, CreationSession session, GenerationProgress progress) {
+    private Mono<String> generate(String system, String user, CreationSession session, GenerationProgress progress,
+        String requestedModelName) {
         var timeout = session == null ? THEME_TIMEOUT : COMPONENT_TIMEOUT;
         return Mono.defer(() -> {
             if (inFlight.incrementAndGet() > 3) {
@@ -83,11 +96,12 @@ public class AiService {
                 .flatMap(config -> {
                     if (!config.enabled()) {
                         return Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                            "请先在灵构 UI 插件设置中启用 AI 生成，再选择 AI 基座语言模型"));
+                            "请先在灵构 UI 插件设置中启用 AI 生成，再在工作台选择 AI 基座语言模型"));
                     }
-                    if (config.modelName() != null && config.modelName().length() > 160) {
-                        return Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                            "模型资源名称无效，请从 AI 基座模型选择器重新选择"));
+                    var modelName = normalizeModelName(requestedModelName == null
+                        ? config.modelName() : requestedModelName);
+                    if (modelName.length() > 160) {
+                        return Mono.error(invalidModelName());
                     }
                     if (config.outputBudget() < 1024 || config.outputBudget() > 32768) {
                         return Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -98,16 +112,16 @@ public class AiService {
                         .prompt(user)
                         .maxOutputTokens(config.outputBudget())
                         .maxRetries(0)
+                        .lifecycle(progress)
                         .timeouts(GenerationTimeouts.total(timeout));
                     if (session != null) {
                         builder.tools(session.tools()).stopWhen(step -> !session.complete()
                             && StopCondition.stepCountIs(7).shouldContinue(step))
-                            .lifecycle(progress)
                             .prepareStep(step -> CreationStepPolicy.prepare(step, system));
                     }
                     var generation = builder.build();
                     long started = System.nanoTime();
-                    return foundation.generate(config.modelName(), generation)
+                    return foundation.generate(modelName.isEmpty() ? null : modelName, generation)
                         .map(result -> {
                             LOG.info("Lingui AI completed: elapsedMs={}, systemBytes={}, steps={}, toolCalls={}",
                                 (System.nanoTime() - started) / 1_000_000,
@@ -135,8 +149,17 @@ public class AiService {
                 })
                 .timeout(timeout, Mono.defer(() -> Mono.error(AiGenerationErrors.deadline(timeout))))
                 .onErrorMap(error -> !(error instanceof ResponseStatusException),
-                    AiGenerationErrors::translate)
+                    error -> AiGenerationErrors.translate(progress.failureOr(error)))
                 .doFinally(signal -> inFlight.decrementAndGet());
         });
+    }
+
+    private static String normalizeModelName(String modelName) {
+        return modelName == null ? "" : modelName.trim();
+    }
+
+    private static ResponseStatusException invalidModelName() {
+        return new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            "模型资源名称无效，请在工作台重新选择 AI 基座语言模型");
     }
 }

@@ -26,6 +26,7 @@ afterEach(() => {
 })
 async function setup(instance: ComponentInstance) {
   const repository = createHaloRepository()
+  repository.getGenerationSettings = undefined
   vi.spyOn(repository, 'listTemplates').mockResolvedValue([])
   vi.spyOn(repository, 'listThemes').mockResolvedValue([])
   const generate = vi.spyOn(repository, 'generate'),
@@ -103,10 +104,11 @@ describe('creative feature workbench integration', () => {
     const instance = createInstance(card('原作'))
     const { generate, save } = await setup(instance)
     generate.mockResolvedValueOnce(card('紧凑方案')).mockResolvedValueOnce(card('舒展方案'))
-    const candidates = wrapper!.getComponent(DesignCandidates)
-    await candidates.get('textarea').setValue('生成两个布局')
-    await press('生成两种方案')
+    await wrapper!.get('textarea[aria-label="组件创作需求"]').setValue('生成两个布局')
+    await press('多方案')
+    await wrapper!.get('.lu-prompt-box').trigger('submit')
     await settle()
+    const candidates = wrapper!.getComponent(DesignCandidates)
     expect(generate).toHaveBeenCalledTimes(2)
     expect(active().document.title).toBe('原作')
     const adopt = candidates

@@ -6,8 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
@@ -26,6 +28,8 @@ import run.halo.aifoundation.chat.GenerateTextRequest;
 import run.halo.aifoundation.chat.GenerateTextResult;
 import run.halo.aifoundation.chat.FinishReason;
 import run.halo.aifoundation.exception.DefaultModelNotConfiguredException;
+import run.halo.aifoundation.exception.ProviderApiException;
+import run.halo.aifoundation.lifecycle.GenerationErrorEvent;
 import run.halo.app.plugin.ReactiveSettingFetcher;
 
 class AiServiceTest {
@@ -49,6 +53,117 @@ class AiServiceTest {
 
     private void enable() {
         when(settings.fetch("ai", AiSettings.class)).thenReturn(Mono.just(new AiSettings(true, null, null)));
+    }
+
+    private Mono<String> generateWithModel(boolean theme, String modelName) {
+        return theme
+            ? service.generateTheme(new AiEndpoint.GenerateThemeRequest("深色", null, modelName))
+            : service.generate(new AiEndpoint.GenerateRequest(request.instruction(), request.document(), modelName));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void workbenchSelectionOverridesTheLegacyModelForComponentsAndThemes(boolean theme) {
+        when(settings.fetch("ai", AiSettings.class))
+            .thenReturn(Mono.just(new AiSettings(true, "legacy-model", null)));
+        when(foundation.generate(eq("workbench-model"), any()))
+            .thenReturn(Mono.just(GenerateTextResult.builder().text(VALID_DESIGN).build()));
+
+        assertEquals(VALID_DESIGN, generateWithModel(theme, "  workbench-model  ").block());
+
+        verify(foundation).generate(eq("workbench-model"), any());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void omittedModelsPreserveTheTrimmedLegacySelection(boolean theme) {
+        when(settings.fetch("ai", AiSettings.class))
+            .thenReturn(Mono.just(new AiSettings(true, "  legacy-model  ", null)));
+        when(foundation.generate(eq("legacy-model"), any()))
+            .thenReturn(Mono.just(GenerateTextResult.builder().text(VALID_DESIGN).build()));
+
+        assertEquals(VALID_DESIGN, generateWithModel(theme, null).block());
+
+        verify(foundation).generate(eq("legacy-model"), any());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void explicitEmptyAndWhitespaceSelectionsUseFoundationDefaultInsteadOfLegacyModel(boolean theme) {
+        when(settings.fetch("ai", AiSettings.class))
+            .thenReturn(Mono.just(new AiSettings(true, "legacy-model", null)));
+        when(foundation.generate(isNull(), any()))
+            .thenReturn(Mono.just(GenerateTextResult.builder().text(VALID_DESIGN).build()));
+
+        assertEquals(VALID_DESIGN, generateWithModel(theme, "").block());
+        assertEquals(VALID_DESIGN, generateWithModel(theme, "  ").block());
+
+        verify(foundation, org.mockito.Mockito.times(2)).generate(isNull(), any());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void rejectsInvalidWorkbenchModelsBeforeReadingConfigurationOrCallingFoundation(boolean theme) {
+        var error = assertThrows(ResponseStatusException.class,
+            () -> generateWithModel(theme, "  " + "x".repeat(161) + "  ").block());
+
+        assertEquals(400, error.getStatusCode().value());
+        assertTrue(error.getReason().contains("工作台"));
+        verifyNoInteractions(settings, foundation);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void rejectsInvalidLegacyModelsBeforeCallingFoundation(boolean theme) {
+        when(settings.fetch("ai", AiSettings.class))
+            .thenReturn(Mono.just(new AiSettings(true, "x".repeat(161), null)));
+
+        var error = assertThrows(ResponseStatusException.class, () -> generateWithModel(theme, null).block());
+
+        assertEquals(400, error.getStatusCode().value());
+        verifyNoInteractions(foundation);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void acceptsAMaximumLengthWorkbenchModelEvenWhenLegacySelectionIsInvalid(boolean theme) {
+        var modelName = "x".repeat(160);
+        when(settings.fetch("ai", AiSettings.class))
+            .thenReturn(Mono.just(new AiSettings(true, "x".repeat(161), null)));
+        when(foundation.generate(eq(modelName), any()))
+            .thenReturn(Mono.just(GenerateTextResult.builder().text(VALID_DESIGN).build()));
+
+        assertEquals(VALID_DESIGN, generateWithModel(theme, "  " + modelName + "  ").block());
+
+        verify(foundation).generate(eq(modelName), any());
+    }
+
+    @Test
+    void generationSettingsExposeOnlyTheNormalizedLegacyModel() {
+        when(settings.fetch("ai", AiSettings.class))
+            .thenReturn(Mono.just(new AiSettings(false, "  legacy-model  ", 4096)));
+
+        assertEquals(new AiEndpoint.GenerationSettings("legacy-model"), service.generationSettings().block());
+        verifyNoInteractions(foundation);
+    }
+
+    @Test
+    void generationSettingsDefaultWhenThePluginHasNoAiConfiguration() {
+        when(settings.fetch("ai", AiSettings.class)).thenReturn(Mono.empty());
+
+        assertEquals(new AiEndpoint.GenerationSettings(""), service.generationSettings().block());
+        verifyNoInteractions(foundation);
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {"  "})
+    void generationSettingsNormalizeMissingLegacyModelsToFoundationDefault(String modelName) {
+        when(settings.fetch("ai", AiSettings.class))
+            .thenReturn(Mono.just(new AiSettings(true, modelName, null)));
+
+        assertEquals(new AiEndpoint.GenerationSettings(""), service.generationSettings().block());
+        verifyNoInteractions(foundation);
     }
 
     @Test
@@ -146,6 +261,7 @@ class AiServiceTest {
         var error = assertThrows(ResponseStatusException.class, () -> service.generate(request).block());
         assertEquals(400, error.getStatusCode().value());
         assertTrue(error.getReason().contains("AI 基座尚未配置默认语言模型"));
+        assertTrue(error.getReason().contains("工作台中选择模型"));
     }
 
     @ParameterizedTest
@@ -303,6 +419,70 @@ class AiServiceTest {
         assertEquals(429, error.getStatusCode().value());
         assertTrue(error.getReason().contains("AI 服务商限流或额度不足"));
         assertFalse(error.getReason().contains("private-provider-error-detail"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void preservesProviderStatusWhenFoundationStreamResultFlattensTheOriginalException(boolean theme) {
+        enable();
+        when(foundation.generate(isNull(), any())).thenAnswer(invocation -> {
+            GenerateTextRequest generation = invocation.getArgument(1);
+            var original = new ProviderApiException("openai", 401, "Bearer private-key; private-prompt");
+            // Foundation 1.0.0 notifies lifecycle with the original failure, then returns an
+            // IllegalStateException containing only its message from StreamTextResult.result().
+            return generation.getLifecycle().onError(GenerationErrorEvent.builder().error(original).build())
+                .then(Mono.error(new IllegalStateException(original.getMessage())));
+        });
+
+        var error = assertThrows(ResponseStatusException.class, () -> generateWithModel(theme, null).block());
+
+        assertEquals(502, error.getStatusCode().value());
+        assertEquals("provider-http", error.getBody().getProperties().get("category"));
+        assertEquals(401, error.getBody().getProperties().get("providerStatus"));
+        assertTrue(error.getReason().contains("认证失败"));
+        assertFalse(error.getReason().contains("private-key"));
+        assertFalse(error.getReason().contains("private-prompt"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void preservesConnectionFailureWhenFoundationStreamResultLosesItsCause(boolean theme) {
+        enable();
+        when(foundation.generate(isNull(), any())).thenAnswer(invocation -> {
+            GenerateTextRequest generation = invocation.getArgument(1);
+            var original = new RuntimeException("private-provider-details",
+                new java.net.ConnectException("private-provider-address"));
+            return generation.getLifecycle().onError(GenerationErrorEvent.builder().error(original).build())
+                .then(Mono.error(new IllegalStateException(original.getMessage())));
+        });
+
+        var error = assertThrows(ResponseStatusException.class, () -> generateWithModel(theme, null).block());
+
+        assertEquals(502, error.getStatusCode().value());
+        assertEquals("connection", error.getBody().getProperties().get("category"));
+        assertTrue(error.getReason().contains("无法连接"));
+        assertFalse(error.getReason().contains("private-provider"));
+    }
+
+    @Test
+    void preservesOriginalProviderDiagnosticsInTheWorkbenchEventStream() {
+        enable();
+        when(foundation.generate(isNull(), any())).thenAnswer(invocation -> {
+            GenerateTextRequest generation = invocation.getArgument(1);
+            var original = new ProviderApiException("openai", 429, "private-provider-details");
+            return generation.getLifecycle().onError(GenerationErrorEvent.builder().error(original).build())
+                .then(Mono.error(new IllegalStateException(original.getMessage())));
+        });
+
+        StepVerifier.create(service.generateEvents(request))
+            .expectNextCount(1)
+            .assertNext(event -> {
+                assertEquals("error", event.type());
+                assertEquals("provider-http", event.problem().category());
+                assertEquals(429, event.problem().status());
+                assertEquals(429, event.problem().providerStatus());
+                assertFalse(event.problem().detail().contains("private-provider"));
+            }).verifyComplete();
     }
 
     @Test

@@ -25,12 +25,18 @@ export interface GenerateRequest {
      * @type {string}
      * @memberof GenerateRequest
      */
-    'document'?: string;
+    'instruction': string;
     /**
      * 
      * @type {string}
      * @memberof GenerateRequest
      */
-    'instruction': string;
+    'document'?: string;
+    /**
+     * 工作台选择的模型资源名称；省略或 null 兼容旧插件设置，空字符串使用 AI 基座默认语言模型
+     * @type {string}
+     * @memberof GenerateRequest
+     */
+    'modelName'?: string | null;
 }
 

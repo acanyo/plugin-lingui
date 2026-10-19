@@ -1,82 +1,45 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { ComponentInstance, LinguiDocument, ThemeTokens } from '@lingui/renderer'
-import { useRepository } from '../services/repository'
-import { useStudioAccess } from '../services/studio-access'
 import LinguiRenderer from '../shared/LinguiRenderer.vue'
 import GenerationProgress from '../ai-adapter/progress/GenerationProgress.vue'
-import { useDesignCandidates } from './useDesignCandidates'
-import { combineCandidateTheme, type CandidateSet } from './model'
+import type { CandidateSet } from './model'
 import './candidates.css'
 const props = defineProps<{
-  instance?: ComponentInstance
-  initial?: CandidateSet
+  set: CandidateSet
+  busy: boolean
   blocked?: boolean
 }>()
 const emit = defineEmits<{
-  changed: [value: CandidateSet]
-  busy: [value: boolean]
+  retry: [id: string]
+  cancel: [id: string]
+  third: []
+  combine: []
   adopt: [document: LinguiDocument, source?: ComponentInstance, theme?: ThemeTokens]
 }>()
-const repository = useRepository(),
-  access = useStudioAccess()
-const api = useDesignCandidates({
-  generate: repository.generate.bind(repository),
-  current: () => props.instance,
-  initial: props.initial,
-  changed: (value) => emit('changed', value),
-  busy: (value) => emit('busy', value),
-})
-const { set, busy } = api,
-  prompt = ref(props.initial?.prompt ?? ''),
-  mobile = ref(0),
-  error = ref('')
+const mobile = ref(0)
+const open = ref(true)
+watch(
+  () => props.set.id,
+  () => {
+    open.value = true
+    mobile.value = 0
+  },
+)
 const safe = { inheritRegistered: false, requests: { allow: () => false } }
-function combine() {
-  const a = set.value?.candidates[0]?.instance,
-    b = set.value?.candidates[1]?.instance
-  if (a && b) {
-    try {
-      api.addCombined(combineCandidateTheme(a, b))
-      error.value = ''
-    } catch (cause) {
-      error.value = String(cause)
-    }
-  }
-}
 </script>
 <template>
-  <details class="lu-candidate-panel">
+  <details
+    class="lu-candidate-panel"
+    :open="open"
+    @toggle="open = ($event.target as HTMLDetailsElement).open"
+  >
     <summary>
       多方案设计{{
         set ? ` · ${set.candidates.filter((c) => c.status === 'done').length} 个可用方案` : ''
       }}
     </summary>
-    <p class="lu-muted">
-      默认顺序生成两案，每案最多两轮修复。采用前保留当前作品；生成期间可取消某案，成功方案和其他候选留在创作历史中。
-    </p>
-    <textarea
-      v-model="prompt"
-      aria-label="多方案共同需求"
-      placeholder="输入同一个创作需求，比较两种布局"
-      maxlength="3400"
-      rows="3"
-      :disabled="busy"
-    />
-    <button
-      type="button"
-      class="lu-button"
-      :disabled="
-        busy ||
-        blocked ||
-        !prompt.trim() ||
-        repository.mode !== 'halo' ||
-        !access.allows('ai:generate')
-      "
-      @click="api.start(prompt)"
-    >
-      生成两种方案{{ set ? '（替换本组候选）' : '' }}
-    </button>
+    <p class="lu-candidate-prompt lu-muted">{{ set.prompt }}</p>
     <nav v-if="set" class="lu-candidate-tabs" aria-label="切换候选">
       <button
         v-for="(row, index) in set.candidates"
@@ -123,7 +86,7 @@ function combine() {
           v-if="['queued', 'running'].includes(row.status)"
           type="button"
           class="lu-button"
-          @click="api.cancel(row.id)"
+          @click="emit('cancel', row.id)"
         >
           取消此案
         </button>
@@ -132,7 +95,7 @@ function combine() {
           type="button"
           class="lu-button"
           :disabled="busy || blocked"
-          @click="api.retry(row.id)"
+          @click="emit('retry', row.id)"
         >
           单独重试
         </button>
@@ -152,18 +115,17 @@ function combine() {
         type="button"
         class="lu-button"
         :disabled="busy || blocked || set.candidates.length >= 3"
-        @click="api.third"
+        @click="emit('third')"
       >
         再生成第三案</button
       ><button
         type="button"
         class="lu-button"
         :disabled="busy || blocked || !set.candidates[0]?.instance || !set.candidates[1]?.instance"
-        @click="combine"
+        @click="emit('combine')"
       >
         以方案一布局、方案二配色创建候选
       </button>
     </div>
-    <p v-if="error" class="lu-error" role="alert">{{ error }}</p>
   </details>
 </template>

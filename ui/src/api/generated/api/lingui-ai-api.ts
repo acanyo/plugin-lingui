@@ -29,6 +29,8 @@ import type { GenerateResponse } from '../models';
 import type { GenerateThemeRequest } from '../models';
 // @ts-ignore
 import type { GenerationEvent } from '../models';
+// @ts-ignore
+import type { GenerationSettings } from '../models';
 /**
  * LinguiAiApi - axios parameter creator
  * @export
@@ -117,6 +119,43 @@ export const LinguiAiApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 读取兼容旧插件配置的工作台初始模型，仅返回模型资源名称
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLinguiGenerationSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/apis/console.api.lingui.acanyo.com/v1alpha1/generation-settings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication basicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -151,6 +190,17 @@ export const LinguiAiApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['LinguiAiApi.generateLinguiTheme']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 读取兼容旧插件配置的工作台初始模型，仅返回模型资源名称
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLinguiGenerationSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerationSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLinguiGenerationSettings(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LinguiAiApi.getLinguiGenerationSettings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -178,6 +228,14 @@ export const LinguiAiApiFactory = function (configuration?: Configuration, baseP
          */
         generateLinguiTheme(requestParameters: LinguiAiApiGenerateLinguiThemeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GenerateResponse> {
             return localVarFp.generateLinguiTheme(requestParameters.generateThemeRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 读取兼容旧插件配置的工作台初始模型，仅返回模型资源名称
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLinguiGenerationSettings(options?: RawAxiosRequestConfig): AxiosPromise<GenerationSettings> {
+            return localVarFp.getLinguiGenerationSettings(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -237,6 +295,16 @@ export class LinguiAiApi extends BaseAPI {
      */
     public generateLinguiTheme(requestParameters: LinguiAiApiGenerateLinguiThemeRequest = {}, options?: RawAxiosRequestConfig) {
         return LinguiAiApiFp(this.configuration).generateLinguiTheme(requestParameters.generateThemeRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 读取兼容旧插件配置的工作台初始模型，仅返回模型资源名称
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LinguiAiApi
+     */
+    public getLinguiGenerationSettings(options?: RawAxiosRequestConfig) {
+        return LinguiAiApiFp(this.configuration).getLinguiGenerationSettings(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

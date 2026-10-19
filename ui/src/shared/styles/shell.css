@@ -114,6 +114,28 @@
 .lingui-studio.lu-standalone .lu-app-layout {
   min-height: 100dvh;
 }
+/* Halo's desktop Console has only a sidebar; its mobile menu keeps its own spacing. */
+@media (min-width: 768px) {
+  @container studio (min-width: 701px) {
+    .lingui-studio.lu-console .lu-app-layout {
+      min-height: 100dvh;
+    }
+    .lingui-studio.lu-console.lu-workspace-active .lu-app-layout {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+    }
+    .lingui-studio.lu-console.lu-workspace-active .lu-app-header {
+      flex-shrink: 0;
+    }
+    .lingui-studio.lu-console.lu-workspace-active .lu-main-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      min-height: 0;
+    }
+  }
+}
 .lingui-studio .lu-resource-back {
   padding: 16px 32px 0;
 }

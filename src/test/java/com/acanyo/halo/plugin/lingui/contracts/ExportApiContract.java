@@ -63,6 +63,8 @@ public final class ExportApiContract {
                     .requestBody(new RequestBody().required(true).content(content(resource))))
                 .delete(operation("delete" + name, tag, resource).addParametersItem(pathParameter)));
         }
+        paths.addPathItem("/apis/console.api.lingui.acanyo.com/v1alpha1/generation-settings", new PathItem()
+            .get(operation("GetLinguiGenerationSettings", "LinguiAi", model(AiEndpoint.GenerationSettings.class))));
         paths.addPathItem("/apis/console.api.lingui.acanyo.com/v1alpha1/generate", new PathItem()
             .post(operation("GenerateLinguiComponent", "LinguiAi", model(AiEndpoint.GenerateResponse.class))
                 .requestBody(new RequestBody().required(true).content(content(model(AiEndpoint.GenerateRequest.class))))));

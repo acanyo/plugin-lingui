@@ -6,10 +6,17 @@ import { useRepository } from '../../services/repository'
 import { useStudioAccess } from '../../services/studio-access'
 import ExternalAiDialog from '../../mcp/ExternalAiDialog.vue'
 import { useThemeGeneration } from './useThemeGeneration'
+import GenerationModelSelector from '../../model-selection/GenerationModelSelector.vue'
+import {
+  useModelSelectionActivity,
+  useWorkbenchModelSelection,
+} from '../../model-selection/context'
 const props = defineProps<{ theme: ThemeTokens; revision: number; blocked: boolean }>()
 const emit = defineEmits<{ generated: [theme: ThemeTokens]; import: [] }>()
 const repository = useRepository()
 const access = useStudioAccess()
+const modelSelection = useWorkbenchModelSelection()
+const modelReady = computed(() => modelSelection?.ready.value ?? true)
 const instruction = ref('')
 const connectingExternalAi = ref(false)
 const inputId = useId()
@@ -18,9 +25,10 @@ const { busy, candidate, problem, status, generate, accept, discard } = useTheme
   repository,
   () => props.theme,
   () => props.revision,
-  () => canGenerate.value && !props.blocked,
+  () => canGenerate.value && modelReady.value && !props.blocked,
   (theme) => emit('generated', theme),
 )
+useModelSelectionActivity(busy)
 const suggestions = [
   {
     label: '清爽蓝白',
@@ -77,7 +85,8 @@ function keydown(event: KeyboardEvent) {
         </button>
       </div>
       <div class="lu-theme-ai-actions">
-        <div>
+        <GenerationModelSelector v-if="canGenerate" :disabled="busy || blocked || !!candidate" />
+        <div class="lu-theme-ai-utilities">
           <button type="button" class="lu-text-button" @click="connectingExternalAi = true">
             <LinguiIcon name="code" />连接外部 AI
           </button>
@@ -87,7 +96,7 @@ function keydown(event: KeyboardEvent) {
           v-if="canGenerate"
           type="submit"
           class="lu-button primary"
-          :disabled="busy || blocked || !!candidate || !instruction.trim()"
+          :disabled="busy || blocked || !modelReady || !!candidate || !instruction.trim()"
           :aria-busy="busy"
         >
           <LinguiIcon name="sparkles" />{{ busy ? '正在设计…' : '生成主题' }}
@@ -137,7 +146,7 @@ function keydown(event: KeyboardEvent) {
         v-if="canGenerate"
         type="button"
         class="lu-text-button"
-        :disabled="busy || blocked"
+        :disabled="busy || blocked || !modelReady"
         @click="generate(instruction)"
       >
         重试生成

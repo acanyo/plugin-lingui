@@ -12,14 +12,6 @@ spec:
           label: 启用 AI 生成
           value: false
           help: 只有创作和修改时调用 AI；阅读文章不需要 AI 服务。
-        - $formkit: aiModelSelector
-          name: modelName
-          label: 生成模型
-          modelType: language
-          available: true
-          clearable: true
-          placeholder: 使用 AI 基座的默认语言模型
-          help: 在 AI 基座中配置服务商和语言模型。此处选择模型资源，留空使用基座默认模型；密钥由 AI 基座管理。
         - $formkit: number
           name: maxOutputTokens
           label: 输出 Token 预算
@@ -28,4 +20,4 @@ spec:
           max: 32768
           step: 1024
           validation: required|number|min:1024|max:32768
-          help: 推理模型可能将思考计入输出预算。复杂组件被截断时可提高预算；请勿超过所选模型允许的上限。
+          help: 在工作台选择生成模型。推理模型可能将思考计入输出预算；复杂组件被截断时可提高预算，请勿超过所选模型允许的上限。
