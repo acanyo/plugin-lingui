@@ -21,6 +21,7 @@ public class CreationTools {
     private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(CreationTools.class);
     private final ComponentCatalog catalog;
     private final PublicApiCatalog publicApiCatalog;
+    private final SiteReferenceTools siteReferences;
     private final SkillResources resources;
     private final DesignValidator validator;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -28,9 +29,10 @@ public class CreationTools {
 
     @Autowired
     public CreationTools(ComponentCatalog catalog, PublicApiCatalog publicApiCatalog,
-        SkillResources resources, DesignValidator validator) {
+        SiteReferenceTools siteReferences, SkillResources resources, DesignValidator validator) {
         this.catalog = catalog;
         this.publicApiCatalog = publicApiCatalog;
+        this.siteReferences = siteReferences;
         this.resources = resources;
         this.validator = validator;
         var definitions = new java.util.ArrayList<Definition>();
@@ -49,12 +51,13 @@ public class CreationTools {
         definitions.add(new Definition("validate_design", "校验设计并返回具体问题。推荐 document.nodes 组件对象数组（工具自动生成 OpenUI source），也接受标准 source。外部 MCP 校验通过时在 design 返回标准设计。只有最终完整作品设置 finalize=true，试校验省略或设 false。不会保存或执行。", schema(
                 Map.of("design", Map.of("type", "object"), "finalize", Map.of("type", "boolean")), List.of("design"))));
         if (publicApiCatalog != null) definitions.addAll(ApiReferenceTools.definitions());
+        if (siteReferences != null) definitions.addAll(SiteReferenceTools.definitions());
         this.definitions = List.copyOf(definitions);
     }
 
     /** Compatibility constructor for isolated validator tests that do not create a Spring context. */
     public CreationTools(ComponentCatalog catalog, SkillResources resources, DesignValidator validator) {
-        this(catalog, null, resources, validator);
+        this(catalog, null, null, resources, validator);
     }
 
     private static Map<String, Object> schema(Map<String, Object> properties, List<String> required) {
@@ -138,6 +141,9 @@ public class CreationTools {
                 case "get_public_api" -> publicApiCatalog == null
                     ? Mono.error(new IllegalStateException("API 目录仅在 Halo 运行环境中可用"))
                     : Mono.fromCallable(() -> publicApiCatalog.details(ApiReferenceTools.ids(input)));
+                case "get_site_profile", "get_navigation" -> siteReferences == null
+                    ? Mono.error(new IllegalStateException("站点资料仅在 Halo 运行环境中可用"))
+                    : siteReferences.execute(name, arguments == null ? Map.of() : arguments);
                 case "get_guidance" -> Mono.just(Map.of("text", resources.get(input.path("topic").asText())));
                 case "validate_design" -> {
                     var design = validator.normalizeToolDesign(input.path("design"));
