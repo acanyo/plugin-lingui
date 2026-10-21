@@ -57,15 +57,18 @@ class PublicApiCatalogTest {
         assertThat(definitions.get(1).inputSchema()).containsEntry("additionalProperties", false);
         assertThat(SiteReferenceTools.definitions()).extracting(CreationTools.Definition::name)
             .containsExactly("get_site_profile", "get_navigation");
+        assertThat(ContentReferenceTools.definitions()).extracting(CreationTools.Definition::name)
+            .containsExactly("read_content", "search_attachments");
     }
 
     @Test
     void addsApiToolsToTheRuntimeCreationSession() throws Exception {
         var tools = new CreationTools(new ComponentCatalog(), mock(PublicApiCatalog.class),
-            mock(SiteReferenceTools.class), new SkillResources(),
+            mock(SiteReferenceTools.class), mock(ContentReferenceTools.class), new SkillResources(),
             new com.acanyo.halo.plugin.lingui.ai.validation.DesignValidator());
 
         assertThat(tools.definitions()).extracting(CreationTools.Definition::name)
-            .contains("search_public_apis", "get_public_api", "get_site_profile", "get_navigation");
+            .contains("search_public_apis", "get_public_api", "get_site_profile", "get_navigation",
+                "read_content", "search_attachments");
     }
 }
