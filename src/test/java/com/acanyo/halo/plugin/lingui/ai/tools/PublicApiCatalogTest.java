@@ -25,8 +25,12 @@ class PublicApiCatalogTest {
             .GET("/apis/api.console.example.test/v1alpha1/posts",
                 request -> ServerResponse.ok().build())
             .build();
+        RouterFunction<ServerResponse> writeRoute = RouterFunctions.route()
+            .POST("/apis/api.example.test/v1alpha1/posts",
+                request -> ServerResponse.ok().build())
+            .build();
         when(context.getBeansOfType(RouterFunction.class)).thenReturn(Map.of(
-            "publicRoute", publicRoute, "consoleRoute", consoleRoute));
+            "publicRoute", publicRoute, "consoleRoute", consoleRoute, "writeRoute", writeRoute));
 
         var result = new PublicApiCatalog(context).search("posts", 20);
         var items = (List<Map<String, Object>>) result.get("items");
@@ -37,6 +41,10 @@ class PublicApiCatalogTest {
         assertThat(PublicApiCatalog.isPublicPath("/apis/api.console.example.test/v1alpha1/posts")).isFalse();
         assertThat(PublicApiCatalog.isPublicPath("/apis/api.notification.halo.run/v1alpha1/userspaces/x"))
             .isFalse();
+        assertThat(PublicApiCatalog.isReadOnlyMethod(
+            org.springframework.web.bind.annotation.RequestMethod.GET)).isTrue();
+        assertThat(PublicApiCatalog.isReadOnlyMethod(
+            org.springframework.web.bind.annotation.RequestMethod.POST)).isFalse();
     }
 
     @Test

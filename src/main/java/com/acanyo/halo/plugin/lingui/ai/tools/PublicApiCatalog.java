@@ -116,6 +116,11 @@ public class PublicApiCatalog {
             && !path.startsWith("/apis/api.notification.halo.run/");
     }
 
+    static boolean isReadOnlyMethod(RequestMethod method) {
+        return method == RequestMethod.GET || method == RequestMethod.HEAD
+            || method == RequestMethod.OPTIONS;
+    }
+
     private Snapshot current() {
         var current = snapshot;
         if (current != null && System.nanoTime() - current.createdAt() < TTL_NANOS) return current;
@@ -147,6 +152,7 @@ public class PublicApiCatalog {
                 Operation operation = operation(data, warnings);
                 var attribute = data.getAttributes().get(OPERATION_ATTRIBUTE);
                 for (RequestMethod method : data.getMethods()) {
+                    if (!isReadOnlyMethod(method)) continue;
                     var id = method.name() + " " + data.getPath();
                     var candidates = routes.computeIfAbsent(id, ignored -> new ArrayList<>());
                     var duplicate = attribute != null
