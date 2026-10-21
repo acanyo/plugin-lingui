@@ -1,6 +1,7 @@
 package com.acanyo.halo.plugin.lingui.ai.tools;
 
 import com.acanyo.halo.plugin.lingui.ai.validation.DesignValidator;
+import com.acanyo.halo.plugin.lingui.ai.validation.ApiBindingValidator;
 import com.acanyo.halo.plugin.lingui.ai.validation.CreationRequirements;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.JsonSchemaFactory;
@@ -23,6 +24,7 @@ public class CreationTools {
     private final PublicApiCatalog publicApiCatalog;
     private final SiteReferenceTools siteReferences;
     private final ContentReferenceTools contentReferences;
+    private final ApiBindingValidator apiBindingValidator;
     private final SkillResources resources;
     private final DesignValidator validator;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -36,6 +38,7 @@ public class CreationTools {
         this.publicApiCatalog = publicApiCatalog;
         this.siteReferences = siteReferences;
         this.contentReferences = contentReferences;
+        this.apiBindingValidator = publicApiCatalog == null ? null : new ApiBindingValidator(publicApiCatalog);
         this.resources = resources;
         this.validator = validator;
         var definitions = new java.util.ArrayList<Definition>();
@@ -115,6 +118,7 @@ public class CreationTools {
             String clean = text.strip().replaceFirst("(?i)^```(?:json)?\\s*", "").replaceFirst("\\s*```$", "");
             var design = validator.parse(clean);
             validator.requireValid(design);
+            if (apiBindingValidator != null) apiBindingValidator.requireValid(design);
             requirements.requireValid(design);
             return design.toString();
         });
@@ -155,6 +159,13 @@ public class CreationTools {
                 case "validate_design" -> {
                     var design = validator.normalizeToolDesign(input.path("design"));
                     var feedback = (com.fasterxml.jackson.databind.node.ObjectNode) mapper.valueToTree(validator.validate(design));
+                    if (feedback.path("valid").asBoolean(false) && apiBindingValidator != null) {
+                        var apiIssues = apiBindingValidator.validate(design);
+                        if (!apiIssues.isEmpty()) {
+                            feedback.put("valid", false);
+                            feedback.set("issues", mapper.valueToTree(apiIssues));
+                        }
+                    }
                     // External clients need the canonical source to export a tool-only nodes design.
                     if (context.reader() != null && feedback.path("valid").asBoolean(false))
                         feedback.set("design", design);

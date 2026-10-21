@@ -83,21 +83,7 @@ public class PublicApiCatalog {
             } else if (routes.size() > 1) {
                 items.add(failure(id, "ambiguous", "同一路径和方法存在多个接口契约"));
             } else {
-                var route = routes.getFirst();
-                if (route.operation() == null) {
-                    items.add(failure(id, "unavailable", "接口未声明可读取的契约"));
-                    continue;
-                }
-                try {
-                    var detail = new LinkedHashMap<>(summary(route));
-                    detail.putAll(new PublicApiSchemaResolver().resolve(route.operation()));
-                    detail.put("status", "ok");
-                    detail.put("anonymousAccess", "unverified");
-                    items.add(detail);
-                } catch (RuntimeException | LinkageError error) {
-                    items.add(failure(id, "unavailable", "接口契约无法完整解析："
-                        + bounded(error.getMessage(), 200)));
-                }
+                items.add(detail(routes.getFirst()));
             }
         }
         var result = new LinkedHashMap<String, Object>();
@@ -110,7 +96,24 @@ public class PublicApiCatalog {
         return result;
     }
 
-    static boolean isPublicPath(String path) {
+    /**
+     * Returns the same bounded contract used by {@link #details(List)} for one exact
+     * method/path pair. This is deliberately read-only: callers use it to verify an
+     * event binding, never to execute a request.
+     */
+    public Map<String, Object> contract(String method, String path) {
+        if (method == null || path == null || method.isBlank() || path.isBlank()) {
+            return failure(String.valueOf(method) + " " + path, "not_found", "接口方法或路径为空");
+        }
+        String normalizedMethod = method.trim().toUpperCase(Locale.ROOT);
+        String id = normalizedMethod + " " + path;
+        var routes = current().routes().get(id);
+        if (routes == null || routes.isEmpty()) return failure(id, "not_found", "当前路由中未找到该公开接口");
+        if (routes.size() > 1) return failure(id, "ambiguous", "同一路径和方法存在多个接口契约");
+        return detail(routes.getFirst());
+    }
+
+    public static boolean isPublicPath(String path) {
         if (path == null || !path.startsWith("/apis/api.")) return false;
         return !path.startsWith("/apis/api.console.")
             && !path.startsWith("/apis/api.notification.halo.run/");
@@ -205,6 +208,20 @@ public class PublicApiCatalog {
         }
         if (!route.conditions().isEmpty()) result.put("routeConditions", route.conditions());
         return result;
+    }
+
+    private static Map<String, Object> detail(Route route) {
+        if (route.operation() == null) return failure(route.id(), "unavailable", "接口未声明可读取的契约");
+        try {
+            var detail = new LinkedHashMap<>(summary(route));
+            detail.putAll(new PublicApiSchemaResolver().resolve(route.operation()));
+            detail.put("status", "ok");
+            detail.put("anonymousAccess", "unverified");
+            return detail;
+        } catch (RuntimeException | LinkageError error) {
+            return failure(route.id(), "unavailable", "接口契约无法完整解析："
+                + bounded(error.getMessage(), 200));
+        }
     }
 
     private static Map<String, Object> conditions(RouterFunctionData data) {
