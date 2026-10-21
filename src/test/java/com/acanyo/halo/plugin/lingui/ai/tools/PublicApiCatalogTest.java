@@ -58,7 +58,7 @@ class PublicApiCatalogTest {
         assertThat(SiteReferenceTools.definitions()).extracting(CreationTools.Definition::name)
             .containsExactly("get_site_profile", "get_navigation");
         assertThat(ContentReferenceTools.definitions()).extracting(CreationTools.Definition::name)
-            .containsExactly("read_content", "search_attachments");
+            .containsExactly("list_posts", "list_single_pages", "read_content", "search_attachments");
     }
 
     @Test
@@ -69,6 +69,6 @@ class PublicApiCatalogTest {
 
         assertThat(tools.definitions()).extracting(CreationTools.Definition::name)
             .contains("search_public_apis", "get_public_api", "get_site_profile", "get_navigation",
-                "read_content", "search_attachments");
+                "list_posts", "list_single_pages", "read_content", "search_attachments");
     }
 }
