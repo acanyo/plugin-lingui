@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -19,30 +20,41 @@ import run.halo.aifoundation.tool.ToolDefinition;
 public class CreationTools {
     private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(CreationTools.class);
     private final ComponentCatalog catalog;
+    private final PublicApiCatalog publicApiCatalog;
     private final SkillResources resources;
     private final DesignValidator validator;
     private final ObjectMapper mapper = new ObjectMapper();
     private final List<Definition> definitions;
 
-    public CreationTools(ComponentCatalog catalog, SkillResources resources, DesignValidator validator) {
+    @Autowired
+    public CreationTools(ComponentCatalog catalog, PublicApiCatalog publicApiCatalog,
+        SkillResources resources, DesignValidator validator) {
         this.catalog = catalog;
+        this.publicApiCatalog = publicApiCatalog;
         this.resources = resources;
         this.validator = validator;
-        definitions = List.of(
-            new Definition("search_components", "按中文用途或组件名称搜索全部组件；query 为空可分页浏览目录。", schema(
+        var definitions = new java.util.ArrayList<Definition>();
+        definitions.add(new Definition("search_components", "按中文用途或组件名称搜索全部组件；query 为空可分页浏览目录。", schema(
                 Map.of("query", Map.of("type", "string", "maxLength", 120),
                     "offset", Map.of("type", "integer", "minimum", 0, "maximum", 105),
-                    "limit", Map.of("type", "integer", "minimum", 1, "maximum", 30)), List.of())),
-            new Definition("get_component_schemas", "批量读取 1–12 个组件的完整参数、动作、绑定及引用定义。用真实 schema，不能猜测字段。", schema(
+                    "limit", Map.of("type", "integer", "minimum", 1, "maximum", 30)), List.of())));
+        definitions.add(new Definition("get_component_schemas", "批量读取 1–12 个组件的完整参数、动作、绑定及引用定义。用真实 schema，不能猜测字段。", schema(
                 Map.of("names", Map.of("type", "array", "items", Map.of("type", "string", "maxLength", 80),
-                    "minItems", 1, "maxItems", 12, "uniqueItems", true)), List.of("names"))),
-            new Definition("get_current_work", "获取当前请求的完整作品快照；外部 MCP 必须提供已保存作品的 workName，不读取浏览器状态。", schema(
+                    "minItems", 1, "maxItems", 12, "uniqueItems", true)), List.of("names"))));
+        definitions.add(new Definition("get_current_work", "获取当前请求的完整作品快照；外部 MCP 必须提供已保存作品的 workName，不读取浏览器状态。", schema(
                 Map.of("workName", Map.of("type", "string", "minLength", 1, "maxLength", 160,
-                    "pattern", "^[a-zA-Z0-9][a-zA-Z0-9._-]*$")), List.of())),
-            new Definition("get_guidance", "先读取 skill 创作入口；按需读取 interactions 交互、theme 主题、data 动态数据、layout 布局，或 examples 经校验的接口重试/测验/指标布局范例。只读取与当前需求相关的参考。", schema(
-                Map.of("topic", Map.of("type", "string", "enum", List.of("skill", "interactions", "theme", "data", "layout", "examples"))), List.of("topic"))),
-            new Definition("validate_design", "校验设计并返回具体问题。推荐 document.nodes 组件对象数组（工具自动生成 OpenUI source），也接受标准 source。外部 MCP 校验通过时在 design 返回标准设计。只有最终完整作品设置 finalize=true，试校验省略或设 false。不会保存或执行。", schema(
+                    "pattern", "^[a-zA-Z0-9][a-zA-Z0-9._-]*$")), List.of())));
+        definitions.add(new Definition("get_guidance", "先读取 skill 创作入口；按需读取 interactions 交互、theme 主题、data 动态数据、layout 布局，或 examples 经校验的接口重试/测验/指标布局范例。只读取与当前需求相关的参考。", schema(
+                Map.of("topic", Map.of("type", "string", "enum", List.of("skill", "interactions", "theme", "data", "layout", "examples"))), List.of("topic"))));
+        definitions.add(new Definition("validate_design", "校验设计并返回具体问题。推荐 document.nodes 组件对象数组（工具自动生成 OpenUI source），也接受标准 source。外部 MCP 校验通过时在 design 返回标准设计。只有最终完整作品设置 finalize=true，试校验省略或设 false。不会保存或执行。", schema(
                 Map.of("design", Map.of("type", "object"), "finalize", Map.of("type", "boolean")), List.of("design"))));
+        if (publicApiCatalog != null) definitions.addAll(ApiReferenceTools.definitions());
+        this.definitions = List.copyOf(definitions);
+    }
+
+    /** Compatibility constructor for isolated validator tests that do not create a Spring context. */
+    public CreationTools(ComponentCatalog catalog, SkillResources resources, DesignValidator validator) {
+        this(catalog, null, resources, validator);
     }
 
     private static Map<String, Object> schema(Map<String, Object> properties, List<String> required) {
@@ -119,6 +131,13 @@ public class CreationTools {
                     input.path("names").forEach(item -> names.add(item.asText()));
                     yield Mono.just(catalog.schemas(names));
                 }
+                case "search_public_apis" -> publicApiCatalog == null
+                    ? Mono.error(new IllegalStateException("API 目录仅在 Halo 运行环境中可用"))
+                    : Mono.fromCallable(() -> publicApiCatalog.search(
+                        input.path("query").asText(""), input.path("limit").asInt(8)));
+                case "get_public_api" -> publicApiCatalog == null
+                    ? Mono.error(new IllegalStateException("API 目录仅在 Halo 运行环境中可用"))
+                    : Mono.fromCallable(() -> publicApiCatalog.details(ApiReferenceTools.ids(input)));
                 case "get_guidance" -> Mono.just(Map.of("text", resources.get(input.path("topic").asText())));
                 case "validate_design" -> {
                     var design = validator.normalizeToolDesign(input.path("design"));
