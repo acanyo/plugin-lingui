@@ -2,6 +2,7 @@ package com.acanyo.halo.plugin.lingui.ai.tools;
 
 import com.acanyo.halo.plugin.lingui.ai.validation.DesignValidator;
 import com.acanyo.halo.plugin.lingui.ai.validation.ApiBindingValidator;
+import com.acanyo.halo.plugin.lingui.ai.validation.RuntimePreflightValidator;
 import com.acanyo.halo.plugin.lingui.ai.validation.CreationRequirements;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.JsonSchemaFactory;
@@ -25,6 +26,7 @@ public class CreationTools {
     private final SiteReferenceTools siteReferences;
     private final ContentReferenceTools contentReferences;
     private final ApiBindingValidator apiBindingValidator;
+    private final RuntimePreflightValidator runtimePreflightValidator;
     private final SkillResources resources;
     private final DesignValidator validator;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -39,6 +41,7 @@ public class CreationTools {
         this.siteReferences = siteReferences;
         this.contentReferences = contentReferences;
         this.apiBindingValidator = publicApiCatalog == null ? null : new ApiBindingValidator(publicApiCatalog);
+        this.runtimePreflightValidator = new RuntimePreflightValidator();
         this.resources = resources;
         this.validator = validator;
         var definitions = new java.util.ArrayList<Definition>();
@@ -119,6 +122,7 @@ public class CreationTools {
             var design = validator.parse(clean);
             validator.requireValid(design);
             if (apiBindingValidator != null) apiBindingValidator.requireValid(design);
+            runtimePreflightValidator.requireValid(design);
             requirements.requireValid(design);
             return design.toString();
         });
@@ -164,6 +168,14 @@ public class CreationTools {
                         if (!apiIssues.isEmpty()) {
                             feedback.put("valid", false);
                             feedback.set("issues", mapper.valueToTree(apiIssues));
+                        }
+                    }
+                    if (feedback.path("valid").asBoolean(false)) {
+                        var runtime = runtimePreflightValidator.inspect(design);
+                        feedback.set("runtime", mapper.valueToTree(runtime));
+                        if (!runtime.issues().isEmpty()) {
+                            feedback.put("valid", false);
+                            feedback.set("issues", mapper.valueToTree(runtime.issues()));
                         }
                     }
                     // External clients need the canonical source to export a tool-only nodes design.
