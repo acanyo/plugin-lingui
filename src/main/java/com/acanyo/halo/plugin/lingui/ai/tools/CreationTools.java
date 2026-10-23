@@ -60,6 +60,7 @@ public class CreationTools {
         definitions.add(new Definition("validate_design", "校验设计并返回具体问题。推荐 document.nodes 组件对象数组（工具自动生成 OpenUI source），也接受标准 source。外部 MCP 校验通过时在 design 返回标准设计。只有最终完整作品设置 finalize=true，试校验省略或设 false。不会保存或执行。", schema(
                 Map.of("design", Map.of("type", "object"), "finalize", Map.of("type", "boolean")), List.of("design"))));
         if (publicApiCatalog != null) definitions.addAll(ApiReferenceTools.definitions());
+        if (publicApiCatalog != null) definitions.addAll(ApiBindingSuggestionTools.definitions());
         if (siteReferences != null) definitions.addAll(SiteReferenceTools.definitions());
         if (contentReferences != null) definitions.addAll(ContentReferenceTools.definitions());
         this.definitions = List.copyOf(definitions);
@@ -153,6 +154,7 @@ public class CreationTools {
                 case "get_public_api" -> publicApiCatalog == null
                     ? Mono.error(new IllegalStateException("API 目录仅在 Halo 运行环境中可用"))
                     : Mono.fromCallable(() -> publicApiCatalog.details(ApiReferenceTools.ids(input)));
+                case "suggest_api_bindings" -> Mono.just(ApiBindingSuggestionTools.suggest(input));
                 case "get_site_profile", "get_navigation" -> siteReferences == null
                     ? Mono.error(new IllegalStateException("站点资料仅在 Halo 运行环境中可用"))
                     : siteReferences.execute(name, arguments == null ? Map.of() : arguments);

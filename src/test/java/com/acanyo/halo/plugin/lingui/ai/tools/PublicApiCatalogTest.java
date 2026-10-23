@@ -69,6 +69,7 @@ class PublicApiCatalogTest {
 
         assertThat(tools.definitions()).extracting(CreationTools.Definition::name)
             .contains("search_public_apis", "get_public_api", "get_site_profile", "get_navigation",
-                "list_posts", "list_single_pages", "read_content", "search_attachments");
+                "list_posts", "list_single_pages", "read_content", "search_attachments",
+                "suggest_api_bindings");
     }
 }
