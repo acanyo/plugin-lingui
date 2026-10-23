@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode, Dynamic } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -18,11 +19,15 @@
             report(error)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 {#if node.component === 'LingUI.Alert'}
     {#if visible}<section
             data-lingui-node={node.id}
+            in:motionEnter|global={node.motion?.enter}
+            out:motionExit|global={node.motion?.exit}
+            use:motionFeedback={node.motion}
             class={`lg-alert lg-tone-${node.tone ?? 'info'}`}
             role={node.tone === 'danger' ? 'alert' : 'status'}
         >
@@ -43,11 +48,22 @@
                 >{/if}
         </section>{/if}
 {:else if node.component === 'LingUI.Status'}
-    <span data-lingui-node={node.id} class={`lg-status lg-tone-${node.tone ?? 'info'}`}
+    <span
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class={`lg-status lg-tone-${node.tone ?? 'info'}`}
         ><span class="lg-status-dot" aria-hidden="true"></span>{resolve(node.text)}</span
     >
 {:else}
-    <div data-lingui-node={node.id} class="lg-labeled-divider">
+    <div
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-labeled-divider"
+    >
         <span>{resolve(node.text)}</span>
     </div>
 {/if}

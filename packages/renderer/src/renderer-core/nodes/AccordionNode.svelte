@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode } from '../../protocol/types'
     import { stringList } from '../inputs/values'
@@ -23,15 +24,24 @@
             report(error)
         }
     }
+    const { motionEnter, motionExit, motionFeedback, motionDetails } = createNodeMotion()
 </script>
 
 <section
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     class="lg-accordion"
     aria-label={String(node.label || '折叠内容')}
 >
     {#each node.sections ?? [] as section (section.child)}
-        <details open={selected.includes(section.child)}>
+        <details
+            use:motionDetails={{
+                expanded: selected.includes(section.child),
+                transition: node.motion?.transition,
+            }}
+        >
             <summary
                 onclick={(event) => {
                     event.preventDefault()

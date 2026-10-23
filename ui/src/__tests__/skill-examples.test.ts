@@ -18,7 +18,7 @@ function example(name: string): LinguiDocument {
   return validateDocument({ ...rest, source: serializeSource(nodes as ComponentNode[]) })
 }
 describe('bundled Skill examples', () => {
-  it.each(['api-retry', 'quiz', 'metrics'])(
+  it.each(['api-retry', 'quiz', 'metrics', 'host-callback', 'motion'])(
     'validates %s against the actual renderer contract',
     (name) => expect(resolveDocument(example(name)).nodes.root).toBeDefined(),
   )
@@ -45,5 +45,28 @@ describe('bundled Skill examples', () => {
     await events.fire(resolveDocument(document).nodes.reset!, 'click')
     expect(state.state.answer).toEqual([])
     events.destroy()
+  })
+  it('reads host summary snapshots without an API request or hardcoded article content', async () => {
+    const document = example('host-callback')
+    expect(document.integrations!.apis).toEqual([])
+    expect(document.state.summary).toMatchObject({ title: '', content: '', gptName: '', postId: '' })
+    const state = createRuntime(document.state)
+    const snapshots = [
+      { title: '文章页测试标题', gptName: '宿主 AI', content: '测试回调返回的内容', postId: 'test-post', loading: false, error: '' },
+      { title: '', gptName: '', content: '', postId: 'test-post', loading: true, error: '' },
+      { title: '', gptName: '', content: '', postId: 'test-post', loading: false, error: '宿主数据暂不可用' },
+    ]
+    for (const snapshot of snapshots) {
+      let calls = 0
+      const events = createEventRuntime(state, {
+        inheritRegistered: false,
+        requests: { allow: () => { throw new Error('Unexpected network request') } },
+        callbacks: { 'zhiyue.summary': () => { calls++; return snapshot } },
+      })
+      await events.fire(resolveDocument(document).nodes.root!, 'mount')
+      expect(state.state.summary).toEqual(snapshot)
+      expect(calls).toBe(1)
+      events.destroy()
+    }
   })
 })

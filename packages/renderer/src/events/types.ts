@@ -88,6 +88,8 @@ export type InteractionCallback = (
   context: CallbackContext,
 ) => unknown | Promise<unknown>
 export interface InteractionHost {
+  /** Disable animation for static exports, thumbnails or hosts that require immediate rendering. */
+  motion?: boolean
   /** Run configured mount events once when the work opens; disable for thumbnails and snapshots. */
   autoStart?: boolean
   /** Opt-in workbench diagnostics; embedding hosts avoid per-action snapshots by default. */

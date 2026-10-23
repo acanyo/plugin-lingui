@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode } from '../../protocol/types'
     import { scatterGeometry, waterfallGeometry } from '../charts/workspace'
     import { shortChartNumber } from '../charts/formatting'
@@ -8,9 +9,16 @@
     const number = (value: number) =>
         new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 2 }).format(value)
     const dot = (x: number, y: number) => `M${x - 4},${y}a4,4 0 1 0 8,0a4,4 0 1 0 -8,0`
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<figure data-lingui-node={node.id} class="lg-workspace-chart">
+<figure
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-workspace-chart"
+>
     <figcaption>
         <h3 class="lg-data-heading">{node.label}</h3>
         {#if node.description}<p class="lg-caption">{node.description}</p>{/if}

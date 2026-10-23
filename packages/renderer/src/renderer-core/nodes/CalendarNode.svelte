@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode } from '../../protocol/types'
     import { dateInputValue } from '../../protocol/date-time'
@@ -30,10 +31,14 @@
             report(cause)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <section
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     class="lg-calendar"
     aria-labelledby={`${prefix}-${node.id}-label`}
 >

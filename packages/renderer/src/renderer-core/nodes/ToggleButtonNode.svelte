@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode, Dynamic, JsonValue } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -21,9 +22,16 @@
             report(error)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<div data-lingui-node={node.id} class="lg-toggle-field">
+<div
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-toggle-field"
+>
     <button
         type="button"
         class="lg-toggle-button"

@@ -7,6 +7,7 @@ import PopconfirmNode from './nodes/PopconfirmNode.svelte'
 import HierarchySelectNode from './nodes/HierarchySelectNode.svelte'
 import DynamicInputNode from './nodes/DynamicInputNode.svelte'
 import BaseNode from './nodes/BaseNode.svelte'
+import ConditionalNode from './nodes/ConditionalNode.svelte'
 import InteractiveNode from './nodes/InteractiveNode.svelte'
 import DiagramNode from './nodes/DiagramNode.svelte'
 import TimelineNode from './nodes/TimelineNode.svelte'
@@ -75,7 +76,7 @@ export const componentRegistry: Readonly<
   Modal: ModalNode,
   DateTimeInput: DateTimeNode,
   'LingUI.Callout': BaseNode,
-  'LingUI.Conditional': BaseNode,
+  'LingUI.Conditional': ConditionalNode,
   'LingUI.NumberInput': FieldInputNode,
   'LingUI.Progress': BaseNode,
   'LingUI.Collapse': InteractiveNode,

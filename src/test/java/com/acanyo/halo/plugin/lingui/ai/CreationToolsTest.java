@@ -23,14 +23,14 @@ class CreationToolsTest {
     CreationToolsTest() throws Exception {}
 
     @Test void bundledExamplesPassTheSharedServerContractAndGuidanceIsAvailableToTools() throws Exception {
-        for (String name : List.of("api-retry", "quiz", "metrics")) {
+        for (String name : List.of("api-retry", "quiz", "metrics", "host-callback")) {
             try (var stream = getClass().getClassLoader().getResourceAsStream("skills/lingui-create/examples/" + name + ".json")) {
                 assertThat(stream).isNotNull();
                 var normalized = validator.normalizeToolDesign(mapper.readTree(stream));
                 assertThatCode(() -> validator.requireValid(normalized)).doesNotThrowAnyException();
             }
         }
-        for (String topic : List.of("layout", "examples")) {
+        for (String topic : List.of("layout", "examples", "callbacks")) {
             var result = mapper.valueToTree(tools.call("get_guidance", Map.of("topic", topic), new CreationTools.WorkContext(null, null)).block());
             assertThat(result.path("isError").asBoolean()).isFalse();
             assertThat(result.path("text").asText()).isNotBlank();
@@ -51,6 +51,10 @@ class CreationToolsTest {
             assertThat(schema.path("components").has(name)).isTrue();
         }
         assertThat(catalog.schemas(List.of("Text")).toString().length()).isLessThan(25000);
+        var documentSchema = catalog.schemas(List.of("Text")).path("documentSchema");
+        assertThat(documentSchema.path("additionalProperties").asBoolean(true)).isFalse();
+        assertThat(documentSchema.path("properties").has("integrations")).isTrue();
+        assertThat(documentSchema.path("properties").has("publicEmbed")).isFalse();
         assertThatThrownBy(() -> catalog.schemas(List.of("MadeUp"))).hasMessageContaining("不存在");
     }
 

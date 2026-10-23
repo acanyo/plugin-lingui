@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode, JsonValue } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -50,10 +51,14 @@
             set(next)
         } else set(field.value)
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <div
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     class={`lg-field lg-size-${node.size ?? 'medium'} lg-field-status-${node.status ?? 'default'}`}
 >
     <label for={id}>{label}</label>

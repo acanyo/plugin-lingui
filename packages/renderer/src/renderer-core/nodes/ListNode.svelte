@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { ComponentNode } from '../../protocol/types'
     import NodeRenderer from '../NodeRenderer.svelte'
@@ -10,10 +11,14 @@
         center: 'center',
         stretch: 'stretch',
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <ul
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     class={`lg-list lg-list-${node.direction ?? 'vertical'}`}
     style:align-items={alignment[node.align ?? 'stretch']}
 >

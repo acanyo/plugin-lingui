@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode } from '../../protocol/types'
     import { useRenderer } from '../context'
     import { gaugeGeometry, radarGeometry, heatLevel } from '../charts/analytics'
@@ -12,10 +13,14 @@
     let radar = $derived(radarGeometry(node.data ?? [], Number(node.max)))
     let highest = $derived(Math.max(0, ...(node.matrix ?? []).flatMap((row) => row.cells)))
     const format = new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 2 })
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <figure
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     class={`lg-analytics lg-analytics-${node.component.split('.').at(-1)?.toLowerCase()}`}
 >
     <figcaption>

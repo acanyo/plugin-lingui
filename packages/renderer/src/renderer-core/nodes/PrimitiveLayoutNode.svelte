@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode } from '../../protocol/types'
     import { useRenderer } from '../context'
     import NodeRenderer from '../NodeRenderer.svelte'
@@ -24,11 +25,15 @@
         return groupDisabled() || Boolean(resolve(node.disabled))
     })
     provideGroupDisabled(() => node.component === 'LingUI.FormGroup' && disabled)
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 {#if node.component === 'LingUI.Box'}
     <div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-box lg-box-${node.variant ?? 'plain'} lg-padding-${node.padding ?? 'medium'} lg-gap-${node.gap ?? 'medium'} lg-flow-${node.direction ?? 'vertical'}`}
         style:align-items={flex[node.align ?? ''] ?? node.align ?? 'stretch'}
         style:justify-content={flex[node.justify ?? ''] ?? node.justify}
@@ -36,7 +41,14 @@
         {#each node.children ?? [] as child (child)}<NodeRenderer id={child} />{/each}
     </div>
 {:else if node.component === 'LingUI.Center'}
-    <div data-lingui-node={node.id} class="lg-center" style:min-height={`${node.minHeight ?? 0}px`}>
+    <div
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-center"
+        style:min-height={`${node.minHeight ?? 0}px`}
+    >
         <div class="lg-center-content" style:max-width={`${node.maxWidth ?? 640}px`}>
             <NodeRenderer id={node.child!} />
         </div>
@@ -44,12 +56,18 @@
 {:else if node.component === 'LingUI.Spacer'}
     <div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-spacer lg-spacer-${node.direction ?? 'vertical'} lg-space-${node.size ?? 'medium'}`}
         aria-hidden="true"
     ></div>
 {:else if node.component === 'LingUI.Separator'}
     <div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-separator lg-separator-${node.orientation ?? 'horizontal'}`}
         role="separator"
         aria-orientation={node.orientation ?? 'horizontal'}
@@ -58,6 +76,9 @@
     {#snippet formFields()}
         <fieldset
             data-lingui-node={node.id}
+            in:motionEnter|global={node.motion?.enter}
+            out:motionExit|global={node.motion?.exit}
+            use:motionFeedback={node.motion}
             class="lg-form-group"
             {disabled}
             aria-describedby={description ? `${prefix}-${node.id}-help` : undefined}
@@ -73,13 +94,24 @@
         </fieldset>
     {/snippet}
     {#if node.events?.submit}
-        <form data-lingui-node={node.id} class="lg-form-shell">{@render formFields()}</form>
+        <form
+            data-lingui-node={node.id}
+            in:motionEnter|global={node.motion?.enter}
+            out:motionExit|global={node.motion?.exit}
+            use:motionFeedback={node.motion}
+            class="lg-form-shell"
+        >
+            {@render formFields()}
+        </form>
     {:else}
         {@render formFields()}
     {/if}
 {:else}
     <div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-button-group lg-gap-${node.gap ?? 'small'} lg-flow-${node.direction ?? 'horizontal'}`}
         role="group"
         aria-label={label}

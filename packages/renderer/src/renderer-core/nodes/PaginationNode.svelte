@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode } from '../../protocol/types'
     import { pageNumber, pageItems } from '../inputs/values'
@@ -25,10 +26,14 @@
             report(error)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <nav
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     class="lg-pagination"
     aria-label={String(resolve(node.label) || '分页')}
 >

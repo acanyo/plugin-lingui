@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -43,9 +44,17 @@
             report(error)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<section data-lingui-node={node.id} class="lg-kanban" aria-label={label}>
+<section
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-kanban"
+    aria-label={label}
+>
     <h3 class="lg-data-heading">{label}</h3>
     <div class="lg-kanban-columns">
         {#each node.boards ?? [] as board (board.id)}

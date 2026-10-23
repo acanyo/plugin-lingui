@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode, Dynamic } from '../../protocol/types'
     import { useRenderer } from '../context'
     import { bindEscapeScope } from '../inputs/escape-scope'
@@ -25,10 +26,14 @@
             },
         )
     })
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <div
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     bind:this={element}
     class="lg-tooltip"
     data-lingui-escape-scope={open ? 'open' : undefined}

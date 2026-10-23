@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode } from '../../protocol/types'
     import { useRenderer } from '../context'
     import { useNodeEvents } from '../../events/node'
@@ -52,9 +53,17 @@
     $effect(() => {
         if (disabled) opened = false
     })
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<div data-lingui-node={node.id} class="lg-menu-control" bind:this={container}>
+<div
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-menu-control"
+    bind:this={container}
+>
     <button
         bind:this={trigger}
         type="button"

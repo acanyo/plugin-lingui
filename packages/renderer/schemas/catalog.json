@@ -47,6 +47,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -99,6 +102,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -138,6 +144,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -178,6 +187,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -227,6 +239,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -305,6 +320,9 @@
             "button",
             "submit"
           ]
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -333,6 +351,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -381,6 +402,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -497,6 +521,9 @@
           "type": "integer",
           "minimum": 0,
           "maximum": 2000
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -557,6 +584,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -668,6 +698,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -729,6 +762,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -781,6 +817,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -833,6 +872,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -949,6 +991,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1005,6 +1050,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/stateMotion"
         }
       },
       "required": [
@@ -1053,6 +1101,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1151,6 +1202,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1200,6 +1254,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1343,6 +1400,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1456,6 +1516,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1521,6 +1584,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1566,6 +1632,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1612,6 +1681,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1700,6 +1772,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1759,6 +1834,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1803,6 +1881,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1840,6 +1921,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -1934,6 +2018,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2029,6 +2116,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2140,6 +2230,9 @@
           "type": "integer",
           "minimum": 0,
           "maximum": 2000
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2193,6 +2286,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2346,6 +2442,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2436,6 +2535,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2482,6 +2584,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2535,6 +2640,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2575,6 +2683,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2609,6 +2720,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2674,6 +2788,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/stateMotion"
         }
       },
       "required": [
@@ -2706,6 +2823,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2746,6 +2866,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2799,6 +2922,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -2901,6 +3027,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3011,6 +3140,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3084,6 +3216,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3178,6 +3313,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3244,6 +3382,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3354,6 +3495,9 @@
           "type": "integer",
           "minimum": 0,
           "maximum": 2000
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3503,6 +3647,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3624,6 +3771,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3675,6 +3825,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3723,6 +3876,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3769,6 +3925,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3810,6 +3969,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3851,6 +4013,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3899,6 +4064,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -3990,6 +4158,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4033,6 +4204,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4129,6 +4303,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4228,6 +4405,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4342,6 +4522,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4457,6 +4640,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4566,6 +4752,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4621,6 +4810,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4677,6 +4869,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4725,6 +4920,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4774,6 +4972,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4874,6 +5075,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -4983,6 +5187,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5081,6 +5288,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5163,6 +5373,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5211,6 +5424,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5253,6 +5469,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5286,6 +5505,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5332,6 +5554,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5386,6 +5611,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5485,6 +5713,9 @@
             "button",
             "submit"
           ]
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5537,6 +5768,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5570,6 +5804,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5609,6 +5846,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5644,6 +5884,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5692,6 +5935,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/stateMotion"
         }
       },
       "required": [
@@ -5729,6 +5975,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5844,6 +6093,9 @@
           "type": "integer",
           "minimum": 0,
           "maximum": 2000
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5883,6 +6135,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -5941,6 +6196,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/stateMotion"
         }
       },
       "required": [
@@ -5984,6 +6242,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6027,6 +6288,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6110,6 +6374,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6146,6 +6413,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6184,6 +6454,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6232,6 +6505,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6269,6 +6545,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6306,6 +6585,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6406,6 +6688,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6453,6 +6738,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6497,6 +6785,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6545,6 +6836,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6630,6 +6924,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6724,6 +7021,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6820,6 +7120,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -6901,6 +7204,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -7039,6 +7345,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -7178,6 +7487,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -7303,6 +7615,9 @@
           },
           "required": [],
           "additionalProperties": false
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
         }
       },
       "required": [
@@ -7616,6 +7931,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -7668,6 +7986,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -7707,6 +8028,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -7747,6 +8071,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -7796,6 +8123,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -7874,6 +8204,9 @@
                 "button",
                 "submit"
               ]
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -7902,6 +8235,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -7950,6 +8286,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8066,6 +8405,9 @@
               "type": "integer",
               "minimum": 0,
               "maximum": 2000
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8126,6 +8468,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8237,6 +8582,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8298,6 +8646,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8350,6 +8701,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8402,6 +8756,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8518,6 +8875,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8574,6 +8934,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/stateMotion"
             }
           },
           "required": [
@@ -8622,6 +8985,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8720,6 +9086,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8769,6 +9138,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -8912,6 +9284,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9025,6 +9400,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9090,6 +9468,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9135,6 +9516,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9181,6 +9565,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9269,6 +9656,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9328,6 +9718,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9372,6 +9765,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9409,6 +9805,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9503,6 +9902,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9598,6 +10000,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9709,6 +10114,9 @@
               "type": "integer",
               "minimum": 0,
               "maximum": 2000
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9762,6 +10170,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -9915,6 +10326,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10005,6 +10419,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10051,6 +10468,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10104,6 +10524,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10144,6 +10567,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10178,6 +10604,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10243,6 +10672,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/stateMotion"
             }
           },
           "required": [
@@ -10275,6 +10707,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10315,6 +10750,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10368,6 +10806,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10470,6 +10911,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10580,6 +11024,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10653,6 +11100,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10747,6 +11197,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10813,6 +11266,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -10923,6 +11379,9 @@
               "type": "integer",
               "minimum": 0,
               "maximum": 2000
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11072,6 +11531,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11193,6 +11655,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11244,6 +11709,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11292,6 +11760,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11338,6 +11809,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11379,6 +11853,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11420,6 +11897,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11468,6 +11948,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11559,6 +12042,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11602,6 +12088,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11698,6 +12187,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11797,6 +12289,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -11911,6 +12406,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12026,6 +12524,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12135,6 +12636,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12190,6 +12694,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12246,6 +12753,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12294,6 +12804,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12343,6 +12856,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12443,6 +12959,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12552,6 +13071,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12650,6 +13172,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12732,6 +13257,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12780,6 +13308,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12822,6 +13353,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12855,6 +13389,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12901,6 +13438,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -12955,6 +13495,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13054,6 +13597,9 @@
                 "button",
                 "submit"
               ]
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13106,6 +13652,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13139,6 +13688,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13178,6 +13730,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13213,6 +13768,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13261,6 +13819,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/stateMotion"
             }
           },
           "required": [
@@ -13298,6 +13859,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13413,6 +13977,9 @@
               "type": "integer",
               "minimum": 0,
               "maximum": 2000
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13452,6 +14019,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13510,6 +14080,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/stateMotion"
             }
           },
           "required": [
@@ -13553,6 +14126,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13596,6 +14172,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13679,6 +14258,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13715,6 +14297,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13753,6 +14338,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13801,6 +14389,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13838,6 +14429,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13875,6 +14469,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -13975,6 +14572,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -14022,6 +14622,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -14066,6 +14669,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -14114,6 +14720,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -14199,6 +14808,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -14293,6 +14905,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -14389,6 +15004,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -14470,6 +15088,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -14608,6 +15229,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -14747,6 +15371,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -14872,6 +15499,9 @@
               },
               "required": [],
               "additionalProperties": false
+            },
+            "motion": {
+              "$ref": "#/$defs/motion"
             }
           },
           "required": [
@@ -15334,6 +15964,260 @@
       "required": [
         "actions"
       ],
+      "additionalProperties": false
+    },
+    "motionTiming": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2000
+        },
+        "easing": {
+          "enum": [
+            "linear",
+            "ease",
+            "ease-in",
+            "ease-out",
+            "ease-in-out"
+          ]
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "appearanceMotion": {
+      "type": "object",
+      "properties": {
+        "preset": {
+          "enum": [
+            "fade",
+            "fade-up",
+            "fade-down",
+            "zoom"
+          ]
+        },
+        "delay": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2000
+        },
+        "duration": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2000
+        },
+        "easing": {
+          "enum": [
+            "linear",
+            "ease",
+            "ease-in",
+            "ease-out",
+            "ease-in-out"
+          ]
+        }
+      },
+      "required": [
+        "preset"
+      ],
+      "additionalProperties": false
+    },
+    "motion": {
+      "type": "object",
+      "properties": {
+        "enter": {
+          "$ref": "#/$defs/appearanceMotion"
+        },
+        "exit": {
+          "$ref": "#/$defs/appearanceMotion"
+        },
+        "hover": {
+          "type": "object",
+          "properties": {
+            "preset": {
+              "enum": [
+                "lift",
+                "grow"
+              ]
+            },
+            "duration": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2000
+            },
+            "easing": {
+              "enum": [
+                "linear",
+                "ease",
+                "ease-in",
+                "ease-out",
+                "ease-in-out"
+              ]
+            }
+          },
+          "required": [
+            "preset"
+          ],
+          "additionalProperties": false
+        },
+        "focus": {
+          "type": "object",
+          "properties": {
+            "preset": {
+              "enum": [
+                "lift",
+                "grow"
+              ]
+            },
+            "duration": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2000
+            },
+            "easing": {
+              "enum": [
+                "linear",
+                "ease",
+                "ease-in",
+                "ease-out",
+                "ease-in-out"
+              ]
+            }
+          },
+          "required": [
+            "preset"
+          ],
+          "additionalProperties": false
+        },
+        "press": {
+          "type": "object",
+          "properties": {
+            "preset": {
+              "const": "scale-down"
+            },
+            "duration": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2000
+            },
+            "easing": {
+              "enum": [
+                "linear",
+                "ease",
+                "ease-in",
+                "ease-out",
+                "ease-in-out"
+              ]
+            }
+          },
+          "required": [
+            "preset"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "stateMotion": {
+      "type": "object",
+      "properties": {
+        "enter": {
+          "$ref": "#/$defs/appearanceMotion"
+        },
+        "exit": {
+          "$ref": "#/$defs/appearanceMotion"
+        },
+        "hover": {
+          "type": "object",
+          "properties": {
+            "preset": {
+              "enum": [
+                "lift",
+                "grow"
+              ]
+            },
+            "duration": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2000
+            },
+            "easing": {
+              "enum": [
+                "linear",
+                "ease",
+                "ease-in",
+                "ease-out",
+                "ease-in-out"
+              ]
+            }
+          },
+          "required": [
+            "preset"
+          ],
+          "additionalProperties": false
+        },
+        "focus": {
+          "type": "object",
+          "properties": {
+            "preset": {
+              "enum": [
+                "lift",
+                "grow"
+              ]
+            },
+            "duration": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2000
+            },
+            "easing": {
+              "enum": [
+                "linear",
+                "ease",
+                "ease-in",
+                "ease-out",
+                "ease-in-out"
+              ]
+            }
+          },
+          "required": [
+            "preset"
+          ],
+          "additionalProperties": false
+        },
+        "press": {
+          "type": "object",
+          "properties": {
+            "preset": {
+              "const": "scale-down"
+            },
+            "duration": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2000
+            },
+            "easing": {
+              "enum": [
+                "linear",
+                "ease",
+                "ease-in",
+                "ease-out",
+                "ease-in-out"
+              ]
+            }
+          },
+          "required": [
+            "preset"
+          ],
+          "additionalProperties": false
+        },
+        "transition": {
+          "$ref": "#/$defs/motionTiming"
+        }
+      },
+      "required": [],
       "additionalProperties": false
     }
   }

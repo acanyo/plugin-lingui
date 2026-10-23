@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode, Dynamic } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -49,9 +50,16 @@
         ).parentElement?.querySelectorAll<HTMLButtonElement>('[role=tab]')
         tabs?.[target]?.focus()
     }
+    const { motionEnter, motionExit, motionFeedback, motionTab } = createNodeMotion()
 </script>
 
-<div data-lingui-node={node.id} class="lg-tabs">
+<div
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-tabs"
+>
     <div role="tablist" class="lg-tablist">
         {#each node.tabs ?? [] as tab, index (tab.child)}<button
                 id={`${prefix}-${node.id}-tab-${index}`}
@@ -67,7 +75,7 @@
     {#each node.tabs ?? [] as tab, index (tab.child)}<div
             id={`${prefix}-${node.id}-panel-${index}`}
             role="tabpanel"
-            hidden={selected !== index}
+            use:motionTab={{ active: selected === index, transition: node.motion?.transition }}
             aria-labelledby={`${prefix}-${node.id}-tab-${index}`}
             tabindex="0"
         >

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode, Dynamic } from '../../protocol/types'
     import { safeMediaUrl } from '../../protocol/media-url'
     import { useRenderer } from '../context'
@@ -14,10 +15,17 @@
     let failedSource = $state<string>()
     let label = $derived(String(resolve(node.label) ?? ''))
     let initials = $derived(Array.from(label.trim()).slice(0, 2).join('') || '?')
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 {#if node.component === 'LingUI.Avatar'}
-    <div data-lingui-node={node.id} class="lg-avatar-profile">
+    <div
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-avatar-profile"
+    >
         <div class={`lg-avatar lg-size-${node.size ?? 'medium'}`}>
             {#if source && source !== failedSource}<img
                     src={source}
@@ -38,7 +46,13 @@
         </div>
     </div>
 {:else if node.component === 'LingUI.EmptyState'}
-    <section data-lingui-node={node.id} class="lg-empty-state">
+    <section
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-empty-state"
+    >
         <span class="lg-empty-icon" aria-hidden="true"
             ><LinguiIcon name={node.name ?? 'layers'} /></span
         >
@@ -49,6 +63,9 @@
 {:else if node.component === 'LingUI.Skeleton'}
     <div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-skeleton lg-skeleton-${node.variant ?? 'text'}`}
         role="status"
         aria-label={label || '内容加载中'}
@@ -65,6 +82,9 @@
 {:else if node.component === 'LingUI.Spinner'}
     <div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-spinner-status lg-size-${node.size ?? 'medium'}`}
         role="status"
     >

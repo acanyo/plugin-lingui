@@ -19,6 +19,9 @@ export function registerCustomElements(): void {
     private hostOptions(): InteractionHost {
       const thisElement = this
       return {
+        get motion() {
+          return thisElement.interactionHost.motion
+        },
         get autoStart() {
           return thisElement.interactionHost.autoStart
         },

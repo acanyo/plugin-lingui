@@ -80,6 +80,7 @@ function mountValidatedRenderer(
 export async function renderStatic(instance: ComponentInstance): Promise<string> {
   const host = document.createElement('div')
   const handle = mountRenderer(host, instance, {
+    motion: false,
     autoStart: false,
     inheritRegistered: false,
     requests: { allow: () => false },

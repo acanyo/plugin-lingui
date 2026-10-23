@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode, Dynamic } from '../../protocol/types'
     import { useRenderer } from '../context'
     import { progressRing } from '../charts/compact'
@@ -10,9 +11,16 @@
     }
     let ring = $derived(progressRing(resolve(node.value), Number(node.max)))
     const format = new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 2 })
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<figure data-lingui-node={node.id} class="lg-progress-ring">
+<figure
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-progress-ring"
+>
     <div
         class="lg-ring-plot"
         role="progressbar"

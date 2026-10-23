@@ -76,7 +76,14 @@
         },
         report,
     )
-    provideRenderer(surface, runtime, `lg-${id}`, report, eventRuntime)
+    provideRenderer(
+        surface,
+        runtime,
+        `lg-${id}`,
+        report,
+        eventRuntime,
+        () => interactions.motion !== false,
+    )
     onMount(() => {
         if (interactions.autoStart === false) return
         for (const node of Object.values(surface.nodes)) {

@@ -71,4 +71,6 @@ register_integrations(catalog['$defs'], obj)
 from events_catalog import register_events
 event_capabilities = register_events(components, catalog['$defs'], obj, ref)
 Path('packages/renderer/schemas/event-capabilities.json').write_text(json.dumps(event_capabilities,ensure_ascii=False,indent=2)+'\n')
+from motion_catalog import register_motion
+register_motion(components, catalog['$defs'], obj, ref)
 Path('packages/renderer/schemas/catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2)+'\n')

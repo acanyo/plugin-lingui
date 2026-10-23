@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { onMount, onDestroy, tick } from 'svelte'
     import type { ComponentNode } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -130,9 +131,18 @@
         }
     })
     onDestroy(() => close(false))
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<div data-lingui-node={node.id} bind:this={container} class="lg-popover" role="group">
+<div
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    bind:this={container}
+    class="lg-popover"
+    role="group"
+>
     <div class="lg-popover-trigger" bind:this={trigger}><NodeRenderer id={node.trigger!} /></div>
     <div
         bind:this={panel}

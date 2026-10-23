@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import { tick, untrack } from 'svelte'
     import type { Binding, ComponentNode } from '../../protocol/types'
@@ -81,9 +82,17 @@
             else if (row.parent) void focus(row.parent)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<section data-lingui-node={node.id} class="lg-tree-view" bind:this={element}>
+<section
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-tree-view"
+    bind:this={element}
+>
     <h3 class="lg-data-heading" id={`${prefix}-${node.id}-label`}>{label}</h3>
     <div role="tree" aria-labelledby={`${prefix}-${node.id}-label`} aria-disabled={disabled}>
         {#each rows as row, index (row.id)}

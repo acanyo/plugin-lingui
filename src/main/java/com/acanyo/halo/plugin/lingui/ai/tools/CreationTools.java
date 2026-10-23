@@ -34,7 +34,8 @@ public class CreationTools {
 
     @Autowired
     public CreationTools(ComponentCatalog catalog, PublicApiCatalog publicApiCatalog,
-        SiteReferenceTools siteReferences, ContentReferenceTools contentReferences,
+        SiteReferenceTools siteReferences,
+        ContentReferenceTools contentReferences,
         SkillResources resources, DesignValidator validator) {
         this.catalog = catalog;
         this.publicApiCatalog = publicApiCatalog;
@@ -55,8 +56,8 @@ public class CreationTools {
         definitions.add(new Definition("get_current_work", "获取当前请求的完整作品快照；外部 MCP 必须提供已保存作品的 workName，不读取浏览器状态。", schema(
                 Map.of("workName", Map.of("type", "string", "minLength", 1, "maxLength", 160,
                     "pattern", "^[a-zA-Z0-9][a-zA-Z0-9._-]*$")), List.of())));
-        definitions.add(new Definition("get_guidance", "先读取 skill 创作入口；按需读取 interactions 交互、theme 主题、data 动态数据、layout 布局，或 examples 经校验的接口重试/测验/指标布局范例。只读取与当前需求相关的参考。", schema(
-                Map.of("topic", Map.of("type", "string", "enum", List.of("skill", "interactions", "theme", "data", "layout", "examples"))), List.of("topic"))));
+        definitions.add(new Definition("get_guidance", "按需读取 interactions 交互、motion 动画、theme 主题、data 动态数据、callbacks 宿主回调与公开嵌入、layout 布局，或 examples 经校验的完整范例。system 已包含 skill 入口，无需重复读取。", schema(
+                Map.of("topic", Map.of("type", "string", "enum", List.of("skill", "interactions", "motion", "theme", "data", "callbacks", "layout", "examples"))), List.of("topic"))));
         definitions.add(new Definition("validate_design", "校验设计并返回具体问题。推荐 document.nodes 组件对象数组（工具自动生成 OpenUI source），也接受标准 source。外部 MCP 校验通过时在 design 返回标准设计。只有最终完整作品设置 finalize=true，试校验省略或设 false。不会保存或执行。", schema(
                 Map.of("design", Map.of("type", "object"), "finalize", Map.of("type", "boolean")), List.of("design"))));
         if (publicApiCatalog != null) definitions.addAll(ApiReferenceTools.definitions());
@@ -88,6 +89,7 @@ public class CreationTools {
     public CreationSession session(String snapshot, String instruction) {
         var count = new AtomicInteger();
         var accepted = new java.util.concurrent.atomic.AtomicReference<String>();
+        var lastIssue = new java.util.concurrent.atomic.AtomicReference<String>();
         var context = new WorkContext(snapshot, null);
         var requirements = new CreationRequirements(instruction);
         var sessionTools = definitions.stream().map(tool -> ToolDefinition.builder().name(tool.name())
@@ -110,6 +112,9 @@ public class CreationTools {
                                 else if (valid) result = Map.of("valid", true, "finalized", false,
                                     "message", "仅完成预检，生成尚未结束。确认完整需求均已实现后用 finalize=true 提交完整设计");
                             }
+                            var feedback = mapper.valueToTree(result);
+                            if (!valid) lastIssue.set(feedback.path("issues").path(0).path("message")
+                                .asText(feedback.path("message").asText("设计尚未通过校验")));
                             LOG.info("Lingui design preflight completed: valid={}, issues={}", valid,
                                 mapper.valueToTree(result).path("issues").size());
                         }
@@ -118,9 +123,9 @@ public class CreationTools {
                         return result;
                     }))
             .build()).toList();
-        return new CreationSession(sessionTools, accepted, text -> {
+        return new CreationSession(sessionTools, accepted, lastIssue, text -> {
             String clean = text.strip().replaceFirst("(?i)^```(?:json)?\\s*", "").replaceFirst("\\s*```$", "");
-            var design = validator.parse(clean);
+            var design = validator.normalizeToolDesign(validator.parse(clean));
             validator.requireValid(design);
             if (apiBindingValidator != null) apiBindingValidator.requireValid(design);
             runtimePreflightValidator.requireValid(design);
@@ -199,7 +204,10 @@ public class CreationTools {
             };
         }).map(result -> mapper.convertValue(result, Object.class))
             .subscribeOn(Schedulers.boundedElastic()).onErrorResume(IllegalArgumentException.class,
-            error -> Mono.just(Map.of("isError", true, "message", error.getMessage())));
+            error -> Mono.just(name.equals("validate_design")
+                ? Map.of("isError", true, "message", error.getMessage(), "valid", false,
+                    "issues", List.of(Map.of("message", error.getMessage())))
+                : Map.of("isError", true, "message", error.getMessage())));
     }
 
     public record Definition(String name, String description, Map<String, Object> inputSchema) {}

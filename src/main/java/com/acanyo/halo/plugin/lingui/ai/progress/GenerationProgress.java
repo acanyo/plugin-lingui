@@ -23,10 +23,13 @@ public final class GenerationProgress implements GenerationLifecycle {
     private final Set<Integer> awaitingModel = new HashSet<>();
     private boolean connected;
     private Throwable failure;
+    private int stepOffset;
 
     public GenerationProgress(Consumer<GenerationEvent> consumer) { this.consumer = consumer; }
     public GenerationProgress() { this(event -> {}); }
     public long elapsedMs() { return (System.nanoTime() - started) / 1_000_000; }
+
+    public synchronized void nextAttempt(int completedSteps) { stepOffset += completedSteps; }
 
     /** Foundation 1.0.0's stream result loses the original exception type and cause. */
     public synchronized Throwable failureOr(Throwable streamFailure) {
@@ -46,14 +49,16 @@ public final class GenerationProgress implements GenerationLifecycle {
             activity("prepare", "已连接 AI 基座", "done");
             connected = true;
         }
-        awaitingModel.add(event.getStepIndex());
-        activity("model-" + event.getStepIndex(), "模型生成设计 · 第 " + (event.getStepIndex() + 1) + " 轮", "running");
+        int stepIndex = stepOffset + event.getStepIndex();
+        awaitingModel.add(stepIndex);
+        activity("model-" + stepIndex, "模型生成设计 · 第 " + (stepIndex + 1) + " 轮", "running");
         return Mono.empty();
     }
     @Override public synchronized Mono<Void> onToolCallStart(GenerationToolCallStartEvent event) {
-        if (awaitingModel.remove(event.getStepIndex()))
-            activity("model-" + event.getStepIndex(), "模型返回工具调用 · 第 " + (event.getStepIndex() + 1) + " 轮", "done");
-        String key = event.getStepIndex() + ":" + event.getToolCallId();
+        int stepIndex = stepOffset + event.getStepIndex();
+        if (awaitingModel.remove(stepIndex))
+            activity("model-" + stepIndex, "模型返回工具调用 · 第 " + (stepIndex + 1) + " 轮", "done");
+        String key = stepIndex + ":" + event.getToolCallId();
         String id = toolIds.computeIfAbsent(key, ignored -> "tool-" + toolIds.size());
         String label = switch (event.getToolName()) {
             case "search_components" -> "查询可用组件";
@@ -73,7 +78,7 @@ public final class GenerationProgress implements GenerationLifecycle {
         return Mono.empty();
     }
     @Override public synchronized Mono<Void> onToolCallFinish(GenerationToolCallFinishEvent event) {
-        String id = toolIds.get(event.getStepIndex() + ":" + event.getToolCallId());
+        String id = toolIds.get((stepOffset + event.getStepIndex()) + ":" + event.getToolCallId());
         if (id == null) return Mono.empty();
         Object result = event.getResult() == null ? null : event.getResult().getResult();
         boolean invalid = result instanceof Map<?, ?> map
@@ -94,16 +99,17 @@ public final class GenerationProgress implements GenerationLifecycle {
     }
     @Override public synchronized Mono<Void> onStepFinish(GenerationStepFinishEvent event) {
         var calls = event.getStep().getToolCalls();
-        if (awaitingModel.remove(event.getStepIndex())) {
+        int stepIndex = stepOffset + event.getStepIndex();
+        if (awaitingModel.remove(stepIndex)) {
             var errors = event.getStep().getToolErrors();
             boolean failed = errors != null && !errors.isEmpty();
             String label = failed ? "模型工具调用未执行 · 需要修正"
                 : calls == null || calls.isEmpty() ? "模型已返回设计" : "模型已返回工具调用";
-            activity("model-" + event.getStepIndex(), label + " · 第 " + (event.getStepIndex() + 1) + " 轮",
+            activity("model-" + stepIndex, label + " · 第 " + (stepIndex + 1) + " 轮",
                 failed ? "warning" : "done");
         }
         LoggerFactory.getLogger(GenerationProgress.class).info("Lingui AI step completed: step={}, finish={}, toolCalls={}",
-            event.getStepIndex(), event.getStep().getFinishReason(), calls == null ? 0 : calls.size());
+            stepIndex, event.getStep().getFinishReason(), calls == null ? 0 : calls.size());
         return Mono.empty();
     }
 }

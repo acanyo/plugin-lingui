@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import { onMount, onDestroy, tick } from 'svelte'
     import type { Binding, ComponentNode } from '../../protocol/types'
@@ -206,10 +207,14 @@
         }
     })
     onDestroy(() => close(false))
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <div
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     class={`lg-field lg-select-field lg-size-${node.size ?? 'medium'} lg-field-status-${node.status ?? 'default'}`}
     bind:this={container}
 >

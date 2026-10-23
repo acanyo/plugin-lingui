@@ -18,10 +18,18 @@ public class ComponentCatalog {
     private final ObjectMapper mapper = new ObjectMapper();
     private final JsonNode catalog;
     private final JsonNode labels;
+    private final JsonNode documentSchema;
 
     public ComponentCatalog() throws IOException {
         catalog = load("protocol/catalog.json");
         labels = load("protocol/component-summaries.json");
+        ObjectNode document = load("protocol/design-envelope.schema.json").path("properties").path("document").deepCopy();
+        ((ObjectNode) document.path("properties")).set("nodes", mapper.valueToTree(java.util.Map.of(
+            "type", "array", "items", java.util.Map.of("type", "object"), "minItems", 1, "maxItems", 256)));
+        document.set("required", mapper.valueToTree(List.of("schemaVersion", "title", "parameters", "state")));
+        document.set("oneOf", mapper.valueToTree(List.of(java.util.Map.of("required", List.of("source")),
+            java.util.Map.of("required", List.of("nodes")))));
+        documentSchema = document;
     }
 
     private JsonNode load(String path) throws IOException {
@@ -72,6 +80,9 @@ public class ComponentCatalog {
             + "；基础组合可用 Column、Row、Card、Text、Button、LingUI.Metric、LingUI.Conditional，请按准确名称查询");
         if (!unknown.isEmpty()) result.put("hint", "unknownComponents 中的组件不存在；其余 schema 已返回，优先使用已知组件完成需求，不要猜测字段");
         collect(catalog.path("functions"), needed);
+        result.set("documentSchema", documentSchema.deepCopy());
+        result.put("documentHint", "document 仅允许 documentSchema 声明的字段。nodes 与 source 二选一；公开嵌入在保存后的项目管理中设置，不是设计字段。主题放在设计信封的 theme，不放进 document。");
+        collect(documentSchema, needed);
         ObjectNode definitions = result.putObject("$defs");
         for (String name : needed) definitions.set(name, catalog.path("$defs").path(name).deepCopy());
         result.set("functions", catalog.path("functions").deepCopy());

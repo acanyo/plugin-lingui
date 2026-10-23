@@ -1,13 +1,21 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode } from '../../protocol/types'
     import { safeMediaUrl } from '../../protocol/media-url'
     let { node }: { node: ComponentNode } = $props()
     let failed = $state<string[]>([])
     let members = $derived(node.members ?? []),
         limit = $derived(node.maxVisible ?? 4)
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<div data-lingui-node={node.id} class="lg-avatar-group">
+<div
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-avatar-group"
+>
     <span class="lg-caption">{node.label}</span>
     <div
         class="lg-avatar-stack"

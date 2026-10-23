@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode, Dynamic } from '../../protocol/types'
     import { safeLinkUrl } from '../../protocol/link-url'
     import { useRenderer } from '../context'
@@ -9,10 +10,17 @@
         return resolveValue(value)
     }
     let url = $derived(safeLinkUrl(resolve(node.url)))
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 {#if node.component === 'LingUI.KeyboardShortcut'}
-    <div data-lingui-node={node.id} class="lg-shortcut">
+    <div
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-shortcut"
+    >
         <span>{resolve(node.label)}</span><span
             class="lg-shortcut-keys"
             aria-label={node.keys?.join(' + ')}
@@ -22,7 +30,13 @@
         >
     </div>
 {:else}
-    <div data-lingui-node={node.id} class="lg-file-card">
+    <div
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-file-card"
+    >
         <span class="lg-file-icon" aria-hidden="true"
             ><svg
                 class="lg-icon"

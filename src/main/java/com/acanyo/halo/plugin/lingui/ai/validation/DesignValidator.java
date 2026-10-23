@@ -1,5 +1,7 @@
 package com.acanyo.halo.plugin.lingui.ai.validation;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.io.JsonEOFException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.nio.charset.StandardCharsets;
@@ -45,7 +47,18 @@ public class DesignValidator {
         if (text == null || text.getBytes(StandardCharsets.UTF_8).length > 262144)
             throw new IllegalArgumentException("设计不能超过 256 KiB");
         try { return ProtocolSchemas.MAPPER.readTree(text); }
-        catch (Exception error) { throw new IllegalArgumentException("设计必须是完整有效的 JSON，不能包含重复字段"); }
+        catch (JsonProcessingException error) {
+            // Jackson messages may contain the document itself. Expose only a category and position.
+            String detail = error.getOriginalMessage();
+            String issue = detail != null && detail.startsWith("Duplicate field") ? "设计 JSON 存在重复字段"
+                : error instanceof JsonEOFException ? "设计 JSON 未完整结束，请补齐对象、数组或字符串"
+                : detail != null && detail.startsWith("Trailing token") ? "设计 JSON 后存在多余内容，只能返回一个设计对象"
+                : "设计 JSON 语法错误，请检查引号、逗号与转义";
+            var location = error.getLocation();
+            if (location != null && location.getLineNr() > 0 && location.getColumnNr() > 0)
+                issue += "（第 " + location.getLineNr() + " 行，第 " + location.getColumnNr() + " 列）";
+            throw new IllegalArgumentException(issue);
+        }
     }
 
     public Object validate(JsonNode input) {

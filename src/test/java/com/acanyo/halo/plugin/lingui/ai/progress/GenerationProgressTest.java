@@ -77,4 +77,21 @@ class GenerationProgressTest {
         assertEquals("model-2", first.getLast().id());
         assertEquals("model-0", second.getLast().id());
     }
+
+    @Test
+    void outputRepairContinuesTheTimelineWithoutOverwritingTheOriginalSteps() {
+        var events = new ArrayList<GenerationEvent>();
+        var progress = new GenerationProgress(events::add);
+        progress.onStepStart(GenerationStepStartEvent.builder().stepIndex(0).build()).block();
+        progress.onStepFinish(GenerationStepFinishEvent.builder().stepIndex(0)
+            .step(GenerationStep.builder().text("invalid output").build()).build()).block();
+        progress.nextAttempt(1);
+        progress.onStepStart(GenerationStepStartEvent.builder().stepIndex(0).build()).block();
+        assertEquals("model-1", events.getLast().id());
+        assertTrue(events.getLast().label().contains("第 2 轮"));
+        progress.onStepFinish(GenerationStepFinishEvent.builder().stepIndex(0)
+            .step(GenerationStep.builder().build()).build()).block();
+        assertEquals("model-1", events.getLast().id());
+        assertEquals("done", events.getLast().state());
+    }
 }

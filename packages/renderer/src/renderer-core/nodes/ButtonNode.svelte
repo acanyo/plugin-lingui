@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode } from '../../protocol/types'
     import { useRenderer } from '../context'
     import { useGroupDisabled } from '../inputs/group-state'
@@ -27,10 +28,14 @@
             report(cause)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <button
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     type={node.buttonType ?? 'button'}
     class={`lg-button lg-button-${node.variant ?? 'secondary'} lg-size-${node.size ?? 'medium'} lg-button-tone-${node.tone ?? 'info'}`}
     class:lg-icon-button={node.component === 'LingUI.IconButton'}

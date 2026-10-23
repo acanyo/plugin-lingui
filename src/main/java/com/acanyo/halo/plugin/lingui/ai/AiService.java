@@ -17,6 +17,7 @@ import run.halo.app.plugin.ReactiveSettingFetcher;
 import com.acanyo.halo.plugin.lingui.ai.tools.CreationTools;
 import com.acanyo.halo.plugin.lingui.ai.tools.CreationSession;
 import run.halo.aifoundation.chat.StopCondition;
+import run.halo.aifoundation.control.CancellationSource;
 import com.acanyo.halo.plugin.lingui.ai.tools.CreationStepPolicy;
 
 @Service
@@ -90,6 +91,7 @@ public class AiService {
                 return Mono.error(new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS,
                     "当前生成任务较多，请稍后重试"));
             }
+            var cancellation = new CancellationSource();
             return settings.fetch("ai", AiSettings.class)
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "请先在灵构 UI 插件设置中启用 AI 生成")))
@@ -113,13 +115,16 @@ public class AiService {
                         .maxOutputTokens(config.outputBudget())
                         .maxRetries(0)
                         .lifecycle(progress)
+                        .cancellationToken(cancellation.token())
                         .timeouts(GenerationTimeouts.total(timeout));
                     if (session != null) {
                         builder.tools(session.tools()).stopWhen(step -> !session.complete()
-                            && StopCondition.stepCountIs(7).shouldContinue(step))
+                            && StopCondition.stepCountIs(CreationStepPolicy.STEP_LIMIT).shouldContinue(step))
                             .prepareStep(step -> CreationStepPolicy.prepare(step, system));
                     }
                     var generation = builder.build();
+                    if (session != null) return ComponentGeneration.generate(generation, session, progress,
+                        next -> foundation.generate(modelName.isEmpty() ? null : modelName, next));
                     long started = System.nanoTime();
                     return foundation.generate(modelName.isEmpty() ? null : modelName, generation)
                         .map(result -> {
@@ -128,7 +133,6 @@ public class AiService {
                                 system.getBytes(java.nio.charset.StandardCharsets.UTF_8).length,
                                 result.getSteps() == null ? 0 : result.getSteps().size(),
                                 result.getToolCalls() == null ? 0 : result.getToolCalls().size());
-                            if (session != null && session.complete()) return session.output();
                             if (result.getFinishReason() == FinishReason.LENGTH) {
                                 throw AiGenerationErrors.outputLimit();
                             }
@@ -140,17 +144,16 @@ public class AiService {
                                 throw new ResponseStatusException(HttpStatus.BAD_GATEWAY,
                                     "AI 返回内容为空或超过 256 KiB，请缩小需求后重试");
                             }
-                            if (session != null) {
-                                try { return session.validateOutput().apply(text); }
-                                catch (IllegalArgumentException invalid) { throw AiGenerationErrors.invalidDesign(invalid.getMessage()); }
-                            }
                             return text;
                         });
                 })
                 .timeout(timeout, Mono.defer(() -> Mono.error(AiGenerationErrors.deadline(timeout))))
                 .onErrorMap(error -> !(error instanceof ResponseStatusException),
                     error -> AiGenerationErrors.translate(progress.failureOr(error)))
-                .doFinally(signal -> inFlight.decrementAndGet());
+                .doFinally(signal -> {
+                    cancellation.cancel();
+                    inFlight.decrementAndGet();
+                });
         });
     }
 

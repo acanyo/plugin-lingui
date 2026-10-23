@@ -59,9 +59,15 @@ final class AiGenerationErrors {
     }
 
     static ResponseStatusException toolLimit() {
+        return toolLimit(null);
+    }
+
+    static ResponseStatusException toolLimit(String issue) {
         return translate(new Failure(HttpStatus.BAD_GATEWAY, "tool-limit", 0,
             "com.acanyo.halo.plugin.lingui.ai.tools.CreationSession",
-            "AI 工具调用轮次已用完，模型仍未提交通过校验的设计。当前作品已保留，可查看执行过程与诊断编号后重试"));
+            "AI 工具调用轮次已用完，模型仍未提交通过校验的设计。"
+                + (issue == null || issue.isBlank() ? "" : "最近校验问题：" + issue + "。")
+                + "当前作品已保留，可查看执行过程与诊断编号后重试"));
     }
 
     private static ResponseStatusException translate(Failure failure) {

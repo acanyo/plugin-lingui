@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode, Dynamic } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -47,9 +48,17 @@
             report(error)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<fieldset data-lingui-node={node.id} class="lg-transfer" {disabled}>
+<fieldset
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-transfer"
+    {disabled}
+>
     <legend>{resolve(node.label)}</legend>
     <label class="lg-field"
         ><span class="lg-sr-only">筛选穿梭选项</span><input

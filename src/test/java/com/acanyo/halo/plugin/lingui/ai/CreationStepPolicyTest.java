@@ -8,6 +8,12 @@ import run.halo.aifoundation.message.ModelMessage;
 import static org.assertj.core.api.Assertions.*;
 
 class CreationStepPolicyTest {
+    @Test void outputRepairUsesTheRemainingImplementationRounds() {
+        var prepared = CreationStepPolicy.prepare(StepContext.builder().stepIndex(0).build(), "skill", 4);
+        assertThat(prepared.getMessages().getFirst().getContent().getFirst().getText())
+            .contains("第 5 轮", "必须调用 validate_design");
+    }
+
     @Test void preservesUserAndToolMessagesAndNeverRemovesToolsDuringRepair() {
         var user = ModelMessage.user("user data");
         var tools = ModelMessage.tool(List.of());

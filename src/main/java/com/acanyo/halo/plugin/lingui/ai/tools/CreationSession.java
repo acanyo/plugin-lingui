@@ -6,7 +6,9 @@ import run.halo.aifoundation.tool.ToolDefinition;
 
 /** Request-scoped final artifact; a successful final validation ends the tool loop. */
 public record CreationSession(List<ToolDefinition> tools, AtomicReference<String> validatedDesign,
+    AtomicReference<String> validationIssue,
     java.util.function.Function<String, String> validateOutput) {
     public boolean complete() { return validatedDesign.get() != null; }
     public String output() { return validatedDesign.get(); }
+    public String lastValidationIssue() { return validationIssue.get(); }
 }

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -21,9 +22,16 @@
             report(error)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<section data-lingui-node={node.id} class="lg-split-pane">
+<section
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-split-pane"
+>
     <div class="lg-split-heading">
         <h3 class="lg-data-heading">{$snapshot && resolve(node.label)}</h3>
         <label for={`${prefix}-${node.id}`} class="lg-caption"

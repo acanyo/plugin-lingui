@@ -1,10 +1,17 @@
 <script lang="ts">
-    let { name }: { name: string } = $props()
+    import { createNodeMotion } from '../motion/node'
+    import type { ComponentNode } from '../protocol/types'
+    let { name, node }: { name: string; node?: ComponentNode } = $props()
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
     const paths: Record<string, string[]> = {
         search: ['M20 20l-5-5', 'M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0'],
         calendar: ['M4 5h16v16H4z', 'M8 3v4', 'M16 3v4', 'M4 10h16'],
         eye: ['M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z', 'M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0'],
-        eyeOff: ['M3 3l18 18', 'M9 5c1-.3 2-.5 3-.5 6 0 10 7.5 10 7.5s-1 2-3 4', 'M6 6c-3 2-4 6-4 6s4 7 10 7c2 0 4-.8 5-2'],
+        eyeOff: [
+            'M3 3l18 18',
+            'M9 5c1-.3 2-.5 3-.5 6 0 10 7.5 10 7.5s-1 2-3 4',
+            'M6 6c-3 2-4 6-4 6s4 7 10 7c2 0 4-.8 5-2',
+        ],
         cube: ['m12 3 9 5v8l-9 5-9-5V8l9-5Z', 'm3 8 9 5 9-5', 'M12 13v8'],
         database: [
             'M20 6c0 2-3.6 3-8 3S4 8 4 6s3.6-3 8-3 8 1 8 3Z',
@@ -53,6 +60,10 @@
 </script>
 
 <svg
+    data-lingui-node={node?.id}
+    in:motionEnter|global={node?.motion?.enter}
+    out:motionExit|global={node?.motion?.exit}
+    use:motionFeedback={node?.motion}
     class="lg-icon"
     viewBox="0 0 24 24"
     fill="none"

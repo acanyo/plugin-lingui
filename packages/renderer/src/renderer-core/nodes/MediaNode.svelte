@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode, Dynamic } from '../../protocol/types'
     import { safeMediaUrl } from '../../protocol/media-url'
     import { useRenderer } from '../context'
@@ -15,10 +16,14 @@
     let label = $derived(
         node.component === 'Image' ? '图片' : node.component === 'Video' ? '视频' : '音频',
     )
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <figure
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     class={`lg-media lg-media-${node.component.toLowerCase()} lg-image-${node.variant ?? 'mediumFeature'} lg-image-fit-${node.fit ?? 'cover'}`}
 >
     {#if !url || failed === url}

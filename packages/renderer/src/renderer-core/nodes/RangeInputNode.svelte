@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode, Dynamic, JsonValue } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -35,10 +36,18 @@
         input.value = String(value)
         set({ ...range, [key]: value })
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 {#if node.component === 'LingUI.RangeSlider'}
-    <fieldset data-lingui-node={node.id} class="lg-range-field" {disabled}>
+    <fieldset
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-range-field"
+        {disabled}
+    >
         <legend>{resolve(node.label)}</legend>
         <div class="lg-range-summary">
             <span>{range.start}{node.unit || ''}</span><span aria-hidden="true">—</span><span
@@ -73,7 +82,13 @@
         </div>
     </fieldset>
 {:else}
-    <div data-lingui-node={node.id} class="lg-field">
+    <div
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-field"
+    >
         <label for={`${prefix}-${node.id}`}>{resolve(node.label)}</label>
         <div class="lg-number-stepper">
             <button

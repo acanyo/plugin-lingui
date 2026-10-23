@@ -4,6 +4,7 @@ import type { Dynamic, JsonValue, State, Surface } from '../protocol/types'
 import type { Runtime } from '../interaction-runtime/runtime'
 import type { EventRuntime } from '../events/runtime'
 export interface RendererContext {
+  motionEnabled: () => boolean
   surface: Surface
   runtime: Runtime
   events: EventRuntime
@@ -20,6 +21,7 @@ export function provideRenderer(
   prefix: string,
   report: RendererContext['report'],
   events: EventRuntime,
+  motionEnabled: () => boolean = () => true,
 ) {
   const state = readable(runtime.state, (set) => runtime.subscribe(set))
   const busy = readable(new Set<string>(), (set) => events.subscribe(set))
@@ -32,6 +34,7 @@ export function provideRenderer(
     }
   }
   setContext<RendererContext>(rendererKey, {
+    motionEnabled,
     surface,
     runtime,
     state,

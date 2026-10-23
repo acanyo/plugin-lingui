@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode } from '../../protocol/types'
     import { useRenderer } from '../context'
     import { useNodeEvents } from '../../events/node'
@@ -25,17 +26,27 @@
             report(error)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 {#snippet heading()}
     {#if node.name}<LinguiIcon name={node.name} />{/if}
-    <span data-lingui-node={node.id} class="lg-node-copy">
+    <span
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-node-copy"
+    >
         <span class="lg-node-title">{resolve(node.title)}</span>
         {#if node.description}<span class="lg-node-description">{resolve(node.description)}</span
             >{/if}
     </span>
     {#if node.expanded}<span
             data-lingui-node={node.id}
+            in:motionEnter|global={node.motion?.enter}
+            out:motionExit|global={node.motion?.exit}
+            use:motionFeedback={node.motion}
             class:lg-expanded={open}
             class="lg-node-expand"
             aria-hidden="true"
@@ -47,6 +58,9 @@
 {#if node.component === 'LingUI.Diagram'}
     <div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-diagram lg-diagram-${node.orientation ?? 'vertical'}`}
         role="group"
         aria-label="交互式架构图"
@@ -61,6 +75,9 @@
 {:else}
     <div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-diagram-branch lg-diagram-${presentation}`}
         class:lg-diagram-accent={node.accent}
         data-tone={tone}

@@ -15,8 +15,10 @@ public class SkillResources {
         texts = Map.of("skill", read("SKILL.md"),
             "interactions", read("references/interactions.md"),
             "theme", read("references/theme.md"), "data", read("references/data.md"),
+            "callbacks", read("references/callbacks.md") + example("host-callback"),
+            "motion", read("references/motion.md") + example("motion"),
             "layout", read("references/layout.md"),
-            "examples", read("references/examples.md") + example("api-retry") + example("quiz") + example("metrics"));
+            "examples", read("references/examples.md") + example("api-retry") + example("quiz") + example("metrics") + example("host-callback") + example("motion"));
     }
 
     private String example(String name) throws IOException {
@@ -32,7 +34,7 @@ public class SkillResources {
 
     public String get(String topic) {
         var text = texts.get(topic);
-        if (text == null) throw new IllegalArgumentException("未知参考，请选择 skill、interactions、theme、data、layout 或 examples");
+        if (text == null) throw new IllegalArgumentException("未知参考，请选择 skill、interactions、theme、data、callbacks、motion、layout 或 examples");
         return text;
     }
 }

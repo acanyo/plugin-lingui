@@ -1,0 +1,33 @@
+{
+  "document": {
+    "schemaVersion": "lingui.document/2",
+    "title": "智阅 AI 摘要框",
+    "parameters": [],
+    "integrations": {
+      "apis": [],
+      "callbacks": [{
+        "name": "zhiyue.summary",
+        "label": "智阅文章摘要",
+        "description": "读取文章页宿主提供的当前文章摘要，无需参数，不发起摘要生成请求。",
+        "responseExample": { "title": "", "gptName": "", "content": "", "postId": "", "loading": false, "error": "" }
+      }]
+    },
+    "state": {
+      "summary": { "title": "", "gptName": "", "content": "", "postId": "", "loading": false, "error": "" }
+    },
+    "nodes": [
+      { "id": "root", "component": "Card", "variant": "outlined", "child": "layout",
+        "events": { "mount": { "actions": [{ "type": "callback", "name": "zhiyue.summary" }], "resultPath": "/summary" } } },
+      { "id": "layout", "component": "Column", "children": ["header", "divider", "loading", "error", "body"] },
+      { "id": "header", "component": "Row", "align": "center", "justify": "spaceBetween", "children": ["title", "name"] },
+      { "id": "title", "component": "Text", "text": { "path": "/summary/title" }, "variant": "h3" },
+      { "id": "name", "component": "Text", "text": { "path": "/summary/gptName" }, "variant": "caption" },
+      { "id": "divider", "component": "Divider" },
+      { "id": "loading", "component": "LingUI.Conditional", "condition": { "path": "/summary/loading" }, "child": "loadingText" },
+      { "id": "loadingText", "component": "Text", "text": { "call": "lingui.evaluate", "args": { "expression": { "op": "if", "args": [{ "path": "/summary/loading" }, "正在读取摘要…", ""] } } }, "variant": "caption" },
+      { "id": "error", "component": "LingUI.Conditional", "condition": { "op": "neq", "args": [{ "path": "/summary/error" }, ""] }, "child": "errorText" },
+      { "id": "errorText", "component": "Text", "text": { "path": "/summary/error" }, "variant": "caption" },
+      { "id": "body", "component": "Text", "text": { "path": "/summary/content" }, "variant": "body" }
+    ]
+  }
+}

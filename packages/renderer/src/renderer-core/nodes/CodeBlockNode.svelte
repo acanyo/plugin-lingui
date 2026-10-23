@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { onDestroy } from 'svelte'
     import type { ComponentNode } from '../../protocol/types'
     let { node }: { node: ComponentNode } = $props()
@@ -22,9 +23,16 @@
         }
     }
     onDestroy(() => clearTimeout(timer))
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<figure data-lingui-node={node.id} class="lg-code-block">
+<figure
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-code-block"
+>
     <figcaption class="lg-code-toolbar">
         <span>{node.label ?? node.language ?? '代码'}</span>
         <button

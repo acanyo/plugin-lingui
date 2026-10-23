@@ -1,0 +1,19 @@
+{
+  "document": {
+    "schemaVersion": "lingui.document/2",
+    "title": "交互动画示例",
+    "parameters": [],
+    "state": { "expanded": false },
+    "nodes": [
+      { "id": "root", "component": "Card", "child": "layout", "motion": { "enter": { "preset": "fade-up", "duration": 300 }, "hover": { "preset": "lift" } } },
+      { "id": "layout", "component": "Column", "children": ["title", "toggle", "details", "conditional"] },
+      { "id": "title", "component": "Text", "text": "交互动画", "variant": "h3" },
+      { "id": "toggle", "component": "Button", "child": "toggle-label", "variant": "primary", "motion": { "press": { "preset": "scale-down" }, "focus": { "preset": "grow" } }, "events": { "click": { "actions": [{ "type": "local", "actions": [{ "type": "toggleState", "path": "/expanded" }] }] } } },
+      { "id": "toggle-label", "component": "Text", "text": "展开或收起" },
+      { "id": "details", "component": "LingUI.Collapse", "title": "了解交互动画", "expanded": { "path": "/expanded" }, "child": "details-text", "motion": { "transition": { "duration": 240 } } },
+      { "id": "details-text", "component": "Text", "text": "展开状态驱动内容过渡，按钮和折叠标题都可以切换。" },
+      { "id": "conditional", "component": "LingUI.Conditional", "condition": { "path": "/expanded" }, "child": "conditional-text", "motion": { "enter": { "preset": "fade-up", "duration": 200 }, "exit": { "preset": "fade", "duration": 180 } } },
+      { "id": "conditional-text", "component": "Text", "text": "这段内容在离场动画完成后移除。" }
+    ]
+  }
+}

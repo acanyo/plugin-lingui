@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode, Dynamic } from '../../protocol/types'
     import { safeLinkUrl } from '../../protocol/link-url'
     import { useRenderer } from '../context'
@@ -9,11 +10,15 @@
         return resolveValue(value)
     }
     let url = $derived(safeLinkUrl(resolve(node.url)))
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 {#if node.component === 'LingUI.Link'}
     {#if url}<a
             data-lingui-node={node.id}
+            in:motionEnter|global={node.motion?.enter}
+            out:motionExit|global={node.motion?.exit}
+            use:motionFeedback={node.motion}
             class="lg-link"
             href={url}
             target={node.newWindow ? '_blank' : undefined}
@@ -24,11 +29,19 @@
                     >↗</span
                 ><span class="lg-sr-only">（新窗口打开）</span>{/if}</a
         >
-    {:else}<span data-lingui-node={node.id} class="lg-link-unavailable">{resolve(node.text)}</span
+    {:else}<span
+            data-lingui-node={node.id}
+            in:motionEnter|global={node.motion?.enter}
+            out:motionExit|global={node.motion?.exit}
+            use:motionFeedback={node.motion}
+            class="lg-link-unavailable">{resolve(node.text)}</span
         >{/if}
 {:else if node.component === 'LingUI.Breadcrumbs'}
     <nav
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class="lg-breadcrumbs"
         aria-label={String(node.label || '面包屑导航')}
     >

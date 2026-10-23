@@ -13,6 +13,7 @@ import MenuProperties from './MenuProperties.vue'
 import DynamicInputProperties from './DynamicInputProperties.vue'
 import ContentProperties from './ContentProperties.vue'
 import DesignProperties from './DesignProperties.vue'
+import MotionProperties from './MotionProperties.vue'
 import MediaProperties from './MediaProperties.vue'
 import InputProperties from './InputProperties.vue'
 import TabsProperties from './TabsProperties.vue'
@@ -303,6 +304,7 @@ function apply() {
       @document="emit('document', $event)"
     />
     <DesignProperties :node="node" @update="emit('update', $event)" />
+    <MotionProperties :node="node" @update="emit('update', $event)" />
     <details class="lu-advanced">
       <summary>节点配置</summary>
       <p class="lu-muted">调整绑定、选项或计算表达式。保存前会校验所有字段。</p>

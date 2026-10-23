@@ -1,4 +1,5 @@
 export * from './protocol/types'
+export * from './motion/types'
 export * from './events/types'
 export * from './events/capabilities'
 export * from './events/runtime'

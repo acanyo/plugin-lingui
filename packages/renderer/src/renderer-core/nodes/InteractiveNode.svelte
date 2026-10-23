@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -66,12 +67,16 @@
                 : [value],
         )
     }
+    const { motionEnter, motionExit, motionFeedback, motionDetails } = createNodeMotion()
 </script>
 
 {#if node.component === 'LingUI.Collapse'}<details
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class="lg-collapse"
-        open={expanded}
+        use:motionDetails={{ expanded, transition: node.motion?.transition }}
     >
         <summary aria-expanded={expanded} onclick={toggle}
             ><span>{resolve(node.title)}</span><span class="lg-chevron" aria-hidden="true"
@@ -80,7 +85,13 @@
         >
         <div class="lg-collapse-content"><NodeRenderer id={node.child!} /></div>
     </details>
-{:else if node.component === 'ChoicePicker'}<fieldset data-lingui-node={node.id} class="lg-choice">
+{:else if node.component === 'ChoicePicker'}<fieldset
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-choice"
+    >
         <legend>{resolve(node.label)}</legend
         >{#each node.options ?? [] as option (option.value)}<label
                 class:lg-selected={Array.isArray(selected) && selected.includes(option.value)}
@@ -94,7 +105,13 @@
                 /><span>{option.label}</span></label
             >{/each}
     </fieldset>
-{:else if node.component === 'LingUI.Steps'}<div data-lingui-node={node.id} class="lg-steps">
+{:else if node.component === 'LingUI.Steps'}<div
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-steps"
+    >
         <div class="lg-step-header">
             <p class="lg-muted" aria-live="polite">步骤 {step + 1} / {node.children!.length}</p>
             <div class="lg-step-track" aria-hidden="true">

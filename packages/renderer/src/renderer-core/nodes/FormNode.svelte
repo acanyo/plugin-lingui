@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode, Dynamic, JsonValue } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -25,10 +26,17 @@
             report(error)
         }
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 {#if node.component === 'LingUI.Switch'}
-    <div data-lingui-node={node.id} class="lg-switch-field">
+    <div
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-switch-field"
+    >
         <div class="lg-switch-copy">
             <span id={`${prefix}-${node.id}-label`}>{resolve(node.label)}</span>
             {#if node.description}<p id={`${prefix}-${node.id}-hint`} class="lg-caption">
@@ -47,7 +55,14 @@
         >
     </div>
 {:else if node.component === 'LingUI.SegmentedControl'}
-    <fieldset data-lingui-node={node.id} class="lg-segmented-field" {disabled}>
+    <fieldset
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-segmented-field"
+        {disabled}
+    >
         <legend>{resolve(node.label)}</legend>
         <div class="lg-segmented">
             {#each node.options ?? [] as option (option.value)}
@@ -64,7 +79,14 @@
         </div>
     </fieldset>
 {:else if node.component === 'LingUI.Rating'}
-    <fieldset data-lingui-node={node.id} class="lg-rating" disabled={disabled || node.readOnly}>
+    <fieldset
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-rating"
+        disabled={disabled || node.readOnly}
+    >
         <legend>{resolve(node.label)}</legend>
         <div class="lg-rating-row">
             <div class="lg-rating-stars">

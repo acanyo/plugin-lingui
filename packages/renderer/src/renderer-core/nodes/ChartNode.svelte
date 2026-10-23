@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode } from '../../protocol/types'
     import { lineGeometry, donutGeometry } from '../charts/geometry'
     import { shortChartNumber } from '../charts/formatting'
@@ -12,10 +13,14 @@
         notation: 'compact',
         maximumFractionDigits: 1,
     })
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <figure
     data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
     class:lg-donut-chart={node.component === 'LingUI.DonutChart'}
     class="lg-chart"
 >

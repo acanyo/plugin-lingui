@@ -140,6 +140,7 @@ export type ComponentName = (typeof componentNames)[number]
 export interface ComponentNode {
   id: string
   component: ComponentName
+  motion?: import('../motion/types').NodeMotion
   children?: string[]
   child?: string
   text?: Dynamic

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { onDestroy } from 'svelte'
     import type { ComponentNode } from '../../protocol/types'
     import { useRenderer } from '../context'
@@ -74,9 +75,17 @@
     onDestroy(() => {
         if (dialog?.open) dialog.close()
     })
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<div data-lingui-node={node.id} bind:this={container} class="lg-modal">
+<div
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    bind:this={container}
+    class="lg-modal"
+>
     {#if buttonTrigger}
         <div
             bind:this={trigger}

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import { tick } from 'svelte'
     import type { Binding, ComponentNode, Dynamic } from '../../protocol/types'
@@ -85,6 +86,7 @@
             input.value = next
         } else error = '请输入六位十六进制颜色，例如 #2563eb。'
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 <svelte:window
@@ -92,7 +94,13 @@
         if (picker && !event.composedPath().includes(picker)) open = false
     }}
 />
-<div data-lingui-node={node.id} class="lg-field">
+<div
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-field"
+>
     <label for={`${prefix}-${node.id}`}>{resolve(node.label)}</label>
     <div
         class="lg-color-picker"

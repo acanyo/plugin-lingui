@@ -44,6 +44,7 @@ class ToolDesignSubmissionTest {
         var mixed = new java.util.HashMap<>(design()); mixed.put("source", "root = Text({}, [])");
         var session = tools.session(null);
         assertThat(mapper.valueToTree(validate(session, Map.of("design", mixed, "finalize", true))).path("isError").asBoolean()).isTrue();
+        assertThat(mapper.valueToTree(validate(session, Map.of("design", mixed, "finalize", true))).path("issues").size()).isEqualTo(1);
         var dangling = new java.util.HashMap<>(design());
         dangling.put("nodes", List.of(Map.of("id", "root", "component", "Column", "children", List.of("missing"))));
         var result = mapper.valueToTree(validate(session, Map.of("design", dangling, "finalize", true)));

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import type { ComponentNode } from '../../protocol/types'
     import { lineGeometry } from '../charts/geometry'
     import { funnelGeometry } from '../charts/compact'
@@ -9,9 +10,16 @@
     let delta = $derived((data.at(-1)?.value ?? 0) - (data[0]?.value ?? 0))
     const format = new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 2 })
     const percent = new Intl.NumberFormat('zh-CN', { style: 'percent', maximumFractionDigits: 1 })
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
-<figure data-lingui-node={node.id} class="lg-compact-chart">
+<figure
+    data-lingui-node={node.id}
+    in:motionEnter|global={node.motion?.enter}
+    out:motionExit|global={node.motion?.exit}
+    use:motionFeedback={node.motion}
+    class="lg-compact-chart"
+>
     <figcaption>
         <h3 class="lg-data-heading">{node.label}</h3>
         {#if node.description}<p class="lg-caption">{node.description}</p>{/if}

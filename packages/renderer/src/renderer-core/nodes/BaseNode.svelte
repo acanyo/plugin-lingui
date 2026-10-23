@@ -1,7 +1,7 @@
 <script lang="ts">
+    import { createNodeMotion } from '../../motion/node'
     import { useNodeEvents } from '../../events/node'
     import type { Binding, ComponentNode, Dynamic, JsonValue } from '../../protocol/types'
-    import { evaluate } from '../../interaction-runtime/expression'
     import { rangePercent } from '../inputs/ranges'
     import { useRenderer } from '../context'
     import NodeRenderer from '../NodeRenderer.svelte'
@@ -30,14 +30,6 @@
         input.value = String(value)
         set(value)
     }
-    let condition = $derived.by(() => {
-        try {
-            return node.condition === undefined || Boolean(evaluate(node.condition, $snapshot))
-        } catch (error) {
-            report(error)
-            return false
-        }
-    })
     let progress = $derived.by(() => {
         const value = Number(resolve(node.value))
         return Number.isFinite(value)
@@ -58,11 +50,15 @@
         end: 'flex-end',
         spaceBetween: 'space-between',
     }
+    const { motionEnter, motionExit, motionFeedback } = createNodeMotion()
 </script>
 
 {#if node.component === 'Column' || node.component === 'Row'}
     <div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-layout ${node.component === 'Row' ? 'lg-row' : 'lg-column'}`}
         style:align-items={flexValues[node.align ?? ''] ?? node.align}
         style:justify-content={flexValues[node.justify ?? ''] ?? node.justify}
@@ -71,6 +67,9 @@
     </div>
 {:else if node.component === 'Card'}<div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-card lg-card-${node.variant ?? 'outlined'}`}
     >
         <NodeRenderer id={node.child!} />
@@ -78,18 +77,38 @@
 {:else if node.component === 'Text'}<svelte:element
         this={textTag}
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-text lg-${node.variant ?? 'body'}`}>{resolve(node.text)}</svelte:element
     >
-{:else if node.component === 'Icon'}<LinguiIcon name={node.name!} />
-{:else if node.component === 'Divider'}<hr data-lingui-node={node.id} class="lg-divider" />
-{:else if node.component === 'CheckBox'}<label data-lingui-node={node.id} class="lg-check"
+{:else if node.component === 'Icon'}<LinguiIcon name={node.name!} {node} />
+{:else if node.component === 'Divider'}<hr
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-divider"
+    />
+{:else if node.component === 'CheckBox'}<label
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-check"
         ><input
             type="checkbox"
             checked={Boolean(resolve(node.value))}
             onchange={(event) => set(event.currentTarget.checked)}
         /><span>{resolve(node.label)}</span></label
     >
-{:else if node.component === 'Slider'}<div data-lingui-node={node.id} class="lg-field">
+{:else if node.component === 'Slider'}<div
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-field"
+    >
         <div class="lg-field-heading">
             <label for={inputId}>{resolve(node.label)}</label>
             <span class="lg-field-value">{resolve(node.value)}</span>
@@ -105,7 +124,13 @@
             oninput={numeric}
         />
     </div>
-{:else if node.component === 'LingUI.Progress'}<div data-lingui-node={node.id} class="lg-field">
+{:else if node.component === 'LingUI.Progress'}<div
+        data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
+        class="lg-field"
+    >
         <div class="lg-field-heading">
             <span>{resolve(node.label)}</span><span class="lg-caption">{Math.round(progress)}%</span
             >
@@ -116,10 +141,11 @@
     </div>
 {:else if node.component === 'LingUI.Callout'}<div
         data-lingui-node={node.id}
+        in:motionEnter|global={node.motion?.enter}
+        out:motionExit|global={node.motion?.exit}
+        use:motionFeedback={node.motion}
         class={`lg-callout lg-tone-${tone}`}
     >
         <NodeRenderer id={node.child!} />
     </div>
-{:else if node.component === 'LingUI.Conditional' && condition}<NodeRenderer
-        id={node.child!}
-    />{/if}
+{/if}
